@@ -62,7 +62,7 @@ public class HostUDP : MonoBehaviour
 
     }
 
-    void onDisable()
+    void OnDisable()
     {
 
         closed = true;

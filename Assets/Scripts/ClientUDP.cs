@@ -37,7 +37,7 @@ public class ClientUDP : MonoBehaviour
         //Debug.Log(Remote.ToString());
 
 
-        Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
+        //Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
 
     }
 
