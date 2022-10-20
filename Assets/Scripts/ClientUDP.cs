@@ -26,7 +26,8 @@ public class ClientUDP : MonoBehaviour
 
         Debug.Log("Sending Message");
 
-        server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+        //server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+        server = new IPEndPoint(IPAddress.Parse("192.168.204.33"), 9050);
         Remote = (EndPoint)(server);
 
         message = "Hi i want to connect";
