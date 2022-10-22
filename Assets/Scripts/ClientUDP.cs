@@ -10,52 +10,60 @@ using System.Threading;
 public class ClientUDP : MonoBehaviour
 {
 
-    int recv;
-    byte[] data;
-    IPEndPoint ipep;
-    Socket newsock;
-    IPEndPoint server;
-    EndPoint Remote;
-    string message;
+    private int recv;
+    private byte[] data = new byte[1024];
+    private IPEndPoint ipep;
+    private Socket newsock;
+    private IPEndPoint server;
+    private EndPoint Remote;
+    private string message;
 
-    Thread myThread;
+    private Thread myThread;
 
-    private void clientConnection()
+    private void ClientConnection()
     {
         Debug.LogWarning("Starting Thread");
-
         Debug.Log("Sending Message");
 
-        //server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
-        server = new IPEndPoint(IPAddress.Parse("192.168.204.33"), 9050);
-        Remote = (EndPoint)(server);
+        server = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+        //server = new IPEndPoint(IPAddress.Parse("192.168.1.44"), 9050);
+        Remote = (EndPoint)server;
 
         message = "Hi i want to connect";
-        data = Encoding.ASCII.GetBytes(message);
-        newsock.SendTo(data, data.Length, SocketFlags.None, Remote);
+        data = Encoding.Default.GetBytes(message);
+        recv = newsock.SendTo(data, data.Length, SocketFlags.None, Remote);
 
         //recv = newsock.ReceiveFrom(data, ref Remote);
         //Debug.Log(Remote.ToString());
 
-
-        //Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
+        // Montu code
+        try
+        {
+            recv = newsock.Receive(data);
+            Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
+        }
+        catch(Exception e)
+        {
+            Debug.Log("[CLIENT] Failed to send:" + e.ToString());
+        }
 
     }
 
-    public void Start()
+    private void Start()
     {
-        data = new byte[1024];
-        ipep = new IPEndPoint(IPAddress.Any, 9050);
+        //ipep = new IPEndPoint(IPAddress.Any, 9050);
 
+        // Start the socket
         newsock = new Socket(AddressFamily.InterNetwork,
                         SocketType.Dgram, ProtocolType.Udp);
 
-        myThread = new Thread(clientConnection);
+        // Start the thread
+        myThread = new Thread(ClientConnection);
         myThread.Start();
 
     }
 
-    void onDisable()
+    private void OnDisable()
     {
         try
         {

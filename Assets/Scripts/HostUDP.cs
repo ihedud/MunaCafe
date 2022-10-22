@@ -9,19 +9,18 @@ using System.Threading;
 
 public class HostUDP : MonoBehaviour
 {
+    private int recv;
+    private byte[] data = new byte[1024];
+    private IPEndPoint ipep;
+    private Socket newsock;
+    //private IPEndPoint sender;
+    private EndPoint Remote;
+    private string welcome;
 
-    int recv;
-    byte[] data;
-    IPEndPoint ipep;
-    Socket newsock;
-    IPEndPoint sender;
-    EndPoint Remote;
-    //string welcome;
+    private bool closed = true;
+    private Thread myThread;
 
-    bool closed = true;
-    Thread myThread;
-
-    private void hostConnection()
+    private void HostConnection()
     {
         //while to keep waiting for messages
         while(!closed)
@@ -30,17 +29,22 @@ public class HostUDP : MonoBehaviour
 
             Debug.Log("Waiting for a client...");
 
-            sender = new IPEndPoint(IPAddress.Any, 0);
-            Remote = (EndPoint)(sender);
+            //sender = new IPEndPoint(IPAddress.Any, 0);
+            ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
 
+            Remote = (EndPoint)ipep;
+
+            newsock.Bind(ipep);
             recv = newsock.ReceiveFrom(data, ref Remote);
 
             Debug.Log(Remote.ToString());
             Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
 
-            //welcome = "Welcome to my test server";
-            //data = Encoding.ASCII.GetBytes(welcome);
-            //newsock.SendTo(data, data.Length, SocketFlags.None, Remote);
+
+            // Send Data
+            welcome = "Welcome to my test server";
+            data = Encoding.ASCII.GetBytes(welcome);
+            newsock.SendTo(data, data.Length, SocketFlags.None, Remote);
         }
 
 
@@ -48,15 +52,13 @@ public class HostUDP : MonoBehaviour
 
     public void Start()
     {
-        data = new byte[1024];
-        ipep = new IPEndPoint(IPAddress.Any, 9050);
 
+        // Socket
         newsock = new Socket(AddressFamily.InterNetwork,
                         SocketType.Dgram, ProtocolType.Udp);
 
-        newsock.Bind(ipep);
-
-        Thread myThread = new Thread(hostConnection);
+        // Thread
+        myThread = new Thread(HostConnection);
         closed = false;
         myThread.Start();
 
