@@ -22,20 +22,21 @@ public class HostUDP : MonoBehaviour
 
     private void HostConnection()
     {
+
+        //sender = new IPEndPoint(IPAddress.Any, 0);
+        ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
+        Remote = (EndPoint)ipep;
+        newsock.Bind(ipep);
+
         //while to keep waiting for messages
-        while(!closed)
+        while (!closed)
         {
             Debug.LogWarning("Starting Thread");
 
             Debug.Log("Waiting for a client...");
 
-            //sender = new IPEndPoint(IPAddress.Any, 0);
-            ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
 
-            Remote = (EndPoint)ipep;
-
-            newsock.Bind(ipep);
-            recv = newsock.ReceiveFrom(data, ref Remote);
+        recv = newsock.ReceiveFrom(data, ref Remote);
 
             Debug.Log(Remote.ToString());
             Debug.Log(Encoding.ASCII.GetString(data, 0, recv));

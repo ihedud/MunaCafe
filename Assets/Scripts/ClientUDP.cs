@@ -37,15 +37,15 @@ public class ClientUDP : MonoBehaviour
         //Debug.Log(Remote.ToString());
 
         // Montu code
-        try
-        {
+        //try
+        //{
             recv = newsock.Receive(data);
             Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
-        }
-        catch(Exception e)
-        {
-            Debug.Log("[CLIENT] Failed to send:" + e.ToString());
-        }
+       // }
+        //catch(Exception e)
+        //{
+            //Debug.Log("[CLIENT] Failed to send:" + e.ToString());
+        //}
 
     }
 
