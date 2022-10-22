@@ -29,7 +29,7 @@ public class ClientUDP : MonoBehaviour
         //server = new IPEndPoint(IPAddress.Parse("192.168.1.44"), 9050);
         Remote = (EndPoint)server;
 
-        message = "Hi i want to connect";
+        message = "Hi i want to connect bdaghfevtqeadtfhgbetHGDFRBGRWefsvZ";
         data = Encoding.Default.GetBytes(message);
         recv = newsock.SendTo(data, data.Length, SocketFlags.None, Remote);
 
