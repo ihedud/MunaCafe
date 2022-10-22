@@ -9,71 +9,60 @@ using System.Threading;
 
 public class HostUDP : MonoBehaviour
 {
-    private int recv;
-    private byte[] data = new byte[1024];
-    private IPEndPoint ipep;
-    private Socket newsock;
-    //private IPEndPoint sender;
-    private EndPoint Remote;
-    private string welcome;
+    [SerializeField] private int port = 9050;
 
+    private int recv;
+    private string message;
+    private byte[] dataSent = new byte[1024];
+    private byte[] dataReceived = new byte[1024];
     private bool closed = true;
+
+    private IPEndPoint client;
+    private EndPoint remote;
+    private Socket newSocket;
     private Thread myThread;
 
     private void HostConnection()
     {
+        client = new IPEndPoint(IPAddress.Any, port);
+        remote = (EndPoint)client;
+        newSocket.Bind(client);
 
-        //sender = new IPEndPoint(IPAddress.Any, 0);
-        ipep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 9050);
-        Remote = (EndPoint)ipep;
-        newsock.Bind(ipep);
-
-        //while to keep waiting for messages
         while (!closed)
         {
             Debug.LogWarning("Starting Thread");
-
             Debug.Log("Waiting for a client...");
 
-
-        recv = newsock.ReceiveFrom(data, ref Remote);
-
-            Debug.Log(Remote.ToString());
-            Debug.Log(Encoding.ASCII.GetString(data, 0, recv));
-
+            // Receive Data
+            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            Debug.Log(remote.ToString());
+            Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
 
             // Send Data
-            welcome = "Welcome to my test server";
-            data = Encoding.ASCII.GetBytes(welcome);
-            newsock.SendTo(data, data.Length, SocketFlags.None, Remote);
+            message = "Welcome to my test server!";
+            dataSent = Encoding.ASCII.GetBytes(message);
+            newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
-
-
     }
 
-    public void Start()
+    private void Start()
     {
+        // Initialize Socket
+        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-        // Socket
-        newsock = new Socket(AddressFamily.InterNetwork,
-                        SocketType.Dgram, ProtocolType.Udp);
-
-        // Thread
+        // Initialize Thread
         myThread = new Thread(HostConnection);
         closed = false;
         myThread.Start();
-
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-
         closed = true;
 
         try
         {
             myThread.Abort();
-
         }
         catch (Exception e)
         {
