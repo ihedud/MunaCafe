@@ -47,10 +47,11 @@ public class HostUDP : MonoBehaviour
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             Debug.Log(remote.ToString());
             string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
-            Debug.Log(clientUsername);
+            Debug.Log(clientUsername + " wants to connect...");
 
             playerCount++;
             playerManager.ConnectPlayer(clientUsername, playerCount);
+            Debug.Log(clientUsername + " has joined the server!");
 
             // Send Data
             dataSent = Encoding.ASCII.GetBytes(serverName);
