@@ -46,6 +46,9 @@ public class ClientUDP : MonoBehaviour
 
             // Receive Data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            Debug.Log("server name: "+ Encoding.ASCII.GetString(dataReceived, 0, recv));
+            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            Debug.Log("client name: " + Encoding.ASCII.GetString(dataReceived, 0, recv));
             //Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
             Debug.Log(remote.ToString());
             string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
