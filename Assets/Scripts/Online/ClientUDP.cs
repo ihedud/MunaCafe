@@ -81,9 +81,12 @@ public class ClientUDP : MonoBehaviour
                 string clientEmojiID = dataSplit[1];
 
                 Debug.Log(clientUsername + " has joined the server!");
-
-                playerCount++;
-                playerManager.ConnectPlayer(clientUsername, playerCount);
+                
+                if (clientUsername != hostUsername && clientUsername != username)
+                {
+                    playerCount++;
+                    playerManager.ConnectPlayer(clientUsername, playerCount);
+                }
             }
         }
         catch
