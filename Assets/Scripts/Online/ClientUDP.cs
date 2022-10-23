@@ -58,6 +58,10 @@ public class ClientUDP : MonoBehaviour
             string hostUsername = hostDataSplit[0];
             string hostEmojiID = hostDataSplit[1];
 
+            playerManager.ConnectPlayer(hostUsername, playerCount);
+            playerCount++;
+            playerManager.ConnectPlayer(username, playerCount);
+
             while (!closed)
             {
                 if (playerManager.emojiUpdated)
@@ -71,7 +75,6 @@ public class ClientUDP : MonoBehaviour
 
                 // Receive New Data
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                Debug.Log("server name: " + Encoding.ASCII.GetString(dataReceived, 0, recv));
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 string[] dataSplit = data.Split(char.Parse("_"));
                 string clientUsername = dataSplit[0];
@@ -97,7 +100,6 @@ public class ClientUDP : MonoBehaviour
         // Get Data From Session
         serverIP = serverIPInputField.GetComponent<TMP_InputField>().text;
         username = usernameInputField.GetComponent<TMP_InputField>().text;
-        playerManager.ConnectPlayer(username, playerCount);
 
         // Initialize Socket
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
