@@ -34,6 +34,7 @@ public class ManagePlayers : MonoBehaviour
     public void ShowEmoji(string username, int emojiID)
     {
         showEmoji = true;
+
         FindPlayer(username).displayingEmoji = true;
         FindPlayer(username).emojiID = emojiID;
 

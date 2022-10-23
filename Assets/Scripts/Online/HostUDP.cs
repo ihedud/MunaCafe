@@ -25,7 +25,6 @@ public class HostUDP : MonoBehaviour
 
     private int recv;
     private byte[] dataSent = new byte[1024];
-    private byte[] dataSent2 = new byte[1024];
     private byte[] dataReceived = new byte[1024];
     private bool closed = true;
     private bool playerUpdated = false;
@@ -48,14 +47,14 @@ public class HostUDP : MonoBehaviour
 
         client = new IPEndPoint(IPAddress.Any, port);
         remote = (EndPoint)client;
-        
+
         newSocket.Bind(client);
 
         while (!closed)
         {
             Debug.Log("Waiting for clients...");
 
-            
+
             if (!remotes.ContainsKey(remote))
             {
                 // Receive Data
@@ -70,11 +69,8 @@ public class HostUDP : MonoBehaviour
                 Debug.Log(clientUsername + " has joined the server!");
 
                 // Send Data
-                dataSent = Encoding.ASCII.GetBytes(serverName);
+                dataSent = Encoding.ASCII.GetBytes("Server name: " + serverName + "Username: " + username + "Emote ID: " + emojiID);
                 newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
-
-                dataSent2 = Encoding.ASCII.GetBytes(username);
-                newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
             }
             else
             {
@@ -90,7 +86,6 @@ public class HostUDP : MonoBehaviour
                 // Send Data
                 for (int i = 0; i < remotes.Count; i++)
                 {
-                    
                     //newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remotes[i]);
                 }
                 playerUpdated = false;
@@ -112,8 +107,8 @@ public class HostUDP : MonoBehaviour
         playerManager.ConnectPlayer(username, playerCount);
         playerUpdated = true;
 
-    // Initialize Socket
-    newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        // Initialize Socket
+        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         // Initialize Thread
         closed = false;

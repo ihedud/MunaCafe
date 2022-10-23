@@ -2534,14 +2534,26 @@ PrefabInstance:
       propertyPath: host
       value: 
       objectReference: {fileID: 1577482266}
+    - target: {fileID: 5242807808240571538, guid: 958170825bb2169468e60d4664cea114, type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 985632580}
     - target: {fileID: 5242807808471875663, guid: 958170825bb2169468e60d4664cea114, type: 3}
       propertyPath: host
       value: 
       objectReference: {fileID: 1577482266}
+    - target: {fileID: 5242807808471875663, guid: 958170825bb2169468e60d4664cea114, type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 985632580}
     - target: {fileID: 5242807808706260344, guid: 958170825bb2169468e60d4664cea114, type: 3}
       propertyPath: host
       value: 
       objectReference: {fileID: 1577482266}
+    - target: {fileID: 5242807808706260344, guid: 958170825bb2169468e60d4664cea114, type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 985632580}
     - target: {fileID: 5242807808786581987, guid: 958170825bb2169468e60d4664cea114, type: 3}
       propertyPath: m_Name
       value: LobbyCanvas
@@ -2634,13 +2646,25 @@ PrefabInstance:
       propertyPath: host
       value: 
       objectReference: {fileID: 1577482266}
+    - target: {fileID: 5242807809057354772, guid: 958170825bb2169468e60d4664cea114, type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 985632580}
     - target: {fileID: 5242807809238119170, guid: 958170825bb2169468e60d4664cea114, type: 3}
       propertyPath: host
       value: 
       objectReference: {fileID: 1577482266}
+    - target: {fileID: 5242807809238119170, guid: 958170825bb2169468e60d4664cea114, type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 985632580}
     - target: {fileID: 5242807810167883675, guid: 958170825bb2169468e60d4664cea114, type: 3}
       propertyPath: host
       value: 
       objectReference: {fileID: 1577482266}
+    - target: {fileID: 5242807810167883675, guid: 958170825bb2169468e60d4664cea114, type: 3}
+      propertyPath: usernameInputField
+      value: 
+      objectReference: {fileID: 985632580}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958170825bb2169468e60d4664cea114, type: 3}

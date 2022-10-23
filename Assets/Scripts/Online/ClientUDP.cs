@@ -24,6 +24,8 @@ public class ClientUDP : MonoBehaviour
     private int recv;
     private byte[] dataSent = new byte[1024];
     private byte[] dataReceived = new byte[1024];
+    private bool closed = true;
+    public bool emojiChanged = false;
 
     private IPEndPoint host;
     private EndPoint remote;
@@ -43,7 +45,18 @@ public class ClientUDP : MonoBehaviour
             // Send Data
             dataSent = Encoding.Default.GetBytes(username);
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            
+            while (!closed)
+            {
+                if (emojiChanged)
+                {
+                    // Send Data
+                    dataSent = Encoding.Default.GetBytes(username);
+                    recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
+                    emojiChanged = false;
+                }
+            }
             // Receive Data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             Debug.Log("server name: " + Encoding.ASCII.GetString(dataReceived, 0, recv));
@@ -75,12 +88,15 @@ public class ClientUDP : MonoBehaviour
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         // Initialize Thread
+        closed = false;
         myThread = new Thread(ClientConnection);
         myThread.Start();
     }
 
     private void OnDisable()
     {
+        closed = true;
+
         try
         {
             myThread.Abort();
