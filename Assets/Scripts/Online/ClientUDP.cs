@@ -48,9 +48,9 @@ public class ClientUDP : MonoBehaviour
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             Debug.Log("server name: " + Encoding.ASCII.GetString(dataReceived, 0, recv));
             Debug.Log(remote.ToString());
+
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
-
             playerCount++;
             playerManager.ConnectPlayer(clientUsername, playerCount);
             Debug.Log(clientUsername + " has joined the server!");
