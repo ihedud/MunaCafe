@@ -17,6 +17,8 @@ public class HostUDP : MonoBehaviour
     [SerializeField] private GameObject usernameInputField;
     [SerializeField] private ManagePlayers playerManager;
 
+    public int emojiID;
+
     private string serverName;
     private string username;
     private int playerCount = 0;

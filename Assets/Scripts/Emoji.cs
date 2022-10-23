@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Emoji : MonoBehaviour
 {
-    public string id;
+    [SerializeField] private HostUDP host;
 
+    private int id;
+
+    public void SendEmoji()
+    {
+        host.emojiID = id;
+    }
 }
