@@ -30,7 +30,7 @@ public class HostUDP : MonoBehaviour
 
         while (!closed)
         {
-            Debug.LogWarning("Starting Thread");
+            Debug.Log("Starting Thread");
             Debug.Log("Waiting for a client...");
 
             // Receive Data
@@ -39,7 +39,7 @@ public class HostUDP : MonoBehaviour
             Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
 
             // Send Data
-            message = "Welcome to my test server!";
+            message = "Welcome to my test UDP server!";
             dataSent = Encoding.ASCII.GetBytes(message);
             newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
@@ -63,6 +63,7 @@ public class HostUDP : MonoBehaviour
         try
         {
             myThread.Abort();
+            newSocket.Close();
         }
         catch (Exception e)
         {

@@ -36,7 +36,7 @@ public class ClientUDP : MonoBehaviour
         recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
         // Receive Data
-        recv = newSocket.Receive(dataReceived);
+        recv = newSocket.ReceiveFrom(dataReceived, ref remote);
         Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
     }
 
@@ -55,6 +55,7 @@ public class ClientUDP : MonoBehaviour
         try
         {
             myThread.Abort();
+            newSocket.Close();
         }
         catch (Exception e)
         {
