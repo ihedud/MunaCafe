@@ -25,14 +25,17 @@ public class HostUDP : MonoBehaviour
 
     private int recv;
     private byte[] dataSent = new byte[1024];
+    private byte[] dataSent2 = new byte[1024];
     private byte[] dataReceived = new byte[1024];
     private bool closed = true;
+    private bool playerUpdated = false;
 
     private IPEndPoint client;
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
-    private Thread emojiThread;
+    private Dictionary<EndPoint, int> remotes = new Dictionary<EndPoint, int>();
+    //private static PlayerToByte playerToByte;
 
     private void Awake()
     {
@@ -45,25 +48,52 @@ public class HostUDP : MonoBehaviour
 
         client = new IPEndPoint(IPAddress.Any, port);
         remote = (EndPoint)client;
+        
         newSocket.Bind(client);
 
         while (!closed)
         {
             Debug.Log("Waiting for clients...");
 
-            // Receive Data
-            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-            Debug.Log(remote.ToString());
-            string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
-            Debug.Log(clientUsername + " wants to connect...");
+            
+            if (!remotes.ContainsKey(remote))
+            {
+                // Receive Data
+                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                Debug.Log(remote.ToString());
+                string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                Debug.Log(clientUsername + " wants to connect...");
 
-            playerCount++;
-            playerManager.ConnectPlayer(clientUsername, playerCount);
-            Debug.Log(clientUsername + " has joined the server!");
+                playerCount++;
+                remotes.Add(remote, playerCount);
+                playerManager.ConnectPlayer(clientUsername, playerCount);
+                Debug.Log(clientUsername + " has joined the server!");
 
-            // Send Data
-            dataSent = Encoding.ASCII.GetBytes(username);
-            newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+                // Send Data
+                dataSent = Encoding.ASCII.GetBytes(serverName);
+                dataSent2 = Encoding.ASCII.GetBytes(username);
+                newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+                newSocket.SendTo(dataSent2, dataSent.Length, SocketFlags.None, remote);
+            }
+            else
+            {
+                // Receive Data
+                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                Debug.Log(remote.ToString());
+                string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                Debug.Log(clientUsername + " wants to connect...");
+            }
+
+            if (playerUpdated)
+            {
+                // Send Data
+                for (int i = 0; i < remotes.Count; i++)
+                {
+                    
+                    //newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remotes[i]);
+                }
+                playerUpdated = false;
+            }
         }
     }
 
@@ -78,10 +108,11 @@ public class HostUDP : MonoBehaviour
         // Get Data From Session
         serverName = serverNameInputField.GetComponent<TMP_InputField>().text;
         username = usernameInputField.GetComponent<TMP_InputField>().text;
-        playerManager.ConnectPlayer(username, playerCount);
+        playerManager.playerInfo = playerManager.ConnectPlayer(username, playerCount);
+        playerUpdated = true;
 
-        // Initialize Socket
-        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+    // Initialize Socket
+    newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         // Initialize Thread
         closed = false;
