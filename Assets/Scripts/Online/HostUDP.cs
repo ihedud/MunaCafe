@@ -26,14 +26,14 @@ public class HostUDP : MonoBehaviour
     private int recv;
     private byte[] dataSent = new byte[1024];
     private byte[] dataReceived = new byte[1024];
+    private string dataReceivedTemp;
     private bool closed = true;
-    private bool playerUpdated = false;
 
     private IPEndPoint client;
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
-    private Dictionary<EndPoint, int> remotes = new Dictionary<EndPoint, int>();
+    private List<EndPoint> remotes = new List<EndPoint>();
     //private static PlayerToByte playerToByte;
 
     private void Awake()
@@ -54,41 +54,49 @@ public class HostUDP : MonoBehaviour
         {
             Debug.Log("Waiting for clients...");
 
-
-            if (!remotes.ContainsKey(remote))
+            if (!remotes.Contains(remote))
             {
                 // Receive Data
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                Debug.Log(remote.ToString());
-                string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                string[] dataSplit = data.Split(char.Parse("_"));
+                string clientUsername = dataSplit[0];
+                string clientEmojiID = dataSplit[1]; // -1
                 Debug.Log(clientUsername + " wants to connect...");
 
                 playerCount++;
-                remotes.Add(remote, playerCount);
+                remotes.Add(remote);
                 playerManager.ConnectPlayer(clientUsername, playerCount);
                 Debug.Log(clientUsername + " has joined the server!");
 
                 // Send Data
-                dataSent = Encoding.ASCII.GetBytes("Server name: " + serverName + "Username: " + username + "Emote ID: " + emojiID);
+                dataSent = Encoding.ASCII.GetBytes(/*serverName + "_" + */username + "_" + playerManager.FindPlayer(username).emojiID);
                 newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
             }
             else
             {
                 // Receive Data
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                Debug.Log(remote.ToString());
-                string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                Debug.Log(clientUsername + " wants to connect...");
+                string dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
+                string clientUsername = dataSplit[0];
+                string clientEmojiID = dataSplit[1];
+
+                Debug.Log(clientUsername + " is sending an emoji...");
+
+                playerManager.playerUpdated = true;
             }
 
-            if (playerUpdated)
+            if (playerManager.playerUpdated && remotes.Count > 0)
             {
-                // Send Data
+                // Send Data To All Clients
                 for (int i = 0; i < remotes.Count; i++)
                 {
-                    //newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remotes[i]);
+                    byte[] dataSent2 = new byte[1024];
+                    dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
+                    newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
                 }
-                playerUpdated = false;
+                playerManager.playerUpdated = false;
             }
         }
     }
@@ -99,7 +107,6 @@ public class HostUDP : MonoBehaviour
         serverName = serverNameInputField.GetComponent<TMP_InputField>().text;
         username = usernameInputField.GetComponent<TMP_InputField>().text;
         playerManager.ConnectPlayer(username, playerCount);
-        playerUpdated = true;
 
         // Initialize Socket
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);

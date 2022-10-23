@@ -22,10 +22,13 @@ public class ManagePlayers : MonoBehaviour
 
     private bool updatePlayers = false;
     private bool showEmoji = false;
+    public bool playerUpdated = false;
+    public bool emojiUpdated = false;
 
     public void ConnectPlayer(string username, int playerNumber)
     {
         updatePlayers = true;
+        playerUpdated = true;
 
         players[playerNumber].username = username;
         players[playerNumber].connected = true;
@@ -34,6 +37,8 @@ public class ManagePlayers : MonoBehaviour
     public void ShowEmoji(string username, int emojiID)
     {
         showEmoji = true;
+        playerUpdated = true;
+        emojiUpdated = true;
 
         FindPlayer(username).displayingEmoji = true;
         FindPlayer(username).emojiID = emojiID;
@@ -41,7 +46,7 @@ public class ManagePlayers : MonoBehaviour
         UpdateEmoji();
     }
 
-    private Player FindPlayer(string username)
+    public Player FindPlayer(string username)
     {
         for (int i = 0; i < players.Count; i++)
         {
