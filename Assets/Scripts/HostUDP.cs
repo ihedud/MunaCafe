@@ -6,10 +6,18 @@ using System.Net;
 using System.Text;
 using UnityEngine;
 using System.Threading;
+using TMPro;
 
 public class HostUDP : MonoBehaviour
 {
     [SerializeField] private int port = 9050;
+
+    [Header("Session Data")]
+    [SerializeField] private GameObject serverNameInputField;
+    [SerializeField] private GameObject usernameInputField;
+
+    private string serverName;
+    private string username;
 
     private int recv;
     private string message;
@@ -40,13 +48,17 @@ public class HostUDP : MonoBehaviour
 
             // Send Data
             message = "Welcome to my test UDP server!";
-            dataSent = Encoding.ASCII.GetBytes(message);
+            dataSent = Encoding.ASCII.GetBytes(serverName);
             newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
     }
 
-    private void Start()
+    public void Initializing()
     {
+        // Get Data From Session
+        serverName = serverNameInputField.GetComponent<TMP_InputField>().text;
+        username = usernameInputField.GetComponent<TMP_InputField>().text;
+
         // Initialize Socket
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
