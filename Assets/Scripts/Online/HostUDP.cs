@@ -17,7 +17,7 @@ public class HostUDP : MonoBehaviour
     [SerializeField] private GameObject usernameInputField;
     [SerializeField] private ManagePlayers playerManager;
 
-    public int emojiID;
+    public int emojiID = -1;
 
     private string serverName;
     private string username;
@@ -32,6 +32,12 @@ public class HostUDP : MonoBehaviour
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
+    private Thread emojiThread;
+
+    private void Awake()
+    {
+        emojiID = -1;
+    }
 
     private void HostConnection()
     {
@@ -56,9 +62,15 @@ public class HostUDP : MonoBehaviour
             Debug.Log(clientUsername + " has joined the server!");
 
             // Send Data
-            dataSent = Encoding.ASCII.GetBytes(serverName);
+            dataSent = Encoding.ASCII.GetBytes(username);
             newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
+    }
+
+    private void Update()
+    {
+        if (emojiID >= 0)
+            playerManager.ShowEmoji(username, emojiID);
     }
 
     public void Initializing()

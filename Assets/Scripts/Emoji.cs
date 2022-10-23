@@ -5,8 +5,7 @@ using UnityEngine;
 public class Emoji : MonoBehaviour
 {
     [SerializeField] private HostUDP host;
-
-    private int id;
+    [SerializeField] private int id;
 
     public void SendEmoji()
     {

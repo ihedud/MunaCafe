@@ -15,9 +15,11 @@ public class ClientUDP : MonoBehaviour
     [Header("Session Data")]
     [SerializeField] private GameObject serverIPInputField;
     [SerializeField] private GameObject usernameInputField;
+    [SerializeField] private ManagePlayers playerManager;
 
     private string serverIP;
     private string username;
+    private int playerCount = 0;
 
     private int recv;
     private byte[] dataSent = new byte[1024];
@@ -44,7 +46,13 @@ public class ClientUDP : MonoBehaviour
 
             // Receive Data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-            Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
+            //Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
+            Debug.Log(remote.ToString());
+            string clientUsername = Encoding.ASCII.GetString(dataReceived, 0, recv);
+
+            playerCount++;
+            playerManager.ConnectPlayer(clientUsername, playerCount);
+            Debug.Log(clientUsername + " has joined the server!");
         }
         catch
         {
@@ -60,6 +68,7 @@ public class ClientUDP : MonoBehaviour
         // Get Data From Session
         serverIP = serverIPInputField.GetComponent<TMP_InputField>().text;
         username = usernameInputField.GetComponent<TMP_InputField>().text;
+        playerManager.ConnectPlayer(username, playerCount);
 
         // Initialize Socket
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
