@@ -32,20 +32,31 @@ public class ClientUDP : MonoBehaviour
 
     private void ClientConnection()
     {
-        Debug.LogWarning("Starting Thread");
-        Debug.Log("Sending Message");
+        try
+        {
+            Debug.LogWarning("Starting Thread");
+            Debug.Log("Sending Message");
 
-        host = new IPEndPoint(IPAddress.Parse(serverIP), port);
-        remote = (EndPoint)host;
+            host = new IPEndPoint(IPAddress.Parse(serverIP), port);
+            remote = (EndPoint)host;
 
-        // Send Data
-        message = "Hi, I want to connect!";
-        dataSent = Encoding.Default.GetBytes(message);
-        recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            // Send Data
+            message = "Hi, I want to connect!";
+            dataSent = Encoding.Default.GetBytes(message);
+            recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
-        // Receive Data
-        recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-        Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
+            // Receive Data
+            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
+        }
+        catch
+        {
+            Debug.Log("Server is not open yet.");
+
+            myThread.Abort();
+            newSocket.Close();
+        }
+        
     }
 
     public void Initialize()
