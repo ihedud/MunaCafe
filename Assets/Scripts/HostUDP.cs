@@ -20,7 +20,6 @@ public class HostUDP : MonoBehaviour
     private string username;
 
     private int recv;
-    private string message;
     private byte[] dataSent = new byte[1024];
     private byte[] dataReceived = new byte[1024];
     private bool closed = true;
@@ -47,7 +46,6 @@ public class HostUDP : MonoBehaviour
             Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
 
             // Send Data
-            message = "Welcome to my test UDP server!";
             dataSent = Encoding.ASCII.GetBytes(serverName);
             newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }

@@ -10,7 +10,6 @@ using TMPro;
 
 public class ClientUDP : MonoBehaviour
 {
-    [SerializeField] private string ipAddress = "127.0.0.1";
     [SerializeField] private int port = 9050;
 
     [Header("Session Data")]
@@ -21,7 +20,6 @@ public class ClientUDP : MonoBehaviour
     private string username;
 
     private int recv;
-    private string message;
     private byte[] dataSent = new byte[1024];
     private byte[] dataReceived = new byte[1024];
 
@@ -34,15 +32,14 @@ public class ClientUDP : MonoBehaviour
     {
         try
         {
-            Debug.LogWarning("Starting Thread");
+            Debug.Log("Starting Thread");
             Debug.Log("Sending Message");
 
             host = new IPEndPoint(IPAddress.Parse(serverIP), port);
             remote = (EndPoint)host;
 
             // Send Data
-            message = "Hi, I want to connect!";
-            dataSent = Encoding.Default.GetBytes(message);
+            dataSent = Encoding.Default.GetBytes(username);
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
             // Receive Data
@@ -86,4 +83,3 @@ public class ClientUDP : MonoBehaviour
         }
     }
 }
-
