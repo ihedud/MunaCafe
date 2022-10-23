@@ -108,7 +108,7 @@ public class HostUDP : MonoBehaviour
         // Get Data From Session
         serverName = serverNameInputField.GetComponent<TMP_InputField>().text;
         username = usernameInputField.GetComponent<TMP_InputField>().text;
-        playerManager.playerInfo = playerManager.ConnectPlayer(username, playerCount);
+        playerManager.ConnectPlayer(username, playerCount);
         playerUpdated = true;
 
     // Initialize Socket
