@@ -31,14 +31,15 @@ public class HostUDP : MonoBehaviour
 
     private void HostConnection()
     {
+        Debug.Log("Starting Thread");
+
         client = new IPEndPoint(IPAddress.Any, port);
         remote = (EndPoint)client;
         newSocket.Bind(client);
 
         while (!closed)
         {
-            Debug.Log("Starting Thread");
-            Debug.Log("Waiting for a client...");
+            Debug.Log("Waiting for clients...");
 
             // Receive Data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
@@ -61,8 +62,8 @@ public class HostUDP : MonoBehaviour
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         // Initialize Thread
-        myThread = new Thread(HostConnection);
         closed = false;
+        myThread = new Thread(HostConnection);
         myThread.Start();
     }
 

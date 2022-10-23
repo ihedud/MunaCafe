@@ -53,7 +53,6 @@ public class ClientUDP : MonoBehaviour
             myThread.Abort();
             newSocket.Close();
         }
-        
     }
 
     public void Initialize()
