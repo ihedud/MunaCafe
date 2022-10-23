@@ -89,13 +89,27 @@ public class HostUDP : MonoBehaviour
 
             if (playerManager.playerUpdated && remotes.Count > 0)
             {
-                // Send Data To All Clients
-                for (int i = 0; i < remotes.Count; i++)
+                if (playerManager.hostUpdated)
                 {
-                    byte[] dataSent2 = new byte[1024];
-                    dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
-                    newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
+                    // Send Data To All Clients From Host
+                    for (int i = 0; i < remotes.Count; i++)
+                    {
+                        newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remotes[i]);
+
+                        playerManager.hostUpdated = false;
+                    }
                 }
+                else
+                {
+                    // Send Data To All Clients From Other Clients
+                    for (int i = 0; i < remotes.Count; i++)
+                    {
+                        byte[] dataSent2 = new byte[1024];
+                        dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
+                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
+                    }
+                }
+                
                 playerManager.playerUpdated = false;
             }
         }
@@ -107,6 +121,7 @@ public class HostUDP : MonoBehaviour
         serverName = serverNameInputField.GetComponent<TMP_InputField>().text;
         username = usernameInputField.GetComponent<TMP_InputField>().text;
         playerManager.ConnectPlayer(username, playerCount);
+        playerManager.hostUpdated = true;
 
         // Initialize Socket
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);

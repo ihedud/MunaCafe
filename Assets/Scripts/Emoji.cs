@@ -17,8 +17,12 @@ public class Emoji : MonoBehaviour
             {
                 playerManager.players[i].emojiID = id;
                 playerManager.ShowEmoji(playerManager.players[i].username, id);
+
+                if (i == 0)
+                {
+                    playerManager.hostUpdated = true;
+                }
             }
         }
-
     }
 }

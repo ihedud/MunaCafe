@@ -23,6 +23,7 @@ public class ManagePlayers : MonoBehaviour
     private bool updatePlayers = false;
     private bool showEmoji = false;
     public bool playerUpdated = false;
+    public bool hostUpdated = false;
     public bool emojiUpdated = false;
 
     public void ConnectPlayer(string username, int playerNumber)
