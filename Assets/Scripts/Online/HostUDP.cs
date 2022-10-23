@@ -93,12 +93,6 @@ public class HostUDP : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (emojiID >= 0)
-            playerManager.ShowEmoji(username, emojiID);
-    }
-
     public void Initializing()
     {
         // Get Data From Session
