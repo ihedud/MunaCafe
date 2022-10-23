@@ -71,8 +71,9 @@ public class HostUDP : MonoBehaviour
 
                 // Send Data
                 dataSent = Encoding.ASCII.GetBytes(serverName);
-                dataSent2 = Encoding.ASCII.GetBytes(username);
                 newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+
+                dataSent = Encoding.ASCII.GetBytes(username);
                 newSocket.SendTo(dataSent2, dataSent.Length, SocketFlags.None, remote);
             }
             else
