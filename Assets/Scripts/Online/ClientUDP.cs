@@ -64,14 +64,14 @@ public class ClientUDP : MonoBehaviour
             remote = (EndPoint)host;
 
             // Send data
-            dataSent = Encoding.Default.GetBytes(username + "*_/" + "0");
+            dataSent = Encoding.Default.GetBytes(username + "_" + "0");
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
             // Receive host data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
             string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
-            string[] hostDataSplit = hostData.Split(char.Parse("*_/"));
+            string[] hostDataSplit = hostData.Split(char.Parse("_"));
             string hostUsername = hostDataSplit[0];
             string hostEmojiID = hostDataSplit[1];
 
@@ -85,7 +85,7 @@ public class ClientUDP : MonoBehaviour
                 if (playerManager.emojiUpdated)
                 {
                     // Send data
-                    dataSent = Encoding.Default.GetBytes(username + "*_/" + playerManager.FindPlayer(username).emojiID);
+                    dataSent = Encoding.Default.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
                     recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
                     playerManager.emojiUpdated = false;
@@ -119,7 +119,7 @@ public class ClientUDP : MonoBehaviour
                 // Receive new dta
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = data.Split(char.Parse("*_/"));
+                string[] dataSplit = data.Split(char.Parse("_"));
                 clientUsername = dataSplit[0];
                 clientEmojiID = dataSplit[1];
 

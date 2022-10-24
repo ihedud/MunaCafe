@@ -78,7 +78,7 @@ public class HostUDP : MonoBehaviour
                     // Receive data
                     recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                    string[] dataSplit = data.Split(char.Parse("*_/"));
+                    string[] dataSplit = data.Split(char.Parse("_"));
                     string clientUsername = dataSplit[0];
                     Debug.Log(clientUsername + " wants to connect...");
 
@@ -95,7 +95,7 @@ public class HostUDP : MonoBehaviour
                 }
 
                 // Send data
-                dataSent = Encoding.ASCII.GetBytes(username + "*_/" + playerManager.FindPlayer(username).emojiID);
+                dataSent = Encoding.ASCII.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
                 newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
             }
             else
@@ -111,7 +111,7 @@ public class HostUDP : MonoBehaviour
                     for (int i = 0; i < remotes.Count; i++)
                     {
                         byte[] dataSentHost = new byte[1024];
-                        dataSentHost = Encoding.Default.GetBytes(username + "*_/" + playerManager.FindPlayer(username).emojiID);
+                        dataSentHost = Encoding.Default.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
                         newSocket.SendTo(dataSentHost, dataSentHost.Length, SocketFlags.None, remotes[i]);
 
                         playerManager.hostUpdated = false;
@@ -148,7 +148,7 @@ public class HostUDP : MonoBehaviour
                     // Receive data
                     recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                     dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                    string[] dataSplit = dataReceivedTemp.Split(char.Parse("*_/"));
+                    string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
                     string clientUsername = dataSplit[0];
                     string clientEmojiID = dataSplit[1];
 
