@@ -27,6 +27,14 @@ public class ManagePlayers : MonoBehaviour
     public bool emojiUpdated = false;
     public bool emojiIsUpdated = false;
 
+    private void Awake()
+    {
+        for(int i = 0; i < players.Count; i++)
+        {
+            players[i].emojiID = 7;
+        }
+    }
+
     public void ConnectPlayer(string username, int playerNumber)
     {
         updatePlayers = true;
