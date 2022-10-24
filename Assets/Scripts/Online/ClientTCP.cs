@@ -9,7 +9,7 @@ using System.Text;
 
 public class ClientTCP : MonoBehaviour
 {
-    [SerializeField] private string ipAddress = "127.0.0.1";
+    [SerializeField] private string ipAddress;
     [SerializeField] private int port = 9050;
 
     private int recv;
