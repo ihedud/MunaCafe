@@ -39,6 +39,8 @@ public class HostUDP : MonoBehaviour
     private Thread newUserThread;
     private List<EndPoint> remotes = new List<EndPoint>();
 
+    public object myLock = new object();
+
     private void Awake()
     {
         emojiID = -1;
@@ -243,6 +245,7 @@ public class HostUDP : MonoBehaviour
                             byte[] dataSent2 = new byte[1024];
                             dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
                             newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
+
                         }
                     }
                 }
