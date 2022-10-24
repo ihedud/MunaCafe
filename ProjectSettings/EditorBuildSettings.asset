@@ -8,16 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UDP/UDP_JoinGame.unity
     guid: 54fd6f1a7dac4ef40b190af170f909f1
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/UDP/UDP_NewGame.unity
     guid: d92d055c6e644994fb3c93bec0babe4a
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TCP/TCP_JoinGame.unity
     guid: 52758d353ea33194c99e0ace638d4540
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TCP/TCP_NewGame.unity
     guid: 7edf902b5885e9043a054ec439d103ff
   m_configObjects: {}

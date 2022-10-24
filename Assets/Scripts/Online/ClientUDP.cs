@@ -32,6 +32,11 @@ public class ClientUDP : MonoBehaviour
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
+    private Thread emojiThread;
+
+    string clientUsername;
+    string clientEmojiID;
+
     private void Awake()
     {
         emojiID = -1;
@@ -73,18 +78,13 @@ public class ClientUDP : MonoBehaviour
                     playerManager.emojiUpdated = false;
                 }
 
-                // Receive New Data
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = data.Split(char.Parse("_"));
-                string clientUsername = dataSplit[0];
-                string clientEmojiID = dataSplit[1];
 
-                if (clientUsername != username && int.Parse(clientEmojiID) > -1)
-                    playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
+                // Initialize Thread
+                emojiThread = new Thread(ReceivingEmoji);
+                emojiThread.Start();
 
                 Debug.Log(clientUsername + " has joined the server!");
-                
+
                 if (clientUsername != hostUsername && clientUsername != username)
                 {
                     playerCount++;
@@ -99,6 +99,19 @@ public class ClientUDP : MonoBehaviour
             myThread.Abort();
             newSocket.Close();
         }
+    }
+
+    private void ReceivingEmoji()
+    {
+        // Receive New Data
+        recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+        string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+        string[] dataSplit = data.Split(char.Parse("_"));
+        clientUsername = dataSplit[0];
+        clientEmojiID = dataSplit[1];
+
+        if (clientUsername != username && int.Parse(clientEmojiID) > -1)
+            playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
     }
 
     public void Initialize()
@@ -123,6 +136,7 @@ public class ClientUDP : MonoBehaviour
         try
         {
             myThread.Abort();
+            emojiThread.Abort();
             newSocket.Close();
         }
         catch (Exception e)
