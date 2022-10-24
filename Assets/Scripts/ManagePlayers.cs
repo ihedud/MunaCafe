@@ -25,6 +25,7 @@ public class ManagePlayers : MonoBehaviour
     public bool playerUpdated = false;
     public bool hostUpdated = false;
     public bool emojiUpdated = false;
+    public bool emojiIsUpdated = false;
 
     public void ConnectPlayer(string username, int playerNumber)
     {
@@ -40,11 +41,11 @@ public class ManagePlayers : MonoBehaviour
         showEmoji = true;
         playerUpdated = true;
         emojiUpdated = true;
+        emojiIsUpdated = true;
 
         FindPlayer(username).displayingEmoji = true;
         FindPlayer(username).emojiID = emojiID;
 
-        UpdateEmoji();
     }
 
     public Player FindPlayer(string username)
@@ -73,6 +74,12 @@ public class ManagePlayers : MonoBehaviour
 
     private void Update()
     {
+        if(emojiIsUpdated)
+        {
+            UpdateEmoji();
+            emojiIsUpdated = false;
+        }
+
         if (!updatePlayers)
             return;
 
