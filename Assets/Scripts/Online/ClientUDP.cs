@@ -73,7 +73,6 @@ public class ClientUDP : MonoBehaviour
             string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
             string[] hostDataSplit = hostData.Split(char.Parse("_"));
             string hostUsername = hostDataSplit[0];
-            string hostEmojiID = hostDataSplit[1];
 
             // Adding host and client to lobby
             playerManager.ConnectPlayer(hostUsername, playerCount);

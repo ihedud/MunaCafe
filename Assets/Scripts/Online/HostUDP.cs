@@ -85,9 +85,12 @@ public class HostUDP : MonoBehaviour
                     remotes.Add(remote);
 
                     // Adding client to lobby
-                    playerCount++;
-                    playerManager.ConnectPlayer(clientUsername, playerCount);
-                    Debug.Log(clientUsername + " has joined the server!");
+                    if(playerCount < 2)
+                    {
+                        playerCount++;
+                        playerManager.ConnectPlayer(clientUsername, playerCount);
+                        Debug.Log(clientUsername + " has joined the server!");
+                    }
                 }
                 catch (Exception e)
                 {
