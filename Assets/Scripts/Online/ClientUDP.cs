@@ -17,8 +17,6 @@ public class ClientUDP : MonoBehaviour
     [SerializeField] private GameObject usernameInputField;
     [SerializeField] private ManagePlayers playerManager;
 
-    public int emojiID = -1;
-
     private string serverIP;
     private string username;
     private int playerCount = 0;
@@ -38,10 +36,6 @@ public class ClientUDP : MonoBehaviour
     string clientUsername;
     string clientEmojiID;
 
-    private void Awake()
-    {
-        emojiID = -1;
-    }
     private void ClientConnection()
     {
         try
