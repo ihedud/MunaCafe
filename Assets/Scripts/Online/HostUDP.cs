@@ -87,7 +87,9 @@ public class HostUDP : MonoBehaviour
                     // Send Data To All Clients From Host
                     for (int i = 0; i < remotes.Count; i++)
                     {
-                        newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remotes[i]);
+                        byte[] dataSentHost = new byte[1024];
+                        dataSentHost = Encoding.Default.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
+                        newSocket.SendTo(dataSentHost, dataSentHost.Length, SocketFlags.None, remotes[i]);
 
                         playerManager.hostUpdated = false;
                     }
