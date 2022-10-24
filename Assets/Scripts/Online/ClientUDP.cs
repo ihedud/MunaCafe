@@ -36,8 +36,6 @@ public class ClientUDP : MonoBehaviour
     string clientUsername;
     string clientEmojiID;
 
-    public object myLock = new object();
-
     public void Initialize()
     {
         // Get data from session
@@ -71,7 +69,6 @@ public class ClientUDP : MonoBehaviour
 
             // Receive host data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-            Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
             string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
             string[] hostDataSplit = hostData.Split(char.Parse("_"));
             string hostUsername = hostDataSplit[0];
@@ -111,11 +108,7 @@ public class ClientUDP : MonoBehaviour
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 string[] dataSplit = data.Split(char.Parse("_"));
-                
-                lock(myLock)
-                {
-                    clientUsername = dataSplit[0];
-                }
+                clientUsername = dataSplit[0];
                 clientEmojiID = dataSplit[1];
 
                 if (clientUsername != username && int.Parse(clientEmojiID) < 7)

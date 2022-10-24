@@ -69,12 +69,12 @@ public class HostUDP : MonoBehaviour
 
         while (!closed)
         {
-            Debug.Log("Waiting for clients...");
-
             if (!remotes.Contains(remote))
             {
                 try
                 {
+                    Debug.Log("Waiting for clients...");
+
                     // Receive data
                     recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
