@@ -52,7 +52,7 @@ public class ClientUDP : MonoBehaviour
             remote = (EndPoint)host;
 
             // Send Data
-            dataSent = Encoding.Default.GetBytes(username + "_" + "-1");
+            dataSent = Encoding.Default.GetBytes(username + "_" + "0");
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
             // Receive Host Data
@@ -110,7 +110,7 @@ public class ClientUDP : MonoBehaviour
         clientUsername = dataSplit[0];
         clientEmojiID = dataSplit[1];
 
-        if (clientUsername != username && int.Parse(clientEmojiID) > -1)
+        if (clientUsername != username && int.Parse(clientEmojiID) > 0)
             playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
     }
 
