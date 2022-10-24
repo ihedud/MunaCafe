@@ -22,6 +22,17 @@ public class HostTCP : MonoBehaviour
     private Socket clientSocket;
     private Thread myThread;
 
+    public void Initialize()
+    {
+        // Initialize socket
+        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        // Initialize thread
+        myThread = new Thread(HostConnection);
+        closed = false;
+        myThread.Start();
+    }
+
     private void HostConnection()
     {
         client = new IPEndPoint(IPAddress.Any, port);
@@ -30,30 +41,20 @@ public class HostTCP : MonoBehaviour
 
         while (!closed)
         {
-            clientSocket = newSocket.Accept();
             Debug.Log("Starting Thread");
             Debug.Log("Waiting for a client...");
 
-            // Receive Data
+            clientSocket = newSocket.Accept();
+
+            // Receive data
             recv = clientSocket.Receive(dataReceived);
             Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
 
-            // Send Data
+            // Send data
             message = "Welcome to my test TCP server!";
             dataSent = Encoding.Default.GetBytes(message);
             clientSocket.Send(dataSent, dataSent.Length, SocketFlags.None);
         }
-    }
-
-    private void Start()
-    {
-        // Initialize Socket
-        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-        // Initialize Thread
-        myThread = new Thread(HostConnection);
-        closed = false;
-        myThread.Start();
     }
 
     private void OnDisable()

@@ -6,11 +6,14 @@ using System.Threading;
 using System;
 using System.Net;
 using System.Text;
+using TMPro;
 
 public class ClientTCP : MonoBehaviour
 {
-    [SerializeField] private string ipAddress = "127.0.0.1";
+    [SerializeField] private GameObject serverNameInputField;
     [SerializeField] private int port = 9050;
+
+    private string ipAddress;
 
     private int recv;
     private string message;
@@ -21,6 +24,19 @@ public class ClientTCP : MonoBehaviour
     private Socket newSocket;
     private Thread myThread;
 
+    public void Initialize()
+    {
+        // Get data from session
+        ipAddress = serverNameInputField.GetComponent<TMP_InputField>().text;
+
+        // Initialize socket
+        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+        // Initialize thread
+        myThread = new Thread(ClientConnection);
+        myThread.Start();
+    }
+
     private void ClientConnection()
     {
         Debug.LogWarning("Starting Thread");
@@ -29,24 +45,14 @@ public class ClientTCP : MonoBehaviour
         host = new IPEndPoint(IPAddress.Parse(ipAddress), port);
         newSocket.Connect(host);
 
-        // Send Data
+        // Send data
         message = "Hi, I want to connect!";
         dataSent = Encoding.Default.GetBytes(message);
         newSocket.Send(dataSent, dataSent.Length, SocketFlags.None);
 
-        // Receive Data
+        // Receive data
         recv = newSocket.Receive(dataReceived);
         Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
-    }
-
-    private void Start()
-    {
-        // Initialize Socket
-        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        
-        // Initialize Thread
-        myThread = new Thread(ClientConnection);
-        myThread.Start();
     }
 
     private void OnDisable()
