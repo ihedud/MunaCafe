@@ -14,7 +14,7 @@ public class ManagePlayers : MonoBehaviour
         [HideInInspector] public string username;
         [HideInInspector] public bool connected = false;
         [HideInInspector] public bool displayingEmoji = false;
-        [HideInInspector] public int emojiID;
+        [HideInInspector] public int emojiID = -1;
     }
 
     [SerializeField] private List<Sprite> sprites = new List<Sprite>();
