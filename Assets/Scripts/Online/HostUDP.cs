@@ -28,11 +28,13 @@ public class HostUDP : MonoBehaviour
     private byte[] dataReceived = new byte[1024];
     private string dataReceivedTemp;
     private bool closed = true;
+    private bool startReceivingEmoji = false;
 
     private IPEndPoint client;
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
+    private Thread emojiThread;
     private List<EndPoint> remotes = new List<EndPoint>();
     //private static PlayerToByte playerToByte;
 
@@ -75,19 +77,7 @@ public class HostUDP : MonoBehaviour
             }
             else
             {
-                // Receive Data
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
-                string clientUsername = dataSplit[0];
-                string clientEmojiID = dataSplit[1];
-
-                if (clientUsername != username && int.Parse(clientEmojiID) > -1)
-                    playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
-
-                Debug.Log(clientUsername + " is sending an emoji...");
-
-                playerManager.playerUpdated = true;
+                startReceivingEmoji = true;
             }
 
             if (playerManager.playerUpdated && remotes.Count > 0)
@@ -121,6 +111,29 @@ public class HostUDP : MonoBehaviour
         }
     }
 
+    private void ReceivingEmoji()
+    {
+        while(!closed)
+        {
+            if(startReceivingEmoji)
+            {
+                // Receive Data
+                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
+                string clientUsername = dataSplit[0];
+                string clientEmojiID = dataSplit[1];
+
+                if (clientUsername != username && int.Parse(clientEmojiID) > -1)
+                    playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
+
+                Debug.Log(clientUsername + " is sending an emoji...");
+
+                playerManager.playerUpdated = true;
+            }
+        }
+    }
+
     public void Initializing()
     {
         // Get Data From Session
@@ -136,11 +149,16 @@ public class HostUDP : MonoBehaviour
         closed = false;
         myThread = new Thread(HostConnection);
         myThread.Start();
+
+        // Emoji Listen
+        emojiThread = new Thread(ReceivingEmoji);
+        emojiThread.Start();
     }
 
     private void OnDisable()
     {
         closed = true;
+        startReceivingEmoji = false;
 
         try
         {
