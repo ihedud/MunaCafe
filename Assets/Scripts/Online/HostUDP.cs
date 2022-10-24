@@ -124,15 +124,15 @@ public class HostUDP : MonoBehaviour
                 {
                     // Third player, useful for future deliveries
                     // Send data to all clients from other clients
-                    if (dataReceivedTemp != null)
-                    {
-                        for (int i = 0; i < remotes.Count; i++)
-                        {
-                            byte[] dataSent2 = new byte[1024];
-                            dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
-                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
-                        }
-                    }
+                    //if (dataReceivedTemp != null)
+                    //{
+                    //    for (int i = 0; i < remotes.Count; i++)
+                    //    {
+                    //        byte[] dataSent2 = new byte[1024];
+                    //        dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
+                    //        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
+                    //    }
+                    //}
                 }
                 
                 playerManager.playerUpdated = false;

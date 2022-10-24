@@ -36,6 +36,8 @@ public class ClientUDP : MonoBehaviour
     string clientUsername;
     string clientEmojiID;
 
+    public object myLock = new object();
+
     public void Initialize()
     {
         // Get data from session
@@ -91,15 +93,15 @@ public class ClientUDP : MonoBehaviour
                 }
 
                 // Third player, useful for future deliveries
-                if (clientUsername != null)
-                {
-                    if (clientUsername != hostUsername && clientUsername != username)
-                    {
-                        playerCount++;
-                        playerManager.ConnectPlayer(clientUsername, playerCount);
-                        Debug.Log(clientUsername + " has joined the server!");
-                    }
-                }
+                //if (clientUsername != null)
+                //{
+                //    if (clientUsername != hostUsername && clientUsername != username)
+                //    {
+                //        playerCount++;
+                //        playerManager.ConnectPlayer(clientUsername, playerCount);
+                //        Debug.Log(clientUsername + " has joined the server!");
+                //    }
+                //}
                 startReceivingEmoji = true;
             }
         }
@@ -119,7 +121,11 @@ public class ClientUDP : MonoBehaviour
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 string[] dataSplit = data.Split(char.Parse("_"));
-                clientUsername = dataSplit[0];
+                
+                lock(myLock)
+                {
+                    clientUsername = dataSplit[0];
+                }
                 clientEmojiID = dataSplit[1];
 
                 if (clientUsername != username && int.Parse(clientEmojiID) < 7)
