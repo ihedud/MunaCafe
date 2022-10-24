@@ -163,7 +163,7 @@ public class HostUDP : MonoBehaviour
                 }
                 else
                 {
-                    // Send Data To All Clients From Other Clients
+                    // Send data to all clients from other clients
                     if (dataReceivedTemp != null)
                     {
                         for (int i = 0; i < remotes.Count; i++)

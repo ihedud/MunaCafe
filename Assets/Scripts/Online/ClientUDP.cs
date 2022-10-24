@@ -36,58 +36,78 @@ public class ClientUDP : MonoBehaviour
     string clientUsername;
     string clientEmojiID;
 
+    public void Initialize()
+    {
+        // Get data from session
+        serverIP = serverIPInputField.GetComponent<TMP_InputField>().text;
+        username = usernameInputField.GetComponent<TMP_InputField>().text;
+
+        // Initialize socket
+        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+        // Initialize thread
+        closed = false;
+        myThread = new Thread(ClientConnection);
+        myThread.Start();
+
+        // Emoji listen
+        emojiThread = new Thread(ReceivingEmoji);
+        emojiThread.Start();
+    }
+
     private void ClientConnection()
     {
         try
         {
-            Debug.Log("Starting Thread");
-            Debug.Log("Sending Message");
-
             host = new IPEndPoint(IPAddress.Parse(serverIP), port);
             remote = (EndPoint)host;
 
-            // Send Data
+            // Send data with no initial emoji
             dataSent = Encoding.Default.GetBytes(username + "_" + "7");
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
-            // Receive Host Data
+            // Receive host data
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             Debug.Log(Encoding.ASCII.GetString(dataReceived, 0, recv));
+
             string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
             string[] hostDataSplit = hostData.Split(char.Parse("_"));
             string hostUsername = hostDataSplit[0];
             string hostEmojiID = hostDataSplit[1];
 
+            // Adding host and client to the lobby
             playerManager.ConnectPlayer(hostUsername, playerCount);
             playerCount++;
             playerManager.ConnectPlayer(username, playerCount);
+
+            startReceivingEmoji = true;
 
             while (!closed)
             {
                 if (playerManager.emojiUpdated)
                 {
-                    // Send Data
+                    // Send data
                     dataSent = Encoding.Default.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
                     recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
                     playerManager.emojiUpdated = false;
                 }
 
-                Debug.Log(clientUsername + " has joined the server!");
                 if (clientUsername != null)
                 {
                     if (clientUsername != hostUsername && clientUsername != username)
                     {
+                        Debug.Log(clientUsername + " has joined the server!");
+
                         playerCount++;
                         playerManager.ConnectPlayer(clientUsername, playerCount);
                     }
                 }
-                startReceivingEmoji = true;
             }
         }
-        catch
+        catch (Exception e)
         {
-            Debug.Log("Server is not open yet.");
+            Debug.Log("Server is not open yet. Error: " + e.Message);
 
             myThread.Abort();
             newSocket.Close();
@@ -100,7 +120,7 @@ public class ClientUDP : MonoBehaviour
         {
             if(startReceivingEmoji)
             {
-                // Receive New Data
+                // Receive new data
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 string[] dataSplit = data.Split(char.Parse("_"));
@@ -111,25 +131,6 @@ public class ClientUDP : MonoBehaviour
                     playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
             }
         }
-    }
-
-    public void Initialize()
-    {
-        // Get Data From Session
-        serverIP = serverIPInputField.GetComponent<TMP_InputField>().text;
-        username = usernameInputField.GetComponent<TMP_InputField>().text;
-
-        // Initialize Socket
-        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-        // Initialize Thread
-        closed = false;
-        myThread = new Thread(ClientConnection);
-        myThread.Start();
-
-        // Emoji Listen
-        emojiThread = new Thread(ReceivingEmoji);
-        emojiThread.Start();
     }
 
     private void OnDisable()
