@@ -77,7 +77,7 @@ public class HostUDP : MonoBehaviour
             {
                 // Receive Data
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                string dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
                 string clientUsername = dataSplit[0];
                 string clientEmojiID = dataSplit[1];
@@ -105,11 +105,14 @@ public class HostUDP : MonoBehaviour
                 else
                 {
                     // Send Data To All Clients From Other Clients
-                    for (int i = 0; i < remotes.Count; i++)
+                    if (dataReceivedTemp != null)
                     {
-                        byte[] dataSent2 = new byte[1024];
-                        dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
-                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
+                        for (int i = 0; i < remotes.Count; i++)
+                        {
+                            byte[] dataSent2 = new byte[1024];
+                            dataSent2 = Encoding.Default.GetBytes(dataReceivedTemp);
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remotes[i]);
+                        }
                     }
                 }
                 
