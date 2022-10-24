@@ -58,18 +58,25 @@ public class HostUDP : MonoBehaviour
 
             if (!remotes.Contains(remote))
             {
-                // Receive Data
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = data.Split(char.Parse("_"));
-                string clientUsername = dataSplit[0];
-                string clientEmojiID = dataSplit[1]; // -1
-                Debug.Log(clientUsername + " wants to connect...");
+                try
+                {
+                    // Receive Data
+                    recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                    string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                    string[] dataSplit = data.Split(char.Parse("_"));
+                    string clientUsername = dataSplit[0];
+                    string clientEmojiID = dataSplit[1]; // -1
+                    Debug.Log(clientUsername + " wants to connect...");
 
-                playerCount++;
-                remotes.Add(remote);
-                playerManager.ConnectPlayer(clientUsername, playerCount);
-                Debug.Log(clientUsername + " has joined the server!");
+                    playerCount++;
+                    remotes.Add(remote);
+                    playerManager.ConnectPlayer(clientUsername, playerCount);
+                    Debug.Log(clientUsername + " has joined the server!");
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
 
                 // Send Data
                 dataSent = Encoding.ASCII.GetBytes(/*serverName + "_" + */username + "_" + playerManager.FindPlayer(username).emojiID);
@@ -119,19 +126,26 @@ public class HostUDP : MonoBehaviour
         {
             if(startReceivingEmoji)
             {
-                // Receive Data
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
-                string clientUsername = dataSplit[0];
-                string clientEmojiID = dataSplit[1];
+                try
+                {
+                    // Receive Data
+                    recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                    dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                    string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
+                    string clientUsername = dataSplit[0];
+                    string clientEmojiID = dataSplit[1];
 
-                if (clientUsername != username && int.Parse(clientEmojiID) > -1)
-                    playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
+                    if (clientUsername != username && int.Parse(clientEmojiID) > -1)
+                        playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
 
-                Debug.Log(clientUsername + " is sending an emoji...");
+                    Debug.Log(clientUsername + " is sending an emoji...");
 
-                playerManager.playerUpdated = true;
+                    playerManager.playerUpdated = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
         }
     }

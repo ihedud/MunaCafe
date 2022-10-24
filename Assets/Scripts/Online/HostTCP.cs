@@ -30,9 +30,10 @@ public class HostTCP : MonoBehaviour
 
         while (!closed)
         {
-            clientSocket = newSocket.Accept();
             Debug.Log("Starting Thread");
             Debug.Log("Waiting for a client...");
+
+            clientSocket = newSocket.Accept();
 
             // Receive Data
             recv = clientSocket.Receive(dataReceived);

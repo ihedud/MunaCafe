@@ -91,9 +91,9 @@ public class ClientUDP : MonoBehaviour
                 startReceivingEmoji = true;
             }
         }
-        catch
+        catch (Exception e)
         {
-            Debug.Log("Server is not open yet.");
+            Debug.Log("Server is not open yet. Error: " + e.Message);
 
             myThread.Abort();
             newSocket.Close();
