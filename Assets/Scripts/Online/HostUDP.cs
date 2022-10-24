@@ -17,9 +17,6 @@ public class HostUDP : MonoBehaviour
     [SerializeField] private GameObject usernameInputField;
     [SerializeField] private ManagePlayers playerManager;
 
-    public int emojiID = -1;
-
-    private string serverName;
     private string username;
     private int playerCount = 0;
 
@@ -35,12 +32,30 @@ public class HostUDP : MonoBehaviour
     private Socket newSocket;
     private Thread myThread;
     private Thread emojiThread;
-    private List<EndPoint> remotes = new List<EndPoint>();
-    //private static PlayerToByte playerToByte;
 
-    private void Awake()
+    private List<EndPoint> remotes = new List<EndPoint>();
+
+    public void Initializing()
     {
-        emojiID = -1;
+        // Get data from session
+        username = usernameInputField.GetComponent<TMP_InputField>().text;
+
+        // Adding host to lobby
+        playerManager.ConnectPlayer(username, playerCount);
+        playerManager.hostUpdated = true;
+
+        // Initialize socket
+        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+        closed = false;
+
+        // Initialize thread
+        myThread = new Thread(HostConnection);
+        myThread.Start();
+
+        // Emoji thread
+        emojiThread = new Thread(ReceivingEmoji);
+        emojiThread.Start();
     }
 
     private void HostConnection()
@@ -60,16 +75,17 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
-                    // Receive Data
+                    // Receive data
                     recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                    string[] dataSplit = data.Split(char.Parse("_"));
+                    string[] dataSplit = data.Split(char.Parse("*_/"));
                     string clientUsername = dataSplit[0];
-                    string clientEmojiID = dataSplit[1]; // -1
                     Debug.Log(clientUsername + " wants to connect...");
 
-                    playerCount++;
                     remotes.Add(remote);
+
+                    // Adding client to lobby
+                    playerCount++;
                     playerManager.ConnectPlayer(clientUsername, playerCount);
                     Debug.Log(clientUsername + " has joined the server!");
                 }
@@ -78,8 +94,8 @@ public class HostUDP : MonoBehaviour
                     Debug.Log(e.Message);
                 }
 
-                // Send Data
-                dataSent = Encoding.ASCII.GetBytes(/*serverName + "_" + */username + "_" + playerManager.FindPlayer(username).emojiID);
+                // Send data
+                dataSent = Encoding.ASCII.GetBytes(username + "*_/" + playerManager.FindPlayer(username).emojiID);
                 newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
             }
             else
@@ -91,11 +107,11 @@ public class HostUDP : MonoBehaviour
             {
                 if (playerManager.hostUpdated)
                 {
-                    // Send Data To All Clients From Host
+                    // Send data to all clients from host
                     for (int i = 0; i < remotes.Count; i++)
                     {
                         byte[] dataSentHost = new byte[1024];
-                        dataSentHost = Encoding.Default.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
+                        dataSentHost = Encoding.Default.GetBytes(username + "*_/" + playerManager.FindPlayer(username).emojiID);
                         newSocket.SendTo(dataSentHost, dataSentHost.Length, SocketFlags.None, remotes[i]);
 
                         playerManager.hostUpdated = false;
@@ -103,7 +119,8 @@ public class HostUDP : MonoBehaviour
                 }
                 else
                 {
-                    // Send Data To All Clients From Other Clients
+                    // Third player, useful for future deliveries
+                    // Send data to all clients from other clients
                     if (dataReceivedTemp != null)
                     {
                         for (int i = 0; i < remotes.Count; i++)
@@ -128,10 +145,10 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
-                    // Receive Data
+                    // Receive data
                     recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                     dataReceivedTemp = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                    string[] dataSplit = dataReceivedTemp.Split(char.Parse("_"));
+                    string[] dataSplit = dataReceivedTemp.Split(char.Parse("*_/"));
                     string clientUsername = dataSplit[0];
                     string clientEmojiID = dataSplit[1];
 
@@ -148,27 +165,6 @@ public class HostUDP : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void Initializing()
-    {
-        // Get Data From Session
-        serverName = serverNameInputField.GetComponent<TMP_InputField>().text;
-        username = usernameInputField.GetComponent<TMP_InputField>().text;
-        playerManager.ConnectPlayer(username, playerCount);
-        playerManager.hostUpdated = true;
-
-        // Initialize Socket
-        newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-        // Initialize Thread
-        closed = false;
-        myThread = new Thread(HostConnection);
-        myThread.Start();
-
-        // Emoji Listen
-        emojiThread = new Thread(ReceivingEmoji);
-        emojiThread.Start();
     }
 
     private void OnDisable()
