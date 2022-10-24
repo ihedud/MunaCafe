@@ -80,8 +80,6 @@ public class ClientUDP : MonoBehaviour
             playerCount++;
             playerManager.ConnectPlayer(username, playerCount);
 
-            startReceivingEmoji = true;
-
             while (!closed)
             {
                 if (playerManager.emojiUpdated)
@@ -103,6 +101,8 @@ public class ClientUDP : MonoBehaviour
                         playerManager.ConnectPlayer(clientUsername, playerCount);
                     }
                 }
+
+                startReceivingEmoji = true;
             }
         }
         catch (Exception e)
