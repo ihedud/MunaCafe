@@ -92,16 +92,6 @@ public class ClientUDP : MonoBehaviour
                     playerManager.emojiUpdated = false;
                 }
 
-                // Third player, useful for future deliveries
-                //if (clientUsername != null)
-                //{
-                //    if (clientUsername != hostUsername && clientUsername != username)
-                //    {
-                //        playerCount++;
-                //        playerManager.ConnectPlayer(clientUsername, playerCount);
-                //        Debug.Log(clientUsername + " has joined the server!");
-                //    }
-                //}
                 startReceivingEmoji = true;
             }
         }
