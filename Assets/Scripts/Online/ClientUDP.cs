@@ -80,11 +80,13 @@ public class ClientUDP : MonoBehaviour
                 }
 
                 Debug.Log(clientUsername + " has joined the server!");
-
-                if (clientUsername != hostUsername && clientUsername != username)
+                if (clientUsername != null)
                 {
-                    playerCount++;
-                    playerManager.ConnectPlayer(clientUsername, playerCount);
+                    if (clientUsername != hostUsername && clientUsername != username)
+                    {
+                        playerCount++;
+                        playerManager.ConnectPlayer(clientUsername, playerCount);
+                    }
                 }
                 startReceivingEmoji = true;
             }
