@@ -30,6 +30,8 @@ public class HostUDP : MonoBehaviour
     private Socket newSocket;
     private Thread myThread;
 
+    [SerializeField] private GameObject playButton;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -82,6 +84,8 @@ public class HostUDP : MonoBehaviour
                     playerCount++;
                     playerManager.ConnectPlayer(clientUsername, playerCount);
                     Debug.Log(clientUsername + " has joined the server!");
+
+                    playButton.SetActive(true);
                 }
             }
             catch (Exception e)
