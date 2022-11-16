@@ -20,7 +20,6 @@ public class ClientUDP : MonoBehaviour
     private string serverIP;
     private string username;
     private int playerCount = 0;
-    private bool startReceivingEmoji = false;
 
     private int recv;
     private byte[] dataSent = new byte[1024];
@@ -32,9 +31,6 @@ public class ClientUDP : MonoBehaviour
     private Socket newSocket;
     private Thread myThread;
     private Thread emojiThread;
-
-    string clientUsername;
-    string clientEmojiID;
 
     private void Awake()
     {
@@ -55,10 +51,6 @@ public class ClientUDP : MonoBehaviour
         // Initialize thread
         myThread = new Thread(ClientConnection);
         myThread.Start();
-
-        // Emoji thread
-        emojiThread = new Thread(ReceivingEmoji);
-        emojiThread.Start();
     }
 
     private void ClientConnection()
@@ -82,20 +74,6 @@ public class ClientUDP : MonoBehaviour
             playerManager.ConnectPlayer(hostUsername, playerCount);
             playerCount++;
             playerManager.ConnectPlayer(username, playerCount);
-
-            while (!closed)
-            {
-                if (playerManager.emojiUpdated)
-                {
-                    // Send data
-                    dataSent = Encoding.Default.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
-                    recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
-
-                    playerManager.emojiUpdated = false;
-                }
-
-                startReceivingEmoji = true;
-            }
         }
         catch (Exception e)
         {
@@ -103,28 +81,9 @@ public class ClientUDP : MonoBehaviour
         }
     }
 
-    private void ReceivingEmoji()
-    {
-        while(!closed)
-        {
-            if(startReceivingEmoji)
-            {
-                // Receive new dta
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = data.Split(char.Parse("_"));
-                clientUsername = dataSplit[0];
-                clientEmojiID = dataSplit[1];
-
-                if (clientUsername != username && int.Parse(clientEmojiID) < 7)
-                    playerManager.ShowEmoji(clientUsername, int.Parse(clientEmojiID));
-            }
-        }
-    }
     private void OnDisable()
     {
         closed = true;
-        startReceivingEmoji = false;
 
         try
         {
