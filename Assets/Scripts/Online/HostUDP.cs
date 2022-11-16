@@ -85,7 +85,8 @@ public class HostUDP : MonoBehaviour
                     playerManager.ConnectPlayer(clientUsername, playerCount);
                     Debug.Log(clientUsername + " has joined the server!");
 
-                    playButton.SetActive(true);
+                    if (playButton != null)
+                        playButton.SetActive(true);
                 }
             }
             catch (Exception e)
