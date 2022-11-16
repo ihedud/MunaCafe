@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TCP/TCP_NewGame.unity
     guid: 7edf902b5885e9043a054ec439d103ff
+  - enabled: 1
+    path: Assets/Scenes/Game/ClientGame.unity
+    guid: 895f573c8bc08e64e9a67d8a6e653081
+  - enabled: 1
+    path: Assets/Scenes/Game/HostGame.unity
+    guid: df62ba45ad577654399c7bec7a8793fe
   m_configObjects: {}

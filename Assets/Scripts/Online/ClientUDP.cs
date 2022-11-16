@@ -36,6 +36,11 @@ public class ClientUDP : MonoBehaviour
     string clientUsername;
     string clientEmojiID;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     public void Initialize()
     {
         // Get data from session

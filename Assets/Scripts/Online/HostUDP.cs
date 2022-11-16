@@ -35,6 +35,11 @@ public class HostUDP : MonoBehaviour
 
     private List<EndPoint> remotes = new List<EndPoint>();
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     public void Initializing()
     {
         // Get data from session

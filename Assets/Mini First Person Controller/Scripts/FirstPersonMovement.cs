@@ -15,12 +15,22 @@ public class FirstPersonMovement : MonoBehaviour
     /// <summary> Functions to override movement speed. Will use the last added override. </summary>
     public List<System.Func<float>> speedOverrides = new List<System.Func<float>>();
 
+    Player playerTemp;
+    Player player2Temp;
+
+    public GameObject player2;
+
+    JsonSerialization jsonTemp;
+
 
 
     void Awake()
     {
         // Get the rigidbody on this.
         rigidbody = GetComponent<Rigidbody>();
+        playerTemp = new Player();
+        player2Temp = new Player();
+        jsonTemp = new JsonSerialization();
     }
 
     void FixedUpdate()
@@ -40,5 +50,13 @@ public class FirstPersonMovement : MonoBehaviour
 
         // Apply movement.
         rigidbody.velocity = transform.rotation * new Vector3(targetVelocity.x, rigidbody.velocity.y, targetVelocity.y);
+
+        playerTemp.position = transform.position;
+
+        jsonTemp.JsonSerialize(playerTemp);
+
+        jsonTemp.JsonDeserialize(player2Temp);
+
+        player2.transform.position = player2Temp.position;
     }
 }
