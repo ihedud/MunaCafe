@@ -25,16 +25,19 @@ public class ClientUDP : MonoBehaviour
     private byte[] dataSent = new byte[1024];
     private byte[] dataReceived = new byte[1024];
     private bool closed = true;
+    private bool readyToListen = false;
 
     private IPEndPoint host;
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
+    private Thread listeningThread;
 
     private Information myInfo = new Information();
     private Information hostInfo = new Information();
 
     [SerializeField] private JsonSerialization json;
+    [SerializeField] private LoadScene loader;
 
     private void Awake()
     {
@@ -57,6 +60,10 @@ public class ClientUDP : MonoBehaviour
         // Initialize thread
         myThread = new Thread(ClientConnection);
         myThread.Start();
+
+        // Listening thread
+        listeningThread = new Thread(ListeningHost);
+        listeningThread.Start();
     }
 
     private void ClientConnection()
@@ -80,10 +87,33 @@ public class ClientUDP : MonoBehaviour
             playerManager.ConnectPlayer(hostUsername, playerCount);
             playerCount++;
             playerManager.ConnectPlayer(username, playerCount);
+
+            readyToListen = true;
         }
         catch (Exception e)
         {
             Debug.Log("Server is not open yet. Error: " + e.Message);
+        }
+    }
+
+    private void ListeningHost()
+    {
+        while (!closed)
+        {
+            if (readyToListen)
+            {
+                // Receive new data
+                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                hostInfo = json.JsonDeserialize(data);
+                myInfo.onPlay = hostInfo.onPlay;
+
+                if (myInfo.onPlay)
+                {
+                    myInfo.onPlay = false;
+                    loader.LoadNextScene("ClientGame");
+                }
+            }
         }
     }
 
@@ -94,6 +124,7 @@ public class ClientUDP : MonoBehaviour
         try
         {
             myThread.Abort();
+            listeningThread.Abort();
             newSocket.Close();
         }
         catch (Exception e)

@@ -49,7 +49,10 @@ public class HostUDP : MonoBehaviour
             return;
 
         if (playButton != null)
+        {
             playButton.SetActive(true);
+            readyToPlay = false;
+        }
     }
 
     public void Initializing()
@@ -133,8 +136,13 @@ public class HostUDP : MonoBehaviour
 
     public void OnPlayGame()
     {
-        dataSent = Encoding.ASCII.GetBytes(username);
+        myInfo.onPlay = true;
+
+        // Send data
+        dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+
+        myInfo.onPlay = false;
 
         loader.LoadNextScene("HostGame");
     }
