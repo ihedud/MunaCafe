@@ -66,6 +66,8 @@ public class HostUDP : MonoBehaviour
 
         closed = false;
 
+        myInfo.username = username;
+
         // Initialize thread
         myThread = new Thread(HostConnection);
         myThread.Start();
@@ -108,10 +110,9 @@ public class HostUDP : MonoBehaviour
                 Debug.Log(e.Message);
             }
 
-            //// Send data
-            //json.JsonSerialize(myInfo);
-            //dataSent = Encoding.ASCII.GetBytes(username);
-            //newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            // Send data
+            dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
+            newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
     }
 

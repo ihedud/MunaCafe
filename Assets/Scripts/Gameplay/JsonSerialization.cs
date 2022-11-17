@@ -14,15 +14,10 @@ public class Information
 
 public class JsonSerialization : MonoBehaviour
 {
-    private MemoryStream stream;
-
-    [HideInInspector] public string jsonSer;
-    [HideInInspector] public string jsonDes;
-
     public string JsonSerialize(Information info)
     {
-        jsonSer = JsonUtility.ToJson(info);
-        stream = new MemoryStream();
+        string jsonSer = JsonUtility.ToJson(info);
+        MemoryStream stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
         writer.Write(jsonSer);
         return jsonSer;
@@ -30,11 +25,14 @@ public class JsonSerialization : MonoBehaviour
 
     public Information JsonDeserialize(string jsonInfo)
     {
+        MemoryStream stream = new MemoryStream();
+        BinaryWriter writer = new BinaryWriter(stream);
+        writer.Write(jsonInfo);
         Information info = new Information();
         BinaryReader reader = new BinaryReader(stream);
         stream.Seek(0, SeekOrigin.Begin);
-        jsonDes = reader.ReadString();
-        JsonUtility.FromJsonOverwrite(jsonDes, info);
+        jsonInfo = reader.ReadString();
+        JsonUtility.FromJsonOverwrite(jsonInfo, info);
         return info;
     }
 }

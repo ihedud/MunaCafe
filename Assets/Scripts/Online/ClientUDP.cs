@@ -70,15 +70,15 @@ public class ClientUDP : MonoBehaviour
             dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
-            //// Receive host data
-            //recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-            //string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
-            //string[] hostDataSplit = hostData.Split(char.Parse("_"));
-            //string hostUsername = hostDataSplit[0];
+            // Receive host data
+            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
+            hostInfo = json.JsonDeserialize(hostData);
+            string hostUsername = hostInfo.username;
 
-            //// Adding host and client to lobby
-            //playerManager.ConnectPlayer(hostUsername, playerCount);
-            //playerCount++;
+            // Adding host and client to lobby
+            playerManager.ConnectPlayer(hostUsername, playerCount);
+            playerCount++;
             playerManager.ConnectPlayer(username, playerCount);
         }
         catch (Exception e)
