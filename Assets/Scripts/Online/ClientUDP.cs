@@ -30,7 +30,11 @@ public class ClientUDP : MonoBehaviour
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
-    private Thread emojiThread;
+
+    private Information myInfo = new Information();
+    private Information hostInfo = new Information();
+
+    [SerializeField] private JsonSerialization json;
 
     private void Awake()
     {
@@ -48,6 +52,8 @@ public class ClientUDP : MonoBehaviour
 
         closed = false;
 
+        myInfo.username = username;
+
         // Initialize thread
         myThread = new Thread(ClientConnection);
         myThread.Start();
@@ -61,18 +67,18 @@ public class ClientUDP : MonoBehaviour
             remote = (EndPoint)host;
 
             // Send data
-            dataSent = Encoding.Default.GetBytes(username + "_" + "7");
+            dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
             recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
-            // Receive host data
-            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-            string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
-            string[] hostDataSplit = hostData.Split(char.Parse("_"));
-            string hostUsername = hostDataSplit[0];
+            //// Receive host data
+            //recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            //string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
+            //string[] hostDataSplit = hostData.Split(char.Parse("_"));
+            //string hostUsername = hostDataSplit[0];
 
-            // Adding host and client to lobby
-            playerManager.ConnectPlayer(hostUsername, playerCount);
-            playerCount++;
+            //// Adding host and client to lobby
+            //playerManager.ConnectPlayer(hostUsername, playerCount);
+            //playerCount++;
             playerManager.ConnectPlayer(username, playerCount);
         }
         catch (Exception e)
@@ -88,7 +94,6 @@ public class ClientUDP : MonoBehaviour
         try
         {
             myThread.Abort();
-            emojiThread.Abort();
             newSocket.Close();
         }
         catch (Exception e)

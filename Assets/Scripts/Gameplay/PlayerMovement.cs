@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    Player playerTemp;
+    Information playerTemp;
     JsonSerialization jsonTemp;
 
     private void Awake()
     {
-        playerTemp = new Player();
+        playerTemp = new Information();
         jsonTemp = new JsonSerialization();
     }
 
     private void FixedUpdate()
     {
         jsonTemp.JsonDeserialize(playerTemp);
-        Debug.Log(playerTemp.position);
-        transform.position = new Vector3(playerTemp.position.x + 10, playerTemp.position.y, playerTemp.position.z);
+        Debug.Log(playerTemp.playerPos);
+        transform.position = new Vector3(playerTemp.playerPos.x + 10, playerTemp.playerPos.y, playerTemp.playerPos.z);
     }
 }

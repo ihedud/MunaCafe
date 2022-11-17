@@ -24,17 +24,32 @@ public class HostUDP : MonoBehaviour
     private byte[] dataSent = new byte[1024];
     private byte[] dataReceived = new byte[1024];
     private bool closed = true;
+    private bool readyToPlay = false;
 
     private IPEndPoint client;
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
 
+    private Information myInfo = new Information();
+    private Information clientInfo = new Information();
+
     [SerializeField] private GameObject playButton;
+    [SerializeField] private LoadScene loader;
+    [SerializeField] private JsonSerialization json;
 
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    private void Update()
+    {
+        if (!readyToPlay)
+            return;
+
+        if (playButton != null)
+            playButton.SetActive(true);
     }
 
     public void Initializing()
@@ -74,8 +89,8 @@ public class HostUDP : MonoBehaviour
                 // Receive data
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                string[] dataSplit = data.Split(char.Parse("_"));
-                string clientUsername = dataSplit[0];
+                clientInfo = json.JsonDeserialize(data);
+                string clientUsername = clientInfo.username;
                 Debug.Log(clientUsername + " wants to connect...");
 
                 // Adding client to lobby
@@ -85,8 +100,7 @@ public class HostUDP : MonoBehaviour
                     playerManager.ConnectPlayer(clientUsername, playerCount);
                     Debug.Log(clientUsername + " has joined the server!");
 
-                    if (playButton != null)
-                        playButton.SetActive(true);
+                    readyToPlay = true;
                 }
             }
             catch (Exception e)
@@ -94,9 +108,10 @@ public class HostUDP : MonoBehaviour
                 Debug.Log(e.Message);
             }
 
-            // Send data
-            dataSent = Encoding.ASCII.GetBytes(username + "_" + playerManager.FindPlayer(username).emojiID);
-            newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            //// Send data
+            //json.JsonSerialize(myInfo);
+            //dataSent = Encoding.ASCII.GetBytes(username);
+            //newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
     }
 
@@ -113,5 +128,13 @@ public class HostUDP : MonoBehaviour
         {
             Debug.Log(e.Message);
         }
+    }
+
+    public void OnPlayGame()
+    {
+        dataSent = Encoding.ASCII.GetBytes(username);
+        newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+
+        loader.LoadNextScene("HostGame");
     }
 }

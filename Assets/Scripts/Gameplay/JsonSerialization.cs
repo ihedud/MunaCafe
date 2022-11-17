@@ -5,9 +5,11 @@ using System.IO;
 using UnityEngine;
 
 [Serializable]
-public class Player
+public class Information
 {
-    public Vector3 position;
+    public string username = " ";
+    public bool onPlay = false;
+    public Vector3 playerPos = Vector3.zero;
 }
 
 public class JsonSerialization : MonoBehaviour
@@ -17,22 +19,22 @@ public class JsonSerialization : MonoBehaviour
     [HideInInspector] public string jsonSer;
     [HideInInspector] public string jsonDes;
 
-    public void JsonSerialize(Player player)
+    public string JsonSerialize(Information info)
     {
-        jsonSer = JsonUtility.ToJson(player);
+        jsonSer = JsonUtility.ToJson(info);
         stream = new MemoryStream();
         BinaryWriter writer = new BinaryWriter(stream);
         writer.Write(jsonSer);
+        return jsonSer;
     }
 
-    public void JsonDeserialize(Player player)
+    public Information JsonDeserialize(string jsonInfo)
     {
-        if (jsonSer != null)
-        {
-            BinaryReader reader = new BinaryReader(stream);
-            stream.Seek(0, SeekOrigin.Begin);
-            jsonDes = reader.ReadString();
-            JsonUtility.FromJsonOverwrite(jsonDes, player);
-        }
+        Information info = new Information();
+        BinaryReader reader = new BinaryReader(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+        jsonDes = reader.ReadString();
+        JsonUtility.FromJsonOverwrite(jsonDes, info);
+        return info;
     }
 }
