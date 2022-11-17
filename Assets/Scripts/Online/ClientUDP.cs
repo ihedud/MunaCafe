@@ -44,6 +44,15 @@ public class ClientUDP : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    private void Update()
+    {
+        if (myInfo.onPlay)
+        {
+            myInfo.onPlay = false;
+            loader.LoadNextScene("ClientGame");
+        }
+    }
+
     public void Initialize()
     {
         // Get data from session
@@ -107,12 +116,6 @@ public class ClientUDP : MonoBehaviour
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 hostInfo = json.JsonDeserialize(data);
                 myInfo.onPlay = hostInfo.onPlay;
-
-                if (myInfo.onPlay)
-                {
-                    myInfo.onPlay = false;
-                    loader.LoadNextScene("ClientGame");
-                }
             }
         }
     }
