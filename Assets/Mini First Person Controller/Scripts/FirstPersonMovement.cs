@@ -53,9 +53,9 @@ public class FirstPersonMovement : MonoBehaviour
 
         playerTemp.playerPos = transform.position;
 
-        jsonTemp.JsonSerialize(playerTemp);
+        //jsonTemp.JsonSerialize(playerTemp);
 
-        jsonTemp.JsonDeserialize(player2Temp);
+        //jsonTemp.JsonDeserialize(player2Temp);
 
         player2.transform.position = player2Temp.playerPos;
     }

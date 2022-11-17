@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        jsonTemp.JsonDeserialize(playerTemp);
+        //jsonTemp.JsonDeserialize(playerTemp);
         Debug.Log(playerTemp.playerPos);
         transform.position = new Vector3(playerTemp.playerPos.x + 10, playerTemp.playerPos.y, playerTemp.playerPos.z);
     }
