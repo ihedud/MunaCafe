@@ -463,10 +463,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4207293392497186}
-  - component: {fileID: 136877096903737240}
   - component: {fileID: 54063890643546284}
   - component: {fileID: 114963311885979670}
   - component: {fileID: 114762042097486276}
+  - component: {fileID: 4800154379003533086}
   m_Layer: 0
   m_Name: First Person Controller
   m_TagString: Untagged
@@ -492,20 +492,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &136877096903737240
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773623360729482}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!54 &54063890643546284
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -538,6 +524,7 @@ MonoBehaviour:
   canRun: 1
   runSpeed: 90
   runningKey: 304
+  player2: {fileID: 0}
 --- !u!114 &114762042097486276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,7 +542,20 @@ MonoBehaviour:
   movementSpeed: 30
   headToLower: {fileID: 4490257326247362}
   crouchYHeadPosition: 1
-  colliderToLower: {fileID: 136877096903737240}
+  colliderToLower: {fileID: 0}
+--- !u!65 &4800154379003533086
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773623360729482}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.6722074, z: 1}
+  m_Center: {x: 0, y: 0.83610225, z: 0}
 --- !u!1 &1963958859065967600
 GameObject:
   m_ObjectHideFlags: 0
