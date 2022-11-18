@@ -17,11 +17,9 @@ public class JsonSerialization : MonoBehaviour
     public string JsonSerialize(Information info)
     {
         string jsonSer = JsonUtility.ToJson(info);
-        //
-        MemoryStream stream = new MemoryStream();
-        BinaryWriter writer = new BinaryWriter(stream);
-        writer.Write(jsonSer);
-        //
+        //MemoryStream stream = new MemoryStream();
+        //BinaryWriter writer = new BinaryWriter(stream);
+        //writer.Write(jsonSer);
         return jsonSer;
     }
 

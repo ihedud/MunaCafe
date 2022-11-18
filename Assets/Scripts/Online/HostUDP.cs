@@ -85,38 +85,35 @@ public class HostUDP : MonoBehaviour
 
         newSocket.Bind(client);
 
-        while (!closed)
+        try
         {
-            try
+            Debug.Log("Waiting for clients...");
+            
+            // Receive data
+            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+            string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+            clientInfo = json.JsonDeserialize(data);
+            string clientUsername = clientInfo.username;
+            Debug.Log(clientUsername + " wants to connect...");
+            
+            // Adding client to lobby
+            if(playerCount < 2)
             {
-                Debug.Log("Waiting for clients...");
+                playerCount++;
+                playerManager.ConnectPlayer(clientUsername, playerCount);
+                Debug.Log(clientUsername + " has joined the server!");
                 
-                // Receive data
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
-                clientInfo = json.JsonDeserialize(data);
-                string clientUsername = clientInfo.username;
-                Debug.Log(clientUsername + " wants to connect...");
-
-                // Adding client to lobby
-                if(playerCount < 2)
-                {
-                    playerCount++;
-                    playerManager.ConnectPlayer(clientUsername, playerCount);
-                    Debug.Log(clientUsername + " has joined the server!");
-
-                    readyToPlay = true;
-                }
+                readyToPlay = true;
             }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
-
-            // Send data
-            dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
-            newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
         }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+        }
+        
+        // Send data
+        dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
+        newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
     }
 
     private void OnDisable()
