@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class Client : MonoBehaviour
 {
+    [SerializeField] private GameObject myPlayer;
+    [SerializeField] private GameObject hostPlayer;
     private ClientUDP client;
-    //Information playerTemp;
 
     private void Awake()
     {
         client = FindObjectOfType<ClientUDP>();
-        //playerTemp = new Information();
     }
 
     private void FixedUpdate()
     {
         if (client != null)
         {
-            client.myInfo.playerPos = transform.position;
+            client.myInfo.playerPos = myPlayer.transform.position;
+            hostPlayer.transform.position = client.hostInfo.playerPos;
         }
-        //Debug.Log(playerTemp.playerPos);
-        //transform.position = new Vector3(playerTemp.playerPos.x + 10, playerTemp.playerPos.y, playerTemp.playerPos.z);
     }
 }
