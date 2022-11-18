@@ -139,10 +139,9 @@ public class HostUDP : MonoBehaviour
                 recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
                 clientInfo = json.JsonDeserialize(data);
+
                 if (clientInfo.onPlay)
-                {
                     nextScene = true;
-                }
             }
             catch (Exception e)
             {

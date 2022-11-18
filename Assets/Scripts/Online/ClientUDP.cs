@@ -118,12 +118,14 @@ public class ClientUDP : MonoBehaviour
             {
                 try
                 {
+                    // Receive new  data
                     byte[] dataReceived2 = new byte[1024];
                     recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
                     hostInfo = json.JsonDeserialize(data);
                     myInfo.onPlay = hostInfo.onPlay;
-                    nextScene = true;
+                    if (myInfo.onPlay)
+                        nextScene = true;
                 }
                 catch (Exception e) 
                 { 
@@ -141,6 +143,7 @@ public class ClientUDP : MonoBehaviour
             {
                 try
                 {
+                    // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                 }
