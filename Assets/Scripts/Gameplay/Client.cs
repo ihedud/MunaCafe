@@ -25,6 +25,7 @@ public class Client : MonoBehaviour
                 if (client.readyToListen)
                 {
                     client.myInfo.colorID = colorID;
+                    hostPlayer.GetComponent<MeshRenderer>().material = materials[client.hostInfo.colorID];
                 }
             }
             else
