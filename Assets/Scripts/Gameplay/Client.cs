@@ -29,11 +29,8 @@ public class Client : MonoBehaviour
             }
             else
             {
-                if (myPlayer != null)
-                {
-                    client.myInfo.playerPos = myPlayer.transform.position;
-                    hostPlayer.transform.position = client.hostInfo.playerPos;
-                }
+                client.myInfo.playerPos = myPlayer.transform.position;
+                hostPlayer.transform.position = client.hostInfo.playerPos;
             }
         }
     }
