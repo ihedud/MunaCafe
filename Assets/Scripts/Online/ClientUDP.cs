@@ -21,7 +21,6 @@ public class ClientUDP : MonoBehaviour
     private string username;
     private int playerCount = 0;
 
-    private int recv;
     private bool closed = true;
     private bool readyToListen = false;
     private bool nextScene = false;
@@ -89,12 +88,12 @@ public class ClientUDP : MonoBehaviour
 
             // Send data
             byte[] dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-            recv = newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
+            newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
 
             // Receive data
             byte[] dataReceived1 = new byte[1024];
-            recv = newSocket.ReceiveFrom(dataReceived1, ref remote);
-            hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, recv));
+            hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
+
             string hostUsername = hostInfo.username;
 
             // Adding host and client to lobby
@@ -120,8 +119,8 @@ public class ClientUDP : MonoBehaviour
                 {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
-                    int recv2 = newSocket.ReceiveFrom(dataReceived2, ref remote);
-                    hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, recv2));
+                    hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
+
                     if (hostInfo.onPlay)
                         nextScene = true;
                 }
@@ -143,7 +142,7 @@ public class ClientUDP : MonoBehaviour
                 {
                     // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                    recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                 }
                 catch (Exception e)
                 {

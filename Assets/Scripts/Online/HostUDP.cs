@@ -19,8 +19,6 @@ public class HostUDP : MonoBehaviour
 
     private string username;
     private int playerCount = 0;
-
-    private int recv;
     
     private bool closed = true;
     private bool readyToPlay = false;
@@ -102,8 +100,8 @@ public class HostUDP : MonoBehaviour
 
             // Receive data
             byte[] dataReceived1 = new byte[1024];
-            recv = newSocket.ReceiveFrom(dataReceived1, ref remote);
-            clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, recv));
+            clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
+
             string clientUsername = clientInfo.username;
             Debug.Log(clientUsername + " wants to connect...");
 
@@ -141,9 +139,7 @@ public class HostUDP : MonoBehaviour
                 {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
-                    recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
-                    string data = Encoding.ASCII.GetString(dataReceived2, 0, recv) + "}";
-                    clientInfo = json.JsonDeserialize(data);
+                    clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
                 }
                 catch (Exception e)
                 {
@@ -163,7 +159,7 @@ public class HostUDP : MonoBehaviour
                 {
                     // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                    recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                 }
                 catch (Exception e)
                 {
