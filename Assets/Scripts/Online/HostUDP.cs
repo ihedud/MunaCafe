@@ -130,26 +130,27 @@ public class HostUDP : MonoBehaviour
 
     private void ListeningClient()
     {
-        if (readyToListen)
-        {
-            try
-            {
-                // Receive data
-                byte[] dataReceived2 = new byte[1024];
-                recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
-                string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
-                clientInfo = json.JsonDeserialize(data);
-
-                if (clientInfo.onPlay)
-                    nextScene = true;
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-            }
-        }
         while (!closed)
         {
+
+            if (!nextScene)
+            {
+                try
+                {
+                    // Receive data
+                    byte[] dataReceived2 = new byte[1024];
+                    recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
+                    string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
+                    clientInfo = json.JsonDeserialize(data);
+
+                    if (clientInfo.onPlay)
+                        nextScene = true;
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+            }
             if (nextScene)
             {
                 try
