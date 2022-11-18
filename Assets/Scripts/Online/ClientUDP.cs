@@ -50,6 +50,7 @@ public class ClientUDP : MonoBehaviour
         {
             nextScene = false;
             loader.LoadNextScene("ClientGame");
+            myInfo.onPlay = true;
         }
     }
 
@@ -123,8 +124,7 @@ public class ClientUDP : MonoBehaviour
                     recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
                     hostInfo = json.JsonDeserialize(data);
-                    myInfo.onPlay = hostInfo.onPlay;
-                    if (myInfo.onPlay)
+                    if (hostInfo.onPlay)
                         nextScene = true;
                 }
                 catch (Exception e) 
