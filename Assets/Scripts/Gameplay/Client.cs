@@ -6,6 +6,8 @@ public class Client : MonoBehaviour
 {
     [SerializeField] private GameObject myPlayer;
     [SerializeField] private GameObject hostPlayer;
+    [SerializeField] private bool lobby = false;
+    [SerializeField] private List<Material> materials;
     private ClientUDP client;
 
     private void Awake()
@@ -17,8 +19,19 @@ public class Client : MonoBehaviour
     {
         if (client != null)
         {
-            client.myInfo.playerPos = myPlayer.transform.position;
-            hostPlayer.transform.position = client.hostInfo.playerPos;
+            if (lobby)
+            {
+                for (int i = 0; i < materials.Count; i++)
+                {
+                    if (materials[i] == myPlayer.GetComponent<MeshRenderer>().material)
+                        client.myInfo.colorID = i;
+                }
+            }
+            else
+            {
+                client.myInfo.playerPos = myPlayer.transform.position;
+                hostPlayer.transform.position = client.hostInfo.playerPos;
+            }
         }
     }
 }

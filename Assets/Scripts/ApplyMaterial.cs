@@ -6,10 +6,10 @@ public class ApplyMaterial : MonoBehaviour
 {
     [SerializeField] private int colorID = 0;
     [SerializeField] private Material material;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject uiCapsule;
 
     public void ChangeColor()
     {
-        player.GetComponent<MeshRenderer>().material = material;
+        uiCapsule.GetComponent<MeshRenderer>().material = material;
     }
 }

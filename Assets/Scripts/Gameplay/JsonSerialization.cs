@@ -10,6 +10,7 @@ public class Information
     public string username = " ";
     public bool onPlay = false;
     public Vector3 playerPos = Vector3.zero;
+    public int colorID = 0;
 }
 
 public class JsonSerialization : MonoBehaviour
