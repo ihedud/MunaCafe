@@ -21,8 +21,7 @@ public class HostUDP : MonoBehaviour
     private int playerCount = 0;
 
     private int recv;
-    private byte[] dataSent = new byte[1024];
-    private byte[] dataReceived = new byte[1024];
+    
     private bool closed = true;
     private bool readyToPlay = false;
     private bool readyToListen = false;
@@ -99,8 +98,9 @@ public class HostUDP : MonoBehaviour
         try
         {
             Debug.Log("Waiting for clients...");
-            
+
             // Receive data
+            byte[] dataReceived = new byte[1024];
             recv = newSocket.ReceiveFrom(dataReceived, ref remote);
             string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
             clientInfo = json.JsonDeserialize(data);
@@ -115,15 +115,15 @@ public class HostUDP : MonoBehaviour
                 Debug.Log(clientUsername + " has joined the server!");
                 
                 readyToPlay = true;
-                readyToListen = true;
             }
         }
         catch (Exception e)
         {
             Debug.Log(e.Message);
         }
-        
+
         // Send data
+        byte[] dataSent = new byte[1024];
         dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
     }
@@ -135,6 +135,7 @@ public class HostUDP : MonoBehaviour
             if (readyToListen)
             {
                 // Receive new data
+                byte[] dataReceived = new byte[1024];
                 recv = newSocket.ReceiveFrom(dataReceived, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
                 clientInfo = json.JsonDeserialize(data);
@@ -149,6 +150,7 @@ public class HostUDP : MonoBehaviour
             if (readyToListen)
             {
                 // Send data
+                byte[] dataSent = new byte[1024];
                 dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                 recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
             }
@@ -175,10 +177,13 @@ public class HostUDP : MonoBehaviour
         myInfo.onPlay = true;
 
         // Send data
+        byte[] dataSent = new byte[1024];
         dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
 
         myInfo.onPlay = false;
+
+        readyToListen = true;
 
         loader.LoadNextScene("HostGame");
     }
