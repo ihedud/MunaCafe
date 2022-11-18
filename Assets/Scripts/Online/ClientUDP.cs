@@ -86,14 +86,14 @@ public class ClientUDP : MonoBehaviour
             remote = (EndPoint)host;
 
             // Send data
-            byte[] dataSent = new byte[1024];
-            dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-            recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            byte[] dataSent1 = new byte[1024];
+            dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+            recv = newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
 
             // Receive host data
-            byte[] dataReceived = new byte[1024];
-            recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-            string hostData = Encoding.ASCII.GetString(dataReceived, 0, recv);
+            byte[] dataReceived1 = new byte[1024];
+            recv = newSocket.ReceiveFrom(dataReceived1, ref remote);
+            string hostData = Encoding.ASCII.GetString(dataReceived1, 0, recv);
             hostInfo = json.JsonDeserialize(hostData);
             string hostUsername = hostInfo.username;
 
@@ -117,9 +117,9 @@ public class ClientUDP : MonoBehaviour
             if (readyToListen)
             {
                 // Receive new data
-                byte[] dataReceived = new byte[1024];
-                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
-                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                byte[] dataReceived2 = new byte[1024];
+                recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
+                string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
                 hostInfo = json.JsonDeserialize(data);
                 myInfo.onPlay = hostInfo.onPlay;
             }
@@ -132,10 +132,10 @@ public class ClientUDP : MonoBehaviour
         {
             if (readyToListen)
             {
-                byte[] dataSent = new byte[1024];
                 // Send data
-                dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+                byte[] dataSent2 = new byte[1024];
+                dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
             }
         }
     }
