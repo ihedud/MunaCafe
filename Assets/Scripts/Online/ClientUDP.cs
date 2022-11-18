@@ -94,8 +94,7 @@ public class ClientUDP : MonoBehaviour
             // Receive data
             byte[] dataReceived1 = new byte[1024];
             recv = newSocket.ReceiveFrom(dataReceived1, ref remote);
-            string hostData = Encoding.ASCII.GetString(dataReceived1, 0, recv);
-            hostInfo = json.JsonDeserialize(hostData);
+            hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, recv));
             string hostUsername = hostInfo.username;
 
             // Adding host and client to lobby
@@ -122,8 +121,7 @@ public class ClientUDP : MonoBehaviour
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
-                    string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
-                    hostInfo = json.JsonDeserialize(data);
+                    hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, recv));
                     if (hostInfo.onPlay)
                         nextScene = true;
                 }
