@@ -22,7 +22,10 @@ public class Host : MonoBehaviour
         {
             if (lobby)
             {
-                clientPlayer.GetComponent<MeshRenderer>().material = materials[host.clientInfo.colorID];
+                if (host.readyToListen)
+                {
+                    clientPlayer.GetComponent<MeshRenderer>().material = materials[host.clientInfo.colorID];
+                }
             }
             else
             {

@@ -22,7 +22,7 @@ public class HostUDP : MonoBehaviour
     
     private bool closed = true;
     private bool readyToPlay = false;
-    private bool readyToListen = false;
+    public bool readyToListen = false;
 
     private IPEndPoint client;
     private EndPoint remote;

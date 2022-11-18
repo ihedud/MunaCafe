@@ -22,7 +22,7 @@ public class ClientUDP : MonoBehaviour
     private int playerCount = 0;
 
     private bool closed = true;
-    private bool readyToListen = false;
+    public bool readyToListen = false;
     private bool nextScene = false;
 
     private IPEndPoint host;

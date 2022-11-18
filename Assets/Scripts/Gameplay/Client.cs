@@ -21,10 +21,13 @@ public class Client : MonoBehaviour
         {
             if (lobby)
             {
-                for (int i = 0; i < materials.Count; i++)
+                if (client.readyToListen)
                 {
-                    if (materials[i] == myPlayer.GetComponent<MeshRenderer>().material)
-                        client.myInfo.colorID = i;
+                    for (int i = 0; i < materials.Count; i++)
+                    {
+                        if (materials[i] == myPlayer.GetComponent<MeshRenderer>().material)
+                            client.myInfo.colorID = i;
+                    }
                 }
             }
             else
