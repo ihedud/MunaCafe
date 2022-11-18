@@ -25,6 +25,7 @@ public class HostUDP : MonoBehaviour
     private bool closed = true;
     private bool readyToPlay = false;
     private bool readyToListen = false;
+    private bool nextScene = false;
 
     private IPEndPoint client;
     private EndPoint remote;
@@ -129,15 +130,41 @@ public class HostUDP : MonoBehaviour
 
     private void ListeningClient()
     {
-        while (!closed)
+        if (readyToListen)
         {
-            if (readyToListen)
+            try
             {
                 // Receive new data
                 byte[] dataReceived2 = new byte[1024];
                 recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
                 clientInfo = json.JsonDeserialize(data);
+                if (clientInfo.onPlay)
+                {
+                    nextScene = true;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+            }
+        }
+        while (!closed)
+        {
+            if (nextScene)
+            {
+                try
+                {
+                    // Receive new data
+                    byte[] dataReceived2 = new byte[1024];
+                    recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
+                    string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
+                    clientInfo = json.JsonDeserialize(data);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
         }
     }
@@ -146,11 +173,18 @@ public class HostUDP : MonoBehaviour
     {
         while (!closed)
         {
-            if (readyToListen)
+            if (nextScene)
             {
-                // Send data
-                byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                try
+                {
+                    // Send data
+                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                    recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
         }
     }
