@@ -86,8 +86,7 @@ public class ClientUDP : MonoBehaviour
             remote = (EndPoint)host;
 
             // Send data
-            byte[] dataSent1 = new byte[1024];
-            dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+            byte[] dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
             recv = newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
 
             // Receive host data
@@ -133,8 +132,7 @@ public class ClientUDP : MonoBehaviour
             if (readyToListen)
             {
                 // Send data
-                byte[] dataSent2 = new byte[1024];
-                dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                 recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
             }
         }

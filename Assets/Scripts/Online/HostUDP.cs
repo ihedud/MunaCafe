@@ -123,8 +123,7 @@ public class HostUDP : MonoBehaviour
         }
 
         // Send data
-        byte[] dataSent1 = new byte[1024];
-        dataSent1 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
+        byte[] dataSent1 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
     }
 
@@ -150,8 +149,7 @@ public class HostUDP : MonoBehaviour
             if (readyToListen)
             {
                 // Send data
-                byte[] dataSent2 = new byte[1024];
-                dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                 recv = newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
             }
         }
@@ -179,8 +177,7 @@ public class HostUDP : MonoBehaviour
         myInfo.onPlay = true;
 
         // Send data
-        byte[] dataSent3 = new byte[1024];
-        dataSent3 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
+        byte[] dataSent3 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
 
         myInfo.onPlay = false;
