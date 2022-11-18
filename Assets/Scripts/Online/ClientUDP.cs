@@ -32,6 +32,7 @@ public class ClientUDP : MonoBehaviour
     private Socket newSocket;
     private Thread myThread;
     private Thread listeningThread;
+    private Thread peanutThread;
 
     private Information myInfo = new Information();
     private Information hostInfo = new Information();
@@ -73,6 +74,10 @@ public class ClientUDP : MonoBehaviour
         // Listening thread
         listeningThread = new Thread(ListeningHost);
         listeningThread.Start();
+
+        // Peanut thread
+        peanutThread = new Thread(Peanut);
+        peanutThread.Start();
     }
 
     private void ClientConnection()
@@ -120,6 +125,19 @@ public class ClientUDP : MonoBehaviour
         }
     }
 
+    private void Peanut()
+    {
+        while (!closed)
+        {
+            if (readyToListen)
+            {
+                // Send data
+                dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            }
+        }
+    }
+
     private void OnDisable()
     {
         closed = true;
@@ -128,6 +146,7 @@ public class ClientUDP : MonoBehaviour
         {
             myThread.Abort();
             listeningThread.Abort();
+            peanutThread.Abort();
             newSocket.Close();
         }
         catch (Exception e)

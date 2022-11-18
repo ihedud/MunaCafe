@@ -25,11 +25,14 @@ public class HostUDP : MonoBehaviour
     private byte[] dataReceived = new byte[1024];
     private bool closed = true;
     private bool readyToPlay = false;
+    private bool readyToListen = false;
 
     private IPEndPoint client;
     private EndPoint remote;
     private Socket newSocket;
     private Thread myThread;
+    private Thread listeningThread;
+    private Thread peanutThread;
 
     private Information myInfo = new Information();
     private Information clientInfo = new Information();
@@ -74,6 +77,14 @@ public class HostUDP : MonoBehaviour
         // Initialize thread
         myThread = new Thread(HostConnection);
         myThread.Start();
+
+        // Listening thread
+        listeningThread = new Thread(ListeningClient);
+        listeningThread.Start();
+
+        // Peanut thread
+        peanutThread = new Thread(Peanut);
+        peanutThread.Start();
     }
 
     private void HostConnection()
@@ -104,6 +115,7 @@ public class HostUDP : MonoBehaviour
                 Debug.Log(clientUsername + " has joined the server!");
                 
                 readyToPlay = true;
+                readyToListen = true;
             }
         }
         catch (Exception e)
@@ -114,6 +126,33 @@ public class HostUDP : MonoBehaviour
         // Send data
         dataSent = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+    }
+
+    private void ListeningClient()
+    {
+        while (!closed)
+        {
+            if (readyToListen)
+            {
+                // Receive new data
+                recv = newSocket.ReceiveFrom(dataReceived, ref remote);
+                string data = Encoding.ASCII.GetString(dataReceived, 0, recv);
+                clientInfo = json.JsonDeserialize(data);
+            }
+        }
+    }
+
+    private void Peanut()
+    {
+        while (!closed)
+        {
+            if (readyToListen)
+            {
+                // Send data
+                dataSent = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                recv = newSocket.SendTo(dataSent, dataSent.Length, SocketFlags.None, remote);
+            }
+        }
     }
 
     private void OnDisable()
