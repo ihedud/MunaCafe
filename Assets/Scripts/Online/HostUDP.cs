@@ -149,7 +149,10 @@ public class HostUDP : MonoBehaviour
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
                     if (clientInfo.onPlay)
+                    {
+                        myInfo.onPlay = false;
                         nextScene = true;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -170,9 +173,6 @@ public class HostUDP : MonoBehaviour
                     // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-
-                    if (myInfo.onPlay)
-                        myInfo.onPlay = false;
                 }
                 catch (Exception e)
                 {

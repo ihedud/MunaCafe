@@ -24,6 +24,7 @@ public class ClientUDP : MonoBehaviour
     private bool closed = true;
     public bool readyToListen = false;
     private bool nextScene = false;
+    private bool onLoad = false;
 
     private IPEndPoint host;
     private EndPoint remote;
@@ -45,11 +46,13 @@ public class ClientUDP : MonoBehaviour
 
     private void Update()
     {
-        if (nextScene)
+        if (nextScene && !onLoad)
         {
+            onLoad = true;
             nextScene = false;
             myInfo.onPlay = true;
             loader.LoadNextScene("ClientGame");
+            myInfo.onPlay = false;
         }
     }
 
@@ -143,9 +146,6 @@ public class ClientUDP : MonoBehaviour
                     // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-
-                    if (myInfo.onPlay)
-                        myInfo.onPlay = false;
                 }
                 catch (Exception e)
                 {
