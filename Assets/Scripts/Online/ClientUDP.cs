@@ -52,7 +52,6 @@ public class ClientUDP : MonoBehaviour
             nextScene = false;
             myInfo.onPlay = true;
             loader.LoadNextScene("ClientGame");
-            myInfo.onPlay = false;
         }
     }
 

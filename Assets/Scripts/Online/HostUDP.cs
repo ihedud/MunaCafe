@@ -24,6 +24,7 @@ public class HostUDP : MonoBehaviour
     private bool readyToPlay = false;
     public bool readyToListen = false;
     private bool nextScene = false;
+    private bool onLoad = false;
 
     private IPEndPoint client;
     private EndPoint remote;
@@ -46,8 +47,9 @@ public class HostUDP : MonoBehaviour
 
     private void Update()
     {
-        if (nextScene)
+        if (nextScene && !onLoad)
         {
+            onLoad = true;
             nextScene = false;
             loader.LoadNextScene("HostGame");
         }
@@ -149,10 +151,7 @@ public class HostUDP : MonoBehaviour
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
                     if (clientInfo.onPlay)
-                    {
-                        myInfo.onPlay = false;
                         nextScene = true;
-                    }
                 }
                 catch (Exception e)
                 {
@@ -202,13 +201,5 @@ public class HostUDP : MonoBehaviour
     public void OnPlayGame()
     {
         myInfo.onPlay = true;
-
-        //// Send data
-        //byte[] dataSent3 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
-        //newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
-
-        //myInfo.onPlay = false;
-
-        //loader.LoadNextScene("HostGame");
     }
 }
