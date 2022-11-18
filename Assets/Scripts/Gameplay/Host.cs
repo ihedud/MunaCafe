@@ -14,7 +14,6 @@ public class Host : MonoBehaviour
     private void Awake()
     {
         host = FindObjectOfType<HostUDP>();
-
     }
 
     private void FixedUpdate()
@@ -25,6 +24,7 @@ public class Host : MonoBehaviour
             {
                 if (host.readyToListen)
                 {
+                    host.myInfo.colorID = colorID;
                     clientPlayer.GetComponent<MeshRenderer>().material = materials[host.clientInfo.colorID];
                 }
             }
