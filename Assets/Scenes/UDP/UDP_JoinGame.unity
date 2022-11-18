@@ -822,14 +822,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -134.23999
       objectReference: {fileID: 0}
+    - target: {fileID: 2529533211954138584, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -21.120117
+      objectReference: {fileID: 0}
     - target: {fileID: 2529533211954138587, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2090229140}
-    - target: {fileID: 2529533211954138587, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1652085806}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
 --- !u!1001 &6886914246889203188

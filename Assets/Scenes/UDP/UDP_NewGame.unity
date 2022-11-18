@@ -1132,6 +1132,34 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -475.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2529533211340725791, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
+    - target: {fileID: 2529533211340725792, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
+    - target: {fileID: 2529533211340725793, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
+    - target: {fileID: 2529533211340725794, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
+    - target: {fileID: 2529533211340725795, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
+    - target: {fileID: 2529533211340725796, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
+    - target: {fileID: 2529533211340725797, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1175964552}
     - target: {fileID: 2529533211484966679, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
       propertyPath: m_AnchorMin.y
       value: 1
@@ -1321,6 +1349,11 @@ MonoBehaviour:
 --- !u!1 &1175964551 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2529533211954138585, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
+  m_PrefabInstance: {fileID: 1175964548}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1175964552 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7756399818424769090, guid: 9ed5b4a965ddc4e4eb81ebec08aeb9e7, type: 3}
   m_PrefabInstance: {fileID: 1175964548}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1183888499
