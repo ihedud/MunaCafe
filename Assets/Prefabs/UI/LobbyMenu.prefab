@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -146,7 +147,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 6
   material: {fileID: 2100000, guid: 04af0475c11921e4f9f717d5d6095977, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &336837651
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,6 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -293,7 +297,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 0
   material: {fileID: 2100000, guid: e73fa8883635c5f40b02f0e691d54b60, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &435920079
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -440,7 +447,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 2
   material: {fileID: 2100000, guid: 3ecb36cfc027c6a46ad656771517ca76, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &760943064
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,6 +541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -587,7 +597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 4
   material: {fileID: 2100000, guid: 16011e61fbd9fd845b380660085b4150, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &1456341601
 GameObject:
   m_ObjectHideFlags: 0
@@ -679,6 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -734,7 +747,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 5
   material: {fileID: 2100000, guid: 503e1b1fac9c13a47a48a0cfcae73525, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &1628102416
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,6 +841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -881,7 +897,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 1
   material: {fileID: 2100000, guid: d03c6c1f79d80ad40abcff60ec2a5d61, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &1809934999
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,6 +1060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -1097,7 +1116,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   colorID: 3
   material: {fileID: 2100000, guid: acea3d54802ac09419e85f566a48c272, type: 2}
-  player: {fileID: 7756399817944908337}
+  uiCapsule: {fileID: 0}
+  client: {fileID: 0}
+  host: {fileID: 0}
 --- !u!1 &2529533210476079591
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,6 +1718,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &2529533211665334916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2287,6 +2309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Navigation:
     m_Mode: 3
+    m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -2572,7 +2595,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: acea3d54802ac09419e85f566a48c272, type: 2}
+  - {fileID: 2100000, guid: e73fa8883635c5f40b02f0e691d54b60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
