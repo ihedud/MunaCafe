@@ -48,8 +48,8 @@ public class ClientUDP : MonoBehaviour
         if (nextScene)
         {
             nextScene = false;
-            loader.LoadNextScene("ClientGame");
             myInfo.onPlay = true;
+            loader.LoadNextScene("ClientGame");
         }
     }
 
@@ -143,6 +143,9 @@ public class ClientUDP : MonoBehaviour
                     // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+
+                    if (myInfo.onPlay)
+                        myInfo.onPlay = false;
                 }
                 catch (Exception e)
                 {

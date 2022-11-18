@@ -23,6 +23,7 @@ public class HostUDP : MonoBehaviour
     private bool closed = true;
     private bool readyToPlay = false;
     public bool readyToListen = false;
+    private bool nextScene = false;
 
     private IPEndPoint client;
     private EndPoint remote;
@@ -45,6 +46,12 @@ public class HostUDP : MonoBehaviour
 
     private void Update()
     {
+        if (nextScene)
+        {
+            nextScene = false;
+            loader.LoadNextScene("HostGame");
+        }
+
         if (!readyToPlay)
             return;
 
@@ -140,6 +147,9 @@ public class HostUDP : MonoBehaviour
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
+
+                    if (clientInfo.onPlay)
+                        nextScene = true;
                 }
                 catch (Exception e)
                 {
@@ -160,6 +170,9 @@ public class HostUDP : MonoBehaviour
                     // Send data
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+
+                    if (myInfo.onPlay)
+                        myInfo.onPlay = false;
                 }
                 catch (Exception e)
                 {
@@ -190,12 +203,12 @@ public class HostUDP : MonoBehaviour
     {
         myInfo.onPlay = true;
 
-        // Send data
-        byte[] dataSent3 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
-        newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
+        //// Send data
+        //byte[] dataSent3 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
+        //newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
 
-        myInfo.onPlay = false;
+        //myInfo.onPlay = false;
 
-        loader.LoadNextScene("HostGame");
+        //loader.LoadNextScene("HostGame");
     }
 }
