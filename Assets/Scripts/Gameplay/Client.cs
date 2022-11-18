@@ -14,6 +14,11 @@ public class Client : MonoBehaviour
     private void Awake()
     {
         client = FindObjectOfType<ClientUDP>();
+        if (!lobby)
+        {
+            myPlayer.GetComponentInChildren<MeshRenderer>().material = materials[client.myInfo.colorID];
+            hostPlayer.GetComponentInChildren<MeshRenderer>().material = materials[client.hostInfo.colorID];
+        }
     }
 
     private void FixedUpdate()
