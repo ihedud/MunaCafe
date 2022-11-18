@@ -9,6 +9,7 @@ public class Client : MonoBehaviour
     [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
     private ClientUDP client;
+    public int colorID;
 
     private void Awake()
     {
@@ -23,11 +24,7 @@ public class Client : MonoBehaviour
             {
                 if (client.readyToListen)
                 {
-                    for (int i = 0; i < materials.Count; i++)
-                    {
-                        if (materials[i] == myPlayer.GetComponent<MeshRenderer>().material)
-                            client.myInfo.colorID = i;
-                    }
+                    client.myInfo.colorID = colorID;
                 }
             }
             else

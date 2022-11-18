@@ -9,6 +9,7 @@ public class Host : MonoBehaviour
     [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
     private HostUDP host;
+    public int colorID;
 
     private void Awake()
     {
