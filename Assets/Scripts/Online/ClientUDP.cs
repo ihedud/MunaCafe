@@ -33,8 +33,8 @@ public class ClientUDP : MonoBehaviour
     private Thread listeningThread;
     private Thread peanutThread;
 
-    private Information myInfo = new Information();
-    private Information hostInfo = new Information();
+    public Information myInfo = new Information();
+    public Information hostInfo = new Information();
 
     [SerializeField] private JsonSerialization json;
     [SerializeField] private LoadScene loader;
@@ -90,7 +90,7 @@ public class ClientUDP : MonoBehaviour
             byte[] dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
             recv = newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
 
-            // Receive host data
+            // Receive data
             byte[] dataReceived1 = new byte[1024];
             recv = newSocket.ReceiveFrom(dataReceived1, ref remote);
             string hostData = Encoding.ASCII.GetString(dataReceived1, 0, recv);
@@ -118,7 +118,7 @@ public class ClientUDP : MonoBehaviour
             {
                 try
                 {
-                    // Receive new  data
+                    // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);

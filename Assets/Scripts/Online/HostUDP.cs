@@ -34,8 +34,8 @@ public class HostUDP : MonoBehaviour
     private Thread listeningThread;
     private Thread peanutThread;
 
-    private Information myInfo = new Information();
-    private Information clientInfo = new Information();
+    public Information myInfo = new Information();
+    public Information clientInfo = new Information();
 
     [SerializeField] private GameObject playButton;
     [SerializeField] private LoadScene loader;
@@ -134,7 +134,7 @@ public class HostUDP : MonoBehaviour
         {
             try
             {
-                // Receive new data
+                // Receive data
                 byte[] dataReceived2 = new byte[1024];
                 recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                 string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
@@ -154,7 +154,7 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
-                    // Receive new data
+                    // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
                     string data = Encoding.ASCII.GetString(dataReceived2, 0, recv);
