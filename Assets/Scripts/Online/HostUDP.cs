@@ -64,6 +64,7 @@ public class HostUDP : MonoBehaviour
 
         // Adding host to lobby
         playerManager.ConnectPlayer(username, playerCount);
+        playerCount++;
         playerManager.hostUpdated = true;
 
         // Initialize socket
@@ -105,16 +106,13 @@ public class HostUDP : MonoBehaviour
             clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, recv));
             string clientUsername = clientInfo.username;
             Debug.Log(clientUsername + " wants to connect...");
-            
+
             // Adding client to lobby
             if (playerCount < 2)
             {
-                playerCount++;
                 playerManager.ConnectPlayer(clientUsername, playerCount);
+                playerCount++;
                 Debug.Log(clientUsername + " has joined the server!");
-                
-                readyToPlay = true;
-                readyToListen = true;
             }
         }
         catch (Exception e)
@@ -125,6 +123,12 @@ public class HostUDP : MonoBehaviour
         // Send data
         byte[] dataSent1 = Encoding.ASCII.GetBytes(json.JsonSerialize(myInfo));
         newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
+
+        if (playerCount == 2)
+        { 
+            readyToPlay = true;
+            readyToListen = true;
+        }
     }
 
     private void ListeningClient()
@@ -138,7 +142,8 @@ public class HostUDP : MonoBehaviour
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
-                    clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, recv));
+                    string data = Encoding.ASCII.GetString(dataReceived2, 0, recv) + "}";
+                    clientInfo = json.JsonDeserialize(data);
                 }
                 catch (Exception e)
                 {

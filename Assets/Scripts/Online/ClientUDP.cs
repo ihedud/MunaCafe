@@ -120,8 +120,8 @@ public class ClientUDP : MonoBehaviour
                 {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
-                    recv = newSocket.ReceiveFrom(dataReceived2, ref remote);
-                    hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, recv));
+                    int recv2 = newSocket.ReceiveFrom(dataReceived2, ref remote);
+                    hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, recv2));
                     if (hostInfo.onPlay)
                         nextScene = true;
                 }
