@@ -18,7 +18,6 @@ public class ClientUDP : MonoBehaviour
     [SerializeField] private ManagePlayers playerManager;
 
     private string serverIP;
-    private string username;
     private int playerCount = 0;
 
     private bool closed = true;
@@ -29,9 +28,9 @@ public class ClientUDP : MonoBehaviour
     private IPEndPoint host;
     private EndPoint remote;
     private Socket newSocket;
-    private Thread myThread;
-    private Thread listeningThread;
-    private Thread peanutThread;
+    private Thread connectingThread;
+    private Thread receivingThread;
+    private Thread sendingThread;
 
     public Information myInfo = new Information();
     public Information hostInfo = new Information();
@@ -59,29 +58,27 @@ public class ClientUDP : MonoBehaviour
     {
         // Get data from session
         serverIP = serverIPInputField.GetComponent<TMP_InputField>().text;
-        username = usernameInputField.GetComponent<TMP_InputField>().text;
+        myInfo.username = usernameInputField.GetComponent<TMP_InputField>().text;
 
         // Initialize socket
         newSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
         closed = false;
 
-        myInfo.username = username;
+        // Connecting thread
+        connectingThread = new Thread(Connecting);
+        connectingThread.Start();
 
-        // Initialize thread
-        myThread = new Thread(ClientConnection);
-        myThread.Start();
+        // Receiving thread
+        receivingThread = new Thread(Receiving);
+        receivingThread.Start();
 
-        // Listening thread
-        listeningThread = new Thread(ListeningHost);
-        listeningThread.Start();
-
-        // Peanut thread
-        peanutThread = new Thread(Peanut);
-        peanutThread.Start();
+        // Sending thread
+        sendingThread = new Thread(Sending);
+        sendingThread.Start();
     }
 
-    private void ClientConnection()
+    private void Connecting()
     {
         try
         {
@@ -96,12 +93,10 @@ public class ClientUDP : MonoBehaviour
             byte[] dataReceived1 = new byte[1024];
             hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
 
-            string hostUsername = hostInfo.username;
-
             // Adding host and client to lobby
-            playerManager.ConnectPlayer(hostUsername, playerCount);
+            playerManager.ConnectPlayer(hostInfo.username, playerCount);
             playerCount++;
-            playerManager.ConnectPlayer(username, playerCount);
+            playerManager.ConnectPlayer(myInfo.username, playerCount);
 
             readyToListen = true;
         }
@@ -111,7 +106,7 @@ public class ClientUDP : MonoBehaviour
         }
     }
 
-    private void ListeningHost()
+    private void Receiving()
     {
         while (!closed)
         {
@@ -134,7 +129,7 @@ public class ClientUDP : MonoBehaviour
         }
     }
 
-    private void Peanut()
+    private void Sending()
     {
         while (!closed)
         {
@@ -160,9 +155,9 @@ public class ClientUDP : MonoBehaviour
 
         try
         {
-            myThread.Abort();
-            listeningThread.Abort();
-            peanutThread.Abort();
+            connectingThread.Abort();
+            receivingThread.Abort();
+            sendingThread.Abort();
             newSocket.Close();
         }
         catch (Exception e)

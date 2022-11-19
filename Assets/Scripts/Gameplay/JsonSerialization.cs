@@ -11,6 +11,7 @@ public class Information
     public bool onPlay = false;
     public Vector3 playerPos = Vector3.zero;
     public int colorID = 0;
+    public bool hasPing = false;
 }
 
 public class JsonSerialization : MonoBehaviour

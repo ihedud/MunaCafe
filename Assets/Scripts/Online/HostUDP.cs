@@ -17,7 +17,6 @@ public class HostUDP : MonoBehaviour
     [SerializeField] private GameObject usernameInputField;
     [SerializeField] private ManagePlayers playerManager;
 
-    private string username;
     private int playerCount = 0;
     
     private bool closed = true;
@@ -29,9 +28,9 @@ public class HostUDP : MonoBehaviour
     private IPEndPoint client;
     private EndPoint remote;
     private Socket newSocket;
-    private Thread myThread;
-    private Thread listeningThread;
-    private Thread peanutThread;
+    private Thread connectingThread;
+    private Thread receivingThread;
+    private Thread sendingThread;
 
     public Information myInfo = new Information();
     public Information clientInfo = new Information();
@@ -66,11 +65,10 @@ public class HostUDP : MonoBehaviour
 
     public void Initializing()
     {
-        // Get data from session
-        username = usernameInputField.GetComponent<TMP_InputField>().text;
+        myInfo.username = usernameInputField.GetComponent<TMP_InputField>().text;
 
         // Adding host to lobby
-        playerManager.ConnectPlayer(username, playerCount);
+        playerManager.ConnectPlayer(myInfo.username, playerCount);
         playerCount++;
         playerManager.hostUpdated = true;
 
@@ -79,22 +77,20 @@ public class HostUDP : MonoBehaviour
 
         closed = false;
 
-        myInfo.username = username;
+        // Connecting thread
+        connectingThread = new Thread(Connecting);
+        connectingThread.Start();
 
-        // Initialize thread
-        myThread = new Thread(HostConnection);
-        myThread.Start();
+        // Receiving thread
+        receivingThread = new Thread(Receiving);
+        receivingThread.Start();
 
-        // Listening thread
-        listeningThread = new Thread(ListeningClient);
-        listeningThread.Start();
-
-        // Peanut thread
-        peanutThread = new Thread(Peanut);
-        peanutThread.Start();
+        // Sending thread
+        sendingThread = new Thread(Sending);
+        sendingThread.Start();
     }
 
-    private void HostConnection()
+    private void Connecting()
     {
         Debug.Log("Starting Thread");
 
@@ -111,15 +107,14 @@ public class HostUDP : MonoBehaviour
             byte[] dataReceived1 = new byte[1024];
             clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
 
-            string clientUsername = clientInfo.username;
-            Debug.Log(clientUsername + " wants to connect...");
+            Debug.Log(clientInfo.username + " wants to connect...");
 
             // Adding client to lobby
             if (playerCount < 2)
             {
-                playerManager.ConnectPlayer(clientUsername, playerCount);
+                playerManager.ConnectPlayer(clientInfo.username, playerCount);
                 playerCount++;
-                Debug.Log(clientUsername + " has joined the server!");
+                Debug.Log(clientInfo.username + " has joined the server!");
             }
         }
         catch (Exception e)
@@ -138,7 +133,7 @@ public class HostUDP : MonoBehaviour
         }
     }
 
-    private void ListeningClient()
+    private void Receiving()
     {
         while (!closed)
         {
@@ -161,7 +156,7 @@ public class HostUDP : MonoBehaviour
         }
     }
 
-    private void Peanut()
+    private void Sending()
     {
         while (!closed)
         {
@@ -187,9 +182,9 @@ public class HostUDP : MonoBehaviour
 
         try
         {
-            myThread.Abort();
-            listeningThread.Abort();
-            peanutThread.Abort();
+            connectingThread.Abort();
+            receivingThread.Abort();
+            sendingThread.Abort();
             newSocket.Close();
         }
         catch (Exception e)
