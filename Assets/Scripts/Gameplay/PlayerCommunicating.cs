@@ -17,8 +17,11 @@ public class PlayerCommunicating : MonoBehaviour
 
     private void Start()
     {
-        sendMessage.action.Enable();
-        sendMessage.action.performed += SendMessageAction;
+        if (sendMessage != null)
+        {
+            sendMessage.action.Enable();
+            sendMessage.action.performed += SendMessageAction;
+        }
     }
 
     private void SendMessageAction(InputAction.CallbackContext context)
@@ -54,7 +57,10 @@ public class PlayerCommunicating : MonoBehaviour
 
     private void OnDisable()
     {
-        sendMessage.action.Disable();
-        sendMessage.action.performed -= SendMessageAction;
+        if (sendMessage != null)
+        {
+            sendMessage.action.Disable();
+            sendMessage.action.performed -= SendMessageAction;
+        }
     }
 }
