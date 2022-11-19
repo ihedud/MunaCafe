@@ -638,6 +638,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3663806075335848565, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+      propertyPath: sendMessage
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4800154379003533086, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
       propertyPath: m_Size.y
       value: 2.1338646
