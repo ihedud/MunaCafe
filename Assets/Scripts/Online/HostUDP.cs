@@ -23,6 +23,7 @@ public class HostUDP : MonoBehaviour
     private bool readyToPlay = false;
     public bool readyToListen = false;
     private bool nextScene = false;
+    public bool pingDone = false;
     private bool onLoad = false;
 
     private IPEndPoint client;
@@ -147,6 +148,9 @@ public class HostUDP : MonoBehaviour
 
                     if (clientInfo.onPlay)
                         nextScene = true;
+
+                    if (!clientInfo.hasPing)
+                        pingDone = false;
                 }
                 catch (Exception e)
                 {

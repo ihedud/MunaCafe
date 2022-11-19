@@ -38,6 +38,12 @@ public class Host : MonoBehaviour
                 clientPlayer.transform.position = host.clientInfo.playerPos;
                 host.myInfo.playerPos = myPlayer.transform.position;
 
+                if (host.clientInfo.hasPing && !host.pingDone)
+                {
+                    clientPlayer.GetComponent<PlayerCommunicating>().ShowPingFromMessage();
+                    host.pingDone = true;
+                }
+
                 if (myPlayer.GetComponent<PlayerCommunicating>().isShowing)
                     host.myInfo.hasPing = true;
                 else
