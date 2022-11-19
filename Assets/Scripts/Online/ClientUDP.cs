@@ -123,7 +123,7 @@ public class ClientUDP : MonoBehaviour
                         nextScene = true;
 
                     if (!hostInfo.hasPing)
-                        pingDone = true;
+                        pingDone = false;
                 }
                 catch (Exception e) 
                 { 
