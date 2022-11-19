@@ -37,6 +37,12 @@ public class Client : MonoBehaviour
             {
                 hostPlayer.transform.position = client.hostInfo.playerPos;
                 client.myInfo.playerPos = myPlayer.transform.position;
+
+                if (client.hostInfo.hasPing && !client.pingDone)
+                {
+                    hostPlayer.GetComponent<PlayerCommunicating>().ShowPingFromMessage();
+                    client.pingDone = true;
+                }
             }
         }
     }

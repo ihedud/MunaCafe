@@ -37,6 +37,11 @@ public class Host : MonoBehaviour
             {
                 clientPlayer.transform.position = host.clientInfo.playerPos;
                 host.myInfo.playerPos = myPlayer.transform.position;
+
+                if (myPlayer.GetComponent<PlayerCommunicating>().isShowing)
+                    host.myInfo.hasPing = true;
+                else
+                    host.myInfo.hasPing = false;
             }
         }
     }

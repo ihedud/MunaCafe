@@ -24,6 +24,7 @@ public class ClientUDP : MonoBehaviour
     public bool readyToListen = false;
     private bool nextScene = false;
     private bool onLoad = false;
+    public bool pingDone = false;
 
     private IPEndPoint host;
     private EndPoint remote;
@@ -120,6 +121,9 @@ public class ClientUDP : MonoBehaviour
 
                     if (hostInfo.onPlay)
                         nextScene = true;
+
+                    if (!hostInfo.hasPing)
+                        pingDone = true;
                 }
                 catch (Exception e) 
                 { 

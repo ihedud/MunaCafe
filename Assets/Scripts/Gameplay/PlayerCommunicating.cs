@@ -13,12 +13,24 @@ public class PlayerCommunicating : MonoBehaviour
     private GameObject exclamationMark;
     private bool showing = false;
 
+    public bool isShowing => showing;
+
     private void Start()
     {
         sendMessage.action.Enable();
         sendMessage.action.performed += SendMessageAction;
     }
+
     private void SendMessageAction(InputAction.CallbackContext context)
+    {
+        if (!showing)
+        {
+            showing = true;
+            StartCoroutine(ShowExclamationMark());
+        }
+    }
+
+    public void ShowPingFromMessage()
     {
         if (!showing)
         {
