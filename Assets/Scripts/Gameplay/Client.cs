@@ -16,8 +16,8 @@ public class Client : MonoBehaviour
         client = FindObjectOfType<ClientUDP>();
         if (!lobby)
         {
-            myPlayer.GetComponentInChildren<MeshRenderer>().material = materials[client.myInfo.colorID];
-            hostPlayer.GetComponentInChildren<MeshRenderer>().material = materials[client.hostInfo.colorID];
+            myPlayer.GetComponentInChildren<MeshRenderer>().material = materials[client.myPlayer.colorID];
+            hostPlayer.GetComponentInChildren<MeshRenderer>().material = materials[client.hostPlayer.colorID];
         }
     }
 
@@ -29,25 +29,25 @@ public class Client : MonoBehaviour
             {
                 if (client.readyToListen)
                 {
-                    client.myInfo.colorID = colorID;
-                    hostPlayer.GetComponent<MeshRenderer>().material = materials[client.hostInfo.colorID];
+                    client.myPlayer.colorID = colorID;
+                    hostPlayer.GetComponent<MeshRenderer>().material = materials[client.hostPlayer.colorID];
                 }
             }
             else
             {
-                hostPlayer.transform.position = client.hostInfo.playerPos;
-                client.myInfo.playerPos = myPlayer.transform.position;
+                hostPlayer.transform.position = client.hostPlayer.playerPos;
+                client.myPlayer.playerPos = myPlayer.transform.position;
 
-                if (client.hostInfo.hasPing && !client.pingDone)
+                if (client.hostPlayer.hasPing && !client.pingDone)
                 {
                     hostPlayer.GetComponent<PlayerCommunicating>().ShowPingFromMessage();
                     client.pingDone = true;
                 }
 
                 if (myPlayer.GetComponent<PlayerCommunicating>().isShowing)
-                    client.myInfo.hasPing = true;
+                    client.myPlayer.hasPing = true;
                 else
-                    client.myInfo.hasPing = false;
+                    client.myPlayer.hasPing = false;
             }
         }
     }

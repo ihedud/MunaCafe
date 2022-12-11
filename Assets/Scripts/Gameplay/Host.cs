@@ -16,8 +16,8 @@ public class Host : MonoBehaviour
         host = FindObjectOfType<HostUDP>();
         if (!lobby)
         {
-            myPlayer.GetComponentInChildren<MeshRenderer>().material = materials[host.myInfo.colorID];
-            clientPlayer.GetComponentInChildren<MeshRenderer>().material = materials[host.clientInfo.colorID];
+            myPlayer.GetComponentInChildren<MeshRenderer>().material = materials[host.myPlayer.colorID];
+            clientPlayer.GetComponentInChildren<MeshRenderer>().material = materials[host.clientPlayer.colorID];
         }
     }
 
@@ -29,25 +29,25 @@ public class Host : MonoBehaviour
             {
                 if (host.readyToListen)
                 {
-                    host.myInfo.colorID = colorID;
-                    clientPlayer.GetComponent<MeshRenderer>().material = materials[host.clientInfo.colorID];
+                    host.myPlayer.colorID = colorID;
+                    clientPlayer.GetComponent<MeshRenderer>().material = materials[host.clientPlayer.colorID];
                 }
             }
             else
             {
-                clientPlayer.transform.position = host.clientInfo.playerPos;
-                host.myInfo.playerPos = myPlayer.transform.position;
+                clientPlayer.transform.position = host.clientPlayer.playerPos;
+                host.myPlayer.playerPos = myPlayer.transform.position;
 
-                if (host.clientInfo.hasPing && !host.pingDone)
+                if (host.clientPlayer.hasPing && !host.pingDone)
                 {
                     clientPlayer.GetComponent<PlayerCommunicating>().ShowPingFromMessage();
                     host.pingDone = true;
                 }
 
                 if (myPlayer.GetComponent<PlayerCommunicating>().isShowing)
-                    host.myInfo.hasPing = true;
+                    host.myPlayer.hasPing = true;
                 else
-                    host.myInfo.hasPing = false;
+                    host.myPlayer.hasPing = false;
             }
         }
     }
