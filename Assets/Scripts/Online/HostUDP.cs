@@ -38,7 +38,6 @@ public class HostUDP : MonoBehaviour
 
     private JsonSerialization json = new JsonSerialization();
     private LoadScene loader = new LoadScene();
-    private ReplicationManager repManager = new ReplicationManager();
 
     [SerializeField] private GameObject playButton;
 
@@ -108,7 +107,7 @@ public class HostUDP : MonoBehaviour
 
             // Receive data
             byte[] dataReceived1 = new byte[1024];
-            clientPlayer = repManager.PacketBreakdown(json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote))));
+            clientPlayer = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
 
             Debug.Log(clientPlayer.username + " wants to connect...");
 
@@ -126,7 +125,7 @@ public class HostUDP : MonoBehaviour
         }
 
         // Send data
-        byte[] dataSent1 = Encoding.ASCII.GetBytes(json.JsonSerialize(repManager.PacketCreation(0, myPlayer))); // Make sure this is the netID
+        byte[] dataSent1 = Encoding.ASCII.GetBytes(json.JsonSerialize(myPlayer));
         newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
 
         if (playerCount == 2)
@@ -146,7 +145,7 @@ public class HostUDP : MonoBehaviour
                 {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
-                    clientPlayer = repManager.PacketBreakdown(json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote))));
+                    clientPlayer = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
                     if (clientPlayer.onPlay)
                         nextScene = true;
@@ -171,7 +170,7 @@ public class HostUDP : MonoBehaviour
                 try
                 {
                     // Send data
-                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(repManager.PacketCreation(1, myPlayer))); // Make sure
+                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myPlayer));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                 }
                 catch (Exception e)
