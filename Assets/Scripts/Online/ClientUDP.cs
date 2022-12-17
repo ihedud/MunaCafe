@@ -38,7 +38,6 @@ public class ClientUDP : MonoBehaviour
 
     private JsonSerialization json = new JsonSerialization();
     private LoadScene loader = new LoadScene();
-    private ReplicationManager repManager = new ReplicationManager();
 
     private void Awake()
     {
@@ -88,12 +87,12 @@ public class ClientUDP : MonoBehaviour
             remote = (EndPoint)host;
 
             // Send data
-            byte[] dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(repManager.PacketCreation(0, myPlayer)));
+            byte[] dataSent1 = Encoding.Default.GetBytes(json.JsonSerialize(myPlayer));
             newSocket.SendTo(dataSent1, dataSent1.Length, SocketFlags.None, remote);
 
             // Receive data
             byte[] dataReceived1 = new byte[1024];
-            hostPlayer = repManager.PacketBreakdown(json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote))));
+            hostPlayer = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
 
             // Adding host and client to lobby
             playerManager.ConnectPlayer(hostPlayer.username, playerCount);
@@ -118,7 +117,7 @@ public class ClientUDP : MonoBehaviour
                 {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
-                    hostPlayer = repManager.PacketBreakdown(json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote))));
+                    hostPlayer = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
                     if (hostPlayer.onPlay)
                         nextScene = true;
@@ -143,7 +142,7 @@ public class ClientUDP : MonoBehaviour
                 try
                 {
                     // Send data
-                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(repManager.PacketCreation(1,myPlayer)));
+                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myPlayer));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                 }
                 catch (Exception e)
