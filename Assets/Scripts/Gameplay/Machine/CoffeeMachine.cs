@@ -42,7 +42,7 @@ public class CoffeeMachine : MonoBehaviour
 
     private void OnTriggerStay(Collider collider)
     {
-        if (collider.gameObject.tag == "Player2" && collider.gameObject.GetComponent<PlayerState>().hasInteracted)
+        if (collider.gameObject.tag == "Player2" && collider.gameObject.GetComponent<PlayerState>().hasInteracted && !collider.gameObject.GetComponent<PlayerState>().interactionDone)
         {
             player = collider.gameObject;
             CoffeeInteraction();

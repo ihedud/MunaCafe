@@ -35,12 +35,22 @@ public class Tray : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider collider)
+    {
+        if (collider.gameObject.tag == "Player2" && collider.gameObject.GetComponent<PlayerState>().hasInteracted && !collider.gameObject.GetComponent<PlayerState>().interactionDone)
+        {
+            player = collider.gameObject;
+            TrayInteraction();
+        }
+    }
+
     private void OnTriggerExit(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
             playerGrab.action.Disable();
             playerGrab.action.performed -= DeliverOrder;
+            player.GetComponent<PlayerState>().hasInteracted = false;
         }
     }
 
@@ -69,6 +79,12 @@ public class Tray : MonoBehaviour
     }
 
     private void DeliverOrder(InputAction.CallbackContext context)
+    {
+        player.GetComponent<PlayerState>().hasInteracted = true;
+        TrayInteraction();
+    }
+
+    private void TrayInteraction()
     {
         if (currentTrayState == TrayState.Ongoing)
         {

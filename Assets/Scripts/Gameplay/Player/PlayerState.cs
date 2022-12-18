@@ -9,6 +9,7 @@ public class PlayerState : MonoBehaviour
     public State currentState;
 
     public bool hasInteracted;
+    public bool interactionDone;
 
     [SerializeField] private GameObject coffee;
 
@@ -16,6 +17,7 @@ public class PlayerState : MonoBehaviour
     {
         currentState = State.None;
         hasInteracted = false;
+        interactionDone = false;
     }
 
     private void Update()
