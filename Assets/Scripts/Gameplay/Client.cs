@@ -44,10 +44,9 @@ public class Client : MonoBehaviour
                     client.pingDone = true;
                 }
 
-                if (myPlayer.GetComponent<PlayerCommunicating>().isShowing)
-                    client.myInfo.hasPing = true;
-                else
-                    client.myInfo.hasPing = false;
+                client.myInfo.hasPing = myPlayer.GetComponent<PlayerCommunicating>().isShowing;
+
+                client.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
             }
         }
     }
