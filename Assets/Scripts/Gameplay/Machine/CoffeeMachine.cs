@@ -55,6 +55,7 @@ public class CoffeeMachine : MonoBehaviour
         {
             playerGrab.action.Disable();
             playerGrab.action.performed -= GrabCoffee;
+            player.GetComponent<PlayerState>().hasInteracted = false;
         }
     }
 
@@ -62,7 +63,6 @@ public class CoffeeMachine : MonoBehaviour
     {
         player.GetComponent<PlayerState>().hasInteracted = true;
         CoffeeInteraction();
-        //player.GetComponent<PlayerState>().hasInteracted = false;
     }
 
     private void CoffeeInteraction()
@@ -92,6 +92,8 @@ public class CoffeeMachine : MonoBehaviour
 
         currentState = State.Done;
         sphere.GetComponent<MeshRenderer>().material = green;
+
+        player.GetComponent<PlayerState>().hasInteracted = false;
 
         coffee.SetActive(true);
     }
