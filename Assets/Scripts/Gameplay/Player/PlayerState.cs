@@ -20,9 +20,9 @@ public class PlayerState : MonoBehaviour
 
     private void Update()
     {
-        if(currentState == State.Coffee && !coffee.activeInHierarchy)
+        if(currentState == State.Coffee && !coffee.activeSelf)
             coffee.SetActive(true);
-        else if(currentState == State.None && coffee.activeInHierarchy)
+        else if(currentState == State.None && coffee.activeSelf)
             coffee.SetActive(false);
     }
 }

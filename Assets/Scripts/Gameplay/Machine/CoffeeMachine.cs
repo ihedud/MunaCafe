@@ -38,7 +38,10 @@ public class CoffeeMachine : MonoBehaviour
             playerGrab.action.Enable();
             playerGrab.action.performed += GrabCoffee;
         }
-        
+    }
+
+    private void OnTriggerStay(Collider collider)
+    {
         if (collider.gameObject.tag == "Player2" && collider.gameObject.GetComponent<PlayerState>().hasInteracted)
         {
             player = collider.gameObject;
