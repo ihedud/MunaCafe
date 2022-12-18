@@ -8,11 +8,14 @@ public class PlayerState : MonoBehaviour
 
     public State currentState;
 
+    public bool hasInteracted;
+
     [SerializeField] private GameObject coffee;
 
     private void Awake()
     {
         currentState = State.None;
+        hasInteracted = false;
     }
 
     private void Update()

@@ -44,6 +44,11 @@ public class Host : MonoBehaviour
                     host.pingDone = true;
                 }
 
+                if (host.clientInfo.hasInteracted)
+                {
+                    clientPlayer.GetComponent<PlayerState>().hasInteracted = host.clientInfo.hasInteracted;
+                }
+
                 if (myPlayer.GetComponent<PlayerCommunicating>().isShowing)
                     host.myInfo.hasPing = true;
                 else

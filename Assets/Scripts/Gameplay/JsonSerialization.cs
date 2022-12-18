@@ -12,6 +12,7 @@ public class Information
     public Vector3 playerPos = Vector3.zero;
     public int colorID = 0;
     public bool hasPing = false;
+    public bool hasInteracted = false;
 }
 
 public class JsonSerialization : MonoBehaviour

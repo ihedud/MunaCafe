@@ -38,6 +38,12 @@ public class CoffeeMachine : MonoBehaviour
             playerGrab.action.Enable();
             playerGrab.action.performed += GrabCoffee;
         }
+        
+        if (collider.gameObject.tag == "Player2" && collider.gameObject.GetComponent<PlayerState>().hasInteracted)
+        {
+            player = collider.gameObject;
+            CoffeeInteraction();
+        }
     }
 
     private void OnTriggerExit(Collider collider)
@@ -51,6 +57,13 @@ public class CoffeeMachine : MonoBehaviour
 
     private void GrabCoffee(InputAction.CallbackContext context)
     {
+        player.GetComponent<PlayerState>().hasInteracted = true;
+        CoffeeInteraction();
+        player.GetComponent<PlayerState>().hasInteracted = false;
+    }
+
+    private void CoffeeInteraction()
+    {
         if (currentState == State.Empty)
             StartCoroutine(Brewing());
 
@@ -58,7 +71,7 @@ public class CoffeeMachine : MonoBehaviour
         {
             coffee.SetActive(false);
             mug.SetActive(false);
-            
+
             player.GetComponent<PlayerState>().currentState = PlayerState.State.Coffee;
 
             currentState = State.Empty;
