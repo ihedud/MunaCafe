@@ -59,7 +59,7 @@ public class CoffeeMachine : MonoBehaviour
     {
         player.GetComponent<PlayerState>().hasInteracted = true;
         CoffeeInteraction();
-        player.GetComponent<PlayerState>().hasInteracted = false;
+        //player.GetComponent<PlayerState>().hasInteracted = false;
     }
 
     private void CoffeeInteraction()
