@@ -6,10 +6,10 @@ public class PlayerState : MonoBehaviour
 {
     public enum State { None, Coffee };
 
-    public State currentState;
+    [HideInInspector] public State currentState;
 
-    public bool hasInteracted;
-    public bool interactionDone;
+    [HideInInspector] public bool hasInteracted;
+    [HideInInspector] public bool interactionDone;
 
     [SerializeField] private GameObject coffee;
 

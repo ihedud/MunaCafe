@@ -80,6 +80,8 @@ public class CoffeeMachine : MonoBehaviour
             currentState = State.Empty;
             sphere.GetComponent<MeshRenderer>().material = red;
         }
+
+        player.GetComponent<PlayerState>().hasInteracted = false;
     }
 
     private IEnumerator Brewing()
@@ -92,8 +94,6 @@ public class CoffeeMachine : MonoBehaviour
 
         currentState = State.Done;
         sphere.GetComponent<MeshRenderer>().material = green;
-
-        player.GetComponent<PlayerState>().hasInteracted = false;
 
         coffee.SetActive(true);
     }
