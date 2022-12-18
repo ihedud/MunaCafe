@@ -13,6 +13,8 @@ public class Information
     public int colorID = 0;
     public bool hasPing = false;
     public bool hasInteracted = false;
+    public int order1 = 0;
+    public int order2 = 0;
 }
 
 public class JsonSerialization : MonoBehaviour

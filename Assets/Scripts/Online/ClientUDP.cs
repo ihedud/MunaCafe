@@ -23,8 +23,9 @@ public class ClientUDP : MonoBehaviour
     private bool closed = true;
     public bool readyToListen = false;
     private bool nextScene = false;
-    private bool onLoad = false;
     public bool pingDone = false;
+    public bool interactionDone = false;
+    private bool onLoad = false;
 
     private IPEndPoint host;
     private EndPoint remote;
@@ -124,6 +125,9 @@ public class ClientUDP : MonoBehaviour
 
                     if (!hostInfo.hasPing)
                         pingDone = false;
+
+                    if (!hostInfo.hasInteracted)
+                        interactionDone = false;
                 }
                 catch (Exception e) 
                 { 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Tray : MonoBehaviour
+public class TrayClient : MonoBehaviour
 {
     private enum Order { Coffee };
 
@@ -56,7 +56,7 @@ public class Tray : MonoBehaviour
 
     private void Update()
     {
-        if(currentTrayState == TrayState.Empty)
+        if (currentTrayState == TrayState.Empty)
         {
             StartCoroutine(AssignOrder());
         }
@@ -70,7 +70,7 @@ public class Tray : MonoBehaviour
 
         currentOrder = (Order)Random.Range(0, 0);
 
-        switch(currentOrder)
+        switch (currentOrder)
         {
             case Order.Coffee:
                 coffeeTR.SetActive(true);

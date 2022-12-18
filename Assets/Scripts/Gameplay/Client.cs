@@ -29,15 +29,18 @@ public class Client : MonoBehaviour
             {
                 if (client.readyToListen)
                 {
+                    // Color
                     client.myInfo.colorID = colorID;
                     hostPlayer.GetComponent<MeshRenderer>().material = materials[client.hostInfo.colorID];
                 }
             }
             else
             {
+                // Position
                 hostPlayer.transform.position = client.hostInfo.playerPos;
                 client.myInfo.playerPos = myPlayer.transform.position;
 
+                // Ping
                 if (client.hostInfo.hasPing && !client.pingDone)
                 {
                     hostPlayer.GetComponent<PlayerCommunicating>().ShowPingFromMessage();
@@ -45,6 +48,13 @@ public class Client : MonoBehaviour
                 }
 
                 client.myInfo.hasPing = myPlayer.GetComponent<PlayerCommunicating>().isShowing;
+
+                // Interaction
+                hostPlayer.GetComponent<PlayerState>().interactionDone = client.interactionDone;
+                hostPlayer.GetComponent<PlayerState>().hasInteracted = client.hostInfo.hasInteracted;
+
+                if(client.hostInfo.hasInteracted && !client.interactionDone)
+                    client.interactionDone = true;
 
                 client.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
             }
