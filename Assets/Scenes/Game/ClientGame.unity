@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44944602, g: 0.49952197, b: 0.5756907, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -178,8 +178,39 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a700323c78408c847a864b1d9d306775, type: 3}
+--- !u!1 &82514559 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205271116094706940, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 82514558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &82514560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205424110845784953, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 82514558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &82514561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205424110784293924, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 82514558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &82514562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82514559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b231962325a7adb489fcd35bbdc13cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coffeeTR: {fileID: 82514561}
+  coffee: {fileID: 82514560}
+  playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
 --- !u!1 &252123330
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,8 +326,39 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a700323c78408c847a864b1d9d306775, type: 3}
+--- !u!1 &479045814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205271116094706940, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 479045813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &479045815 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205424110845784953, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 479045813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &479045816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6205424110784293924, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 479045813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &479045817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479045814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b231962325a7adb489fcd35bbdc13cb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coffeeTR: {fileID: 479045816}
+  coffee: {fileID: 479045815}
+  playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
 --- !u!1001 &735916390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -695,6 +757,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 16011e61fbd9fd845b380660085b4150, type: 2}
   - {fileID: 2100000, guid: 503e1b1fac9c13a47a48a0cfcae73525, type: 2}
   - {fileID: 2100000, guid: 04af0475c11921e4f9f717d5d6095977, type: 2}
+  tray1: {fileID: 0}
+  tray2: {fileID: 0}
   colorID: 0
 --- !u!4 &1353777245
 Transform:
@@ -912,7 +976,6 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1926771619

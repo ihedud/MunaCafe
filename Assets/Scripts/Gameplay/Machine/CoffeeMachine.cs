@@ -15,7 +15,7 @@ public class CoffeeMachine : MonoBehaviour
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material green;
-    [SerializeField] private Material blue;
+    [SerializeField] private Material grey;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -86,7 +86,7 @@ public class CoffeeMachine : MonoBehaviour
     private IEnumerator Cooldown()
     {
         currentState = State.Cooldown;
-        sphere.GetComponent<MeshRenderer>().material = blue;
+        sphere.GetComponent<MeshRenderer>().material = grey;
 
         yield return new WaitForSeconds(cooldownTime);
 

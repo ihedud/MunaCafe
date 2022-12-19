@@ -8,6 +8,8 @@ public class Host : MonoBehaviour
     [SerializeField] private GameObject clientPlayer;
     [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
+    [SerializeField] private Tray tray1;
+    [SerializeField] private Tray tray2;
     private HostUDP host;
     public int colorID;
 
@@ -57,6 +59,10 @@ public class Host : MonoBehaviour
                     host.interactionDone = true;
 
                 host.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
+
+                // Tray
+                host.myInfo.order1 = (int)tray1.currentOrder;
+                host.myInfo.order2 = (int)tray2.currentOrder;
             }
         }
     }

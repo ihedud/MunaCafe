@@ -5,9 +5,9 @@ using UnityEngine.InputSystem;
 
 public class TrayClient : MonoBehaviour
 {
-    private enum Order { Coffee };
+    [HideInInspector] public enum Order { Coffee };
 
-    private Order currentOrder;
+    [HideInInspector] public Order currentOrder;
 
     private enum TrayState { Empty, Ongoing, Completed };
     private TrayState currentTrayState;
@@ -67,8 +67,6 @@ public class TrayClient : MonoBehaviour
         currentTrayState = TrayState.Ongoing;
 
         yield return new WaitForSeconds(6f);
-
-        currentOrder = (Order)Random.Range(0, 0);
 
         switch (currentOrder)
         {

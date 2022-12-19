@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943a86fa0babae34f96e6e27e61c18cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentOrder: 0
   coffeeTR: {fileID: 6205424110784293924}
   coffee: {fileID: 6205424110845784953}
   playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
@@ -59,8 +60,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 42.6015, y: 35.088715, z: 16.255672}
-  m_Center: {x: 13.800751, y: -10.044357, z: -0.65336037}
+  m_Size: {x: 28.442993, y: 35.088715, z: 2.8394375}
+  m_Center: {x: 6.7214966, y: -10.044357, z: 0.7424598}
 --- !u!1001 &6205271116927855805
 PrefabInstance:
   m_ObjectHideFlags: 0

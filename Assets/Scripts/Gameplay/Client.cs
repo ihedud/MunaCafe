@@ -8,6 +8,8 @@ public class Client : MonoBehaviour
     [SerializeField] private GameObject hostPlayer;
     [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
+    [SerializeField] private TrayClient tray1;
+    [SerializeField] private TrayClient tray2;
     private ClientUDP client;
     public int colorID;
 
@@ -57,6 +59,10 @@ public class Client : MonoBehaviour
                     client.interactionDone = true;
 
                 client.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
+
+                // Tray
+                tray1.currentOrder = (TrayClient.Order)client.hostInfo.order1;
+                tray2.currentOrder = (TrayClient.Order)client.hostInfo.order2;
             }
         }
     }
