@@ -5,15 +5,17 @@ using UnityEngine.InputSystem;
 
 public class CoffeeMachine : MonoBehaviour
 {
-    enum State { Empty, Brewing, Done };
+    enum State { Empty, Brewing, Done, Cooldown};
 
     [SerializeField] private int brewingTime;
+    [SerializeField] private int cooldownTime;
 
     // State
     [SerializeField] private GameObject sphere;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material green;
+    [SerializeField] private Material blue;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -77,9 +79,19 @@ public class CoffeeMachine : MonoBehaviour
 
             player.GetComponent<PlayerState>().currentState = PlayerState.State.Coffee;
 
-            currentState = State.Empty;
-            sphere.GetComponent<MeshRenderer>().material = red;
+            StartCoroutine(Cooldown());
         }
+    }
+
+    private IEnumerator Cooldown()
+    {
+        currentState = State.Cooldown;
+        sphere.GetComponent<MeshRenderer>().material = blue;
+
+        yield return new WaitForSeconds(cooldownTime);
+
+        currentState = State.Empty;
+        sphere.GetComponent<MeshRenderer>().material = red;
 
         player.GetComponent<PlayerState>().hasInteracted = false;
     }
@@ -96,5 +108,7 @@ public class CoffeeMachine : MonoBehaviour
         sphere.GetComponent<MeshRenderer>().material = green;
 
         coffee.SetActive(true);
+
+        player.GetComponent<PlayerState>().hasInteracted = false;
     }
 }
