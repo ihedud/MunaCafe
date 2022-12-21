@@ -7,6 +7,11 @@ using UnityEngine;
 [Serializable]
 public class Information
 {
+    // Packet Information
+    public int hostPacketID = 0;
+    public int clientPacketID = 0;
+
+    // Player Information
     public string username = " ";
     public bool onPlay = false;
     public Vector3 playerPos = Vector3.zero;

@@ -18,7 +18,10 @@ public class HostUDP : MonoBehaviour
     [SerializeField] private ManagePlayers playerManager;
 
     private int playerCount = 0;
-    
+    private List<Information> packetList = new List<Information>();
+    //private bool resend = false;
+    //private int resendID = 0;
+
     private bool closed = true;
     private bool readyToPlay = false;
     public bool readyToListen = false;
@@ -147,6 +150,21 @@ public class HostUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
+                    for (int i = 0; i < packetList.Count; i++)
+                    {
+                        if (packetList[i].hostPacketID == clientInfo.hostPacketID)
+                            packetList.RemoveAt(i);
+                        
+                        if (clientInfo.hostPacketID > packetList[i].hostPacketID)
+                        {
+                            // Resend data
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                            //resendID = packetList[i].hostPacketID;
+                            //resend = true;
+                        }
+                    }
+
                     if (clientInfo.onPlay)
                         nextScene = true;
 
@@ -173,8 +191,13 @@ public class HostUDP : MonoBehaviour
                 try
                 {
                     // Send data
+                    myInfo.hostPacketID++;
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    // if list.count mayor que 10, send world state y clear list
+                    if (packetList.Count > 10)
+                        Debug.Log("worldstate");
+                    packetList.Add(myInfo);
                 }
                 catch (Exception e)
                 {
