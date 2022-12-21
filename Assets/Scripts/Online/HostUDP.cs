@@ -150,6 +150,8 @@ public class HostUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
+                    myInfo.clientPacketID = clientInfo.clientPacketID;
+
                     for (int i = 0; i < packetList.Count; i++)
                     {
                         if (packetList[i].hostPacketID == clientInfo.hostPacketID)
