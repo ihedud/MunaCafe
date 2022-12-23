@@ -199,7 +199,8 @@ public class HostUDP : MonoBehaviour
                     // if list.count mayor que 10, send world state y clear list
                     if (packetList.Count > 10)
                         Debug.Log("worldstate");
-                    packetList.Add(myInfo);
+                    
+                    if (packetList.Count < 200) packetList.Add(myInfo);
                 }
                 catch (Exception e)
                 {

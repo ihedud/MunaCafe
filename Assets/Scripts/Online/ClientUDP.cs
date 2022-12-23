@@ -169,7 +169,7 @@ public class ClientUDP : MonoBehaviour
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                     if (packetList.Count > 10)
                         Debug.Log("pls send worldstate");
-                    packetList.Add(myInfo);
+                    if (packetList.Count < 200) packetList.Add(myInfo);
                 }
                 catch (Exception e)
                 {
