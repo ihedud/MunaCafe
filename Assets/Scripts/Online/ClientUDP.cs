@@ -164,7 +164,7 @@ public class ClientUDP : MonoBehaviour
                 try
                 {
                     // Send data
-                    myInfo.clientPacketID++;
+                    //myInfo.clientPacketID++;
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                     //if (packetList.Count > 10)

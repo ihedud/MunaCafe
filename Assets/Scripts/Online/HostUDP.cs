@@ -193,7 +193,7 @@ public class HostUDP : MonoBehaviour
                 try
                 {
                     // Send data
-                    myInfo.hostPacketID++;
+                    //myInfo.hostPacketID++;
                     byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                     newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                     // if list.count mayor que 10, send world state y clear list
