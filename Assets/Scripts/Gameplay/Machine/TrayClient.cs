@@ -20,6 +20,8 @@ public class TrayClient : MonoBehaviour
     // Input
     [SerializeField] private InputActionReference playerGrab;
 
+    [SerializeField] private PointsManager pointsManager;
+
     private void Awake()
     {
         currentTrayState = TrayState.Empty;
@@ -86,12 +88,13 @@ public class TrayClient : MonoBehaviour
     {
         if (currentTrayState == TrayState.Ongoing)
         {
-            currentTrayState = TrayState.Completed;
             switch (player.GetComponent<PlayerState>().currentState)
             {
                 case PlayerState.State.Coffee:
+                    currentTrayState = TrayState.Completed;
                     coffeeTR.SetActive(false);
                     coffee.SetActive(true);
+                    pointsManager.UpdatePoints(1, player);
                     StartCoroutine(CompleteOrder());
                     break;
             }
