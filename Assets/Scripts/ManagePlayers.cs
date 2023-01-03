@@ -22,10 +22,11 @@ public class ManagePlayers : MonoBehaviour
 
     private bool updatePlayers = false;
     private bool showEmoji = false;
-    public bool playerUpdated = false;
-    public bool hostUpdated = false;
-    public bool emojiUpdated = false;
-    public bool emojiIsUpdated = false;
+
+    [HideInInspector] public bool playerUpdated = false;
+    [HideInInspector] public bool hostUpdated = false;
+    [HideInInspector] public bool emojiUpdated = false;
+    [HideInInspector] public bool emojiIsUpdated = false;
 
     private void Awake()
     {
