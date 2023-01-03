@@ -11,6 +11,8 @@ public class Client : MonoBehaviour
     [SerializeField] private TrayClient tray1;
     [SerializeField] private TrayClient tray2;
     private ClientUDP client;
+
+    public ClientUDP clientInfo => client;
     public int colorID;
 
     private void Awake()

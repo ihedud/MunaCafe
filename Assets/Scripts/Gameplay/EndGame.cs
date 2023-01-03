@@ -38,7 +38,7 @@ public class EndGame : MonoBehaviour
     {
         endGame = true;
 
-        //inGameUI.SetActive(false);
+        inGameUI.SetActive(false);
         mainCamera.SetActive(false);
         mainLight.SetActive(false);
 

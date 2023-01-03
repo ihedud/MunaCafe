@@ -11,6 +11,8 @@ public class Host : MonoBehaviour
     [SerializeField] private Tray tray1;
     [SerializeField] private Tray tray2;
     private HostUDP host;
+
+    public HostUDP hostInfo => host;
     public int colorID;
 
     private void Awake()
