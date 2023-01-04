@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-    public enum State { None, Coffee };
+    public enum State { None, Coffee, EmptyTea, Tea, BurnedTea };
 
     [HideInInspector] public State currentState;
 
@@ -12,6 +12,9 @@ public class PlayerState : MonoBehaviour
     [HideInInspector] public bool interactionDone;
 
     [SerializeField] private GameObject coffee;
+    [SerializeField] private GameObject emptyTea;
+    [SerializeField] private GameObject tea;
+    [SerializeField] private GameObject burnedTea;
 
     private void Awake()
     {
@@ -22,9 +25,20 @@ public class PlayerState : MonoBehaviour
 
     private void Update()
     {
-        if(currentState == State.Coffee && !coffee.activeSelf)
+        if (currentState == State.Coffee && !coffee.activeSelf)
             coffee.SetActive(true);
-        else if(currentState == State.None && coffee.activeSelf)
+        else if (currentState == State.EmptyTea && !emptyTea.activeSelf)
+            emptyTea.SetActive(true);
+        else if (currentState == State.Tea && !tea.activeSelf)
+            tea.SetActive(true);
+        else if (currentState == State.BurnedTea && !burnedTea.activeSelf)
+            burnedTea.SetActive(true);
+        else if (currentState == State.None)
+        {
             coffee.SetActive(false);
+            emptyTea.SetActive(false);
+            tea.SetActive(false);
+            burnedTea.SetActive(false);
+        }
     }
 }
