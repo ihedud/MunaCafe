@@ -6,14 +6,14 @@ public class Host : MonoBehaviour
 {
     [SerializeField] private GameObject myPlayer;
     [SerializeField] private GameObject clientPlayer;
-    [SerializeField] private bool lobby = false;
+    [HideInInspector] [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
     [SerializeField] private Tray tray1;
     [SerializeField] private Tray tray2;
     private HostUDP host;
 
     public HostUDP hostInfo => host;
-    public int colorID;
+    [HideInInspector] public int colorID;
 
     private void Awake()
     {

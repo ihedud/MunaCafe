@@ -6,14 +6,14 @@ public class Client : MonoBehaviour
 {
     [SerializeField] private GameObject myPlayer;
     [SerializeField] private GameObject hostPlayer;
-    [SerializeField] private bool lobby = false;
+    [HideInInspector] [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
     [SerializeField] private TrayClient tray1;
     [SerializeField] private TrayClient tray2;
     private ClientUDP client;
 
     public ClientUDP clientInfo => client;
-    public int colorID;
+    [HideInInspector] public int colorID;
 
     private void Awake()
     {

@@ -5,15 +5,18 @@ using UnityEngine.InputSystem;
 
 public class Tray : MonoBehaviour
 {
-    [HideInInspector] public enum Order { Coffee };
+    [HideInInspector] public enum Order { Coffee, Tea };
 
     [HideInInspector] public Order currentOrder;
 
     private enum TrayState { Empty, Ongoing, Completed };
     private TrayState currentTrayState;
 
+    // Orders
     [SerializeField] private GameObject coffeeTR;
     [SerializeField] private GameObject coffee;
+    [SerializeField] private GameObject teaTR;
+    [SerializeField] private GameObject tea;
 
     private GameObject player;
 
@@ -68,7 +71,7 @@ public class Tray : MonoBehaviour
     {
         currentTrayState = TrayState.Ongoing;
 
-        currentOrder = (Order)Random.Range(0, 0);
+        currentOrder = (Order)Random.Range(0, 2);
 
         yield return new WaitForSeconds(6f);
 
@@ -76,6 +79,9 @@ public class Tray : MonoBehaviour
         {
             case Order.Coffee:
                 coffeeTR.SetActive(true);
+                break;
+            case Order.Tea:
+                teaTR.SetActive(true);
                 break;
         }
     }
@@ -99,6 +105,13 @@ public class Tray : MonoBehaviour
                     pointsManager.UpdatePoints(1, player);
                     StartCoroutine(CompleteOrder());
                     break;
+                case PlayerState.State.Tea:
+                    currentTrayState = TrayState.Completed;
+                    teaTR.SetActive(false);
+                    tea.SetActive(true);
+                    pointsManager.UpdatePoints(1, player);
+                    StartCoroutine(CompleteOrder());
+                    break;
             }
         }
     }
@@ -110,6 +123,8 @@ public class Tray : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         coffee.SetActive(false);
+        tea.SetActive(false);
+
         currentTrayState = TrayState.Empty;
     }
 }

@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class EndGame : MonoBehaviour
 {
-    [SerializeField] private float maxTime;
+    // Time
+    [SerializeField] private float maxGameTime;
 
     // UI
     [SerializeField] private GameObject inGameUI;
     [SerializeField] private GameObject endGameUI;
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject mainLight;
+    [SerializeField] private LoadScene loader;
 
     private float currentTime;
 
@@ -28,13 +30,13 @@ public class EndGame : MonoBehaviour
         if (endGame)
             return;
 
-        if (currentTime < maxTime)
+        if (currentTime < maxGameTime)
             currentTime += Time.deltaTime;
         else
-            FinishGame();
+            ShowScore();
     }
 
-    private void FinishGame()
+    private void ShowScore()
     {
         endGame = true;
 

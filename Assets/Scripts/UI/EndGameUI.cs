@@ -24,10 +24,19 @@ public class EndGameUI : MonoBehaviour
     [SerializeField] private MeshRenderer player1Mat;
     [SerializeField] private MeshRenderer player2Mat;
 
+    [SerializeField] private float scoreDisplayedTime;
+
+    [SerializeField] private LoadScene loader;
+
     private Information player1;
     private Information player2;
 
-    private void Awake()
+    private void OnEnable()
+    {
+        StartCoroutine(LeaveToLobby());
+    }
+
+    private void Start()
     {
         if (host != null)
         {
@@ -44,6 +53,27 @@ public class EndGameUI : MonoBehaviour
         username2.text = player2.username;
         capsule1.material = player1Mat.material;
         capsule2.material = player2Mat.material;
+    }
+
+    private IEnumerator LeaveToLobby()
+    {
+        yield return new WaitForSeconds(scoreDisplayedTime);
+
+        // Esto es si vamos al lobby
+        // Tenemos que hacer que al cargar estas escenas,
+        // salga bien el canvas que toca (lobby)
+
+        //if (host != null)
+        //    loader.LoadNextScene("UDP_NewGame");
+        //else if (client != null)
+        //    loader.LoadNextScene("UDP_JoinGame");
+
+        if (host != null)
+            Destroy(FindObjectOfType<HostUDP>());
+        else if (client != null)
+            Destroy(FindObjectOfType<ClientUDP>());
+
+        loader.LoadNextScene("MainMenu");
     }
 
 }
