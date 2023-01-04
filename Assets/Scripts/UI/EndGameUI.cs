@@ -23,9 +23,12 @@ public class EndGameUI : MonoBehaviour
     [SerializeField] private MeshRenderer capsule2;
     [SerializeField] private MeshRenderer player1Mat;
     [SerializeField] private MeshRenderer player2Mat;
+    [SerializeField] private TextMeshProUGUI points1;
+    [SerializeField] private TextMeshProUGUI points2;
 
     [SerializeField] private float scoreDisplayedTime;
 
+    [SerializeField] private PointsManager pointsManager;
     [SerializeField] private LoadScene loader;
 
     private Information player1;
@@ -33,6 +36,9 @@ public class EndGameUI : MonoBehaviour
 
     private void OnEnable()
     {
+        points1.text = pointsManager.player1Points.ToString();
+        points2.text = pointsManager.player2Points.ToString();
+
         StartCoroutine(LeaveToLobby());
     }
 
