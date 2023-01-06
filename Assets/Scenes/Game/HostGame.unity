@@ -913,6 +913,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+--- !u!23 &1685825642 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23087463268523072, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+  m_PrefabInstance: {fileID: 1685825641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1689809179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1275,6 +1280,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1773623360729482, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
   m_PrefabInstance: {fileID: 1973651563}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &1973651565 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 23087463268523072, guid: 11aaea5348574644a9eb4f4504fcce3f, type: 3}
+  m_PrefabInstance: {fileID: 1973651563}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1702142115346672528
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1523,6 +1533,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -21.3
       objectReference: {fileID: 0}
+    - target: {fileID: 5804238136028416489, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
+      propertyPath: host
+      value: 
+      objectReference: {fileID: 1301816234}
+    - target: {fileID: 5804238136028416489, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
+      propertyPath: player1Mat
+      value: 
+      objectReference: {fileID: 1973651565}
+    - target: {fileID: 5804238136028416489, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
+      propertyPath: player2Mat
+      value: 
+      objectReference: {fileID: 1685825642}
     - target: {fileID: 5804238136028416489, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
       propertyPath: pointsManager
       value: 

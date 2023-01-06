@@ -1018,8 +1018,11 @@ MonoBehaviour:
   capsule2: {fileID: 5804238136657823335}
   player1Mat: {fileID: 0}
   player2Mat: {fileID: 0}
+  points1: {fileID: 7026707795307111689}
+  points2: {fileID: 2768972549611802638}
   scoreDisplayedTime: 8
-  loader: {fileID: 0}
+  pointsManager: {fileID: 0}
+  loader: {fileID: 8970908721174397095, guid: 634b8c40ab6b3e3458a6edd8b385557e, type: 3}
 --- !u!1 &5804238136219603515
 GameObject:
   m_ObjectHideFlags: 0
