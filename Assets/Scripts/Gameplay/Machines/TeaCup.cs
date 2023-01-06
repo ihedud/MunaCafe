@@ -50,10 +50,18 @@ public class TeaCup : MonoBehaviour
         if (player.GetComponent<PlayerState>().currentState == PlayerState.State.None)
         {
             player.GetComponent<PlayerState>().currentState = PlayerState.State.EmptyTea;
-            playerGrab.action.Disable();
-            playerGrab.action.performed -= GrabCup;
-            player.GetComponent<PlayerState>().hasInteracted = false;
-            gameObject.SetActive(false);
+            StartCoroutine(Grabbing());
         }
+    }
+
+    private IEnumerator Grabbing()
+    {
+        playerGrab.action.Disable();
+        playerGrab.action.performed -= GrabCup;
+
+        yield return new WaitForSeconds(0.5f);
+
+        player.GetComponent<PlayerState>().hasInteracted = false;
+        gameObject.SetActive(false);
     }
 }
