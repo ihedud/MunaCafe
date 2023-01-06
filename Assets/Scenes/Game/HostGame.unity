@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44944584, g: 0.49952215, b: 0.5756909, a: 1}
+  m_IndirectSpecularColor: {r: 0.44944602, g: 0.49952197, b: 0.5756907, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4918b3f88eb2df42a116e9705da139d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGameTime: 25
+  maxGameTime: 180
   inGameUI: {fileID: 53340844}
   endGameUI: {fileID: 1325618338}
   mainCamera: {fileID: 1790359590}

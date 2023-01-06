@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4918b3f88eb2df42a116e9705da139d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxGameTime: 25
+  maxGameTime: 180
   inGameUI: {fileID: 335918194}
   endGameUI: {fileID: 410379227}
   mainCamera: {fileID: 1863689761}
