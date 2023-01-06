@@ -96,18 +96,24 @@ public class TrayClient : MonoBehaviour
             switch (player.GetComponent<PlayerState>().currentState)
             {
                 case PlayerState.State.Coffee:
-                    currentTrayState = TrayState.Completed;
-                    coffeeTR.SetActive(false);
-                    coffee.SetActive(true);
-                    pointsManager.UpdatePoints(1, player);
-                    StartCoroutine(CompleteOrder());
+                    if (currentOrder == Order.Coffee)
+                    {
+                        currentTrayState = TrayState.Completed;
+                        coffeeTR.SetActive(false);
+                        coffee.SetActive(true);
+                        pointsManager.UpdatePoints(1, player);
+                        StartCoroutine(CompleteOrder());
+                    }
                     break;
                 case PlayerState.State.Tea:
-                    currentTrayState = TrayState.Completed;
-                    teaTR.SetActive(false);
-                    tea.SetActive(true);
-                    pointsManager.UpdatePoints(1, player);
-                    StartCoroutine(CompleteOrder());
+                    if (currentOrder == Order.Tea)
+                    {
+                        currentTrayState = TrayState.Completed;
+                        teaTR.SetActive(false);
+                        tea.SetActive(true);
+                        pointsManager.UpdatePoints(1, player);
+                        StartCoroutine(CompleteOrder());
+                    }
                     break;
             }
         }

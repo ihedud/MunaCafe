@@ -71,7 +71,7 @@ public class Tray : MonoBehaviour
     {
         currentTrayState = TrayState.Ongoing;
 
-        currentOrder = (Order)Random.Range(0, 2);
+        currentOrder = (Order)Random.Range(0, 1);
 
         yield return new WaitForSeconds(6f);
 
@@ -99,18 +99,24 @@ public class Tray : MonoBehaviour
             switch (player.GetComponent<PlayerState>().currentState)
             {
                 case PlayerState.State.Coffee:
-                    currentTrayState = TrayState.Completed;
-                    coffeeTR.SetActive(false);
-                    coffee.SetActive(true);
-                    pointsManager.UpdatePoints(1, player);
-                    StartCoroutine(CompleteOrder());
+                    if (currentOrder == Order.Coffee)
+                    {
+                        currentTrayState = TrayState.Completed;
+                        coffeeTR.SetActive(false);
+                        coffee.SetActive(true);
+                        pointsManager.UpdatePoints(1, player);
+                        StartCoroutine(CompleteOrder());
+                    }
                     break;
                 case PlayerState.State.Tea:
-                    currentTrayState = TrayState.Completed;
-                    teaTR.SetActive(false);
-                    tea.SetActive(true);
-                    pointsManager.UpdatePoints(1, player);
-                    StartCoroutine(CompleteOrder());
+                    if (currentOrder == Order.Tea)
+                    {
+                        currentTrayState = TrayState.Completed;
+                        teaTR.SetActive(false);
+                        tea.SetActive(true);
+                        pointsManager.UpdatePoints(1, player);
+                        StartCoroutine(CompleteOrder());
+                    }
                     break;
             }
         }
