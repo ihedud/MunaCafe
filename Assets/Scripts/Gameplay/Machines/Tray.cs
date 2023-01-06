@@ -71,7 +71,7 @@ public class Tray : MonoBehaviour
     {
         currentTrayState = TrayState.Ongoing;
 
-        currentOrder = (Order)Random.Range(0, 1);
+        currentOrder = (Order)Random.Range(0, 2);
 
         yield return new WaitForSeconds(6f);
 
