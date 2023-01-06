@@ -22,13 +22,13 @@ public class HostUDP : MonoBehaviour
     //private bool resend = false;
     //private int resendID = 0;
 
-    private bool closed = true;
-    private bool readyToPlay = false;
-    public bool readyToListen = false;
-    private bool nextScene = false;
-    public bool pingDone = false;
-    public bool interactionDone = false;
+    [HideInInspector] public bool readyToListen = false;
+    [HideInInspector] public bool pingDone = false;
+    [HideInInspector] public bool interactionDone = false;
     private bool onLoad = false;
+    private bool nextScene = false;
+    private bool readyToPlay = false;
+    private bool closed = true;
 
     private IPEndPoint client;
     private EndPoint remote;
@@ -37,8 +37,8 @@ public class HostUDP : MonoBehaviour
     private Thread receivingThread;
     private Thread sendingThread;
 
-    public Information myInfo = new Information();
-    public Information clientInfo = new Information();
+    [HideInInspector] public Information myInfo = new Information();
+    [HideInInspector] public Information clientInfo = new Information();
 
     [SerializeField] private GameObject playButton;
     [SerializeField] private LoadScene loader;

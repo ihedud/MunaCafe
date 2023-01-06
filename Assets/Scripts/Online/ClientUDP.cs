@@ -21,12 +21,12 @@ public class ClientUDP : MonoBehaviour
     private int playerCount = 0;
     //private List<Information> packetList = new List<Information>();
 
-    private bool closed = true;
-    public bool readyToListen = false;
-    private bool nextScene = false;
-    public bool pingDone = false;
-    public bool interactionDone = false;
+    [HideInInspector] public bool readyToListen = false;
+    [HideInInspector] public bool pingDone = false;
+    [HideInInspector] public bool interactionDone = false;
     private bool onLoad = false;
+    private bool nextScene = false;
+    private bool closed = true;
 
     private IPEndPoint host;
     private EndPoint remote;
@@ -35,8 +35,8 @@ public class ClientUDP : MonoBehaviour
     private Thread receivingThread;
     private Thread sendingThread;
 
-    public Information myInfo = new Information();
-    public Information hostInfo = new Information();
+    [HideInInspector] public Information myInfo = new Information();
+    [HideInInspector] public Information hostInfo = new Information();
 
     [SerializeField] private JsonSerialization json;
     [SerializeField] private LoadScene loader;

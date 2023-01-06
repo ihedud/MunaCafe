@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44944608, g: 0.49952233, b: 0.5756912, a: 1}
+  m_IndirectSpecularColor: {r: 0.44944602, g: 0.49952197, b: 0.5756907, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -425,6 +425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d12ae80fc6af96448c82341a25b5bfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &335918194 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6723184324058187292, guid: 42d55c78d30b5614485cd4f588d46ee1, type: 3}
+  m_PrefabInstance: {fileID: 335918192}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &410379226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -698,6 +703,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
+--- !u!1 &410379227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5804238137195777918, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
+  m_PrefabInstance: {fileID: 410379226}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &479045813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1206,6 +1216,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353777245}
   - component: {fileID: 1353777244}
+  - component: {fileID: 1353777246}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1253,6 +1264,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1353777246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353777243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4918b3f88eb2df42a116e9705da139d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxGameTime: 25
+  inGameUI: {fileID: 335918194}
+  endGameUI: {fileID: 410379227}
+  mainCamera: {fileID: 1863689761}
+  mainLight: {fileID: 1926771617}
+  loader: {fileID: 0}
 --- !u!1 &1819416695
 GameObject:
   m_ObjectHideFlags: 0
