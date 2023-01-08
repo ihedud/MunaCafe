@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Tray : MonoBehaviour
 {
-    [HideInInspector] public enum Order { Coffee, Tea };
+    [HideInInspector] public enum Order { Coffee, Tea, Donut };
 
     [HideInInspector] public Order currentOrder;
 
@@ -17,6 +17,8 @@ public class Tray : MonoBehaviour
     [SerializeField] private GameObject coffee;
     [SerializeField] private GameObject teaTR;
     [SerializeField] private GameObject tea;
+    [SerializeField] private GameObject donutTR;
+    [SerializeField] private GameObject donut;
 
     private GameObject player;
 
@@ -71,7 +73,7 @@ public class Tray : MonoBehaviour
     {
         currentTrayState = TrayState.Ongoing;
 
-        currentOrder = (Order)Random.Range(0, 2);
+        currentOrder = (Order)Random.Range(0, 3);
 
         yield return new WaitForSeconds(6f);
 
@@ -82,6 +84,9 @@ public class Tray : MonoBehaviour
                 break;
             case Order.Tea:
                 teaTR.SetActive(true);
+                break;
+            case Order.Donut:
+                donutTR.SetActive(true);
                 break;
         }
     }
@@ -118,6 +123,17 @@ public class Tray : MonoBehaviour
                         StartCoroutine(CompleteOrder());
                     }
                     break;
+                case PlayerState.State.Donut:
+                    if (currentOrder == Order.Donut)
+                    {
+                        currentTrayState = TrayState.Completed;
+                        donutTR.SetActive(false);
+                        donut.SetActive(true);
+                        donut.GetComponent<MeshFilter>().mesh = player.GetComponent<PlayerState>().GetDonutMesh();
+                        pointsManager.UpdatePoints(2, player);
+                        StartCoroutine(CompleteOrder());
+                    }
+                    break;
             }
         }
     }
@@ -130,6 +146,7 @@ public class Tray : MonoBehaviour
 
         coffee.SetActive(false);
         tea.SetActive(false);
+        donut.SetActive(false);
 
         currentTrayState = TrayState.Empty;
     }

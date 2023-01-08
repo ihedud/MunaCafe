@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class TrayClient : MonoBehaviour
 {
-    [HideInInspector] public enum Order { Coffee, Tea };
+    [HideInInspector] public enum Order { Coffee, Tea, Donut };
 
     [HideInInspector] public Order currentOrder;
 
@@ -16,6 +16,8 @@ public class TrayClient : MonoBehaviour
     [SerializeField] private GameObject coffee;
     [SerializeField] private GameObject teaTR;
     [SerializeField] private GameObject tea;
+    [SerializeField] private GameObject donutTR;
+    [SerializeField] private GameObject donut;
 
     private GameObject player;
 
@@ -80,6 +82,9 @@ public class TrayClient : MonoBehaviour
             case Order.Tea:
                 teaTR.SetActive(true);
                 break;
+            case Order.Donut:
+                donutTR.SetActive(true);
+                break;
         }
     }
 
@@ -115,6 +120,16 @@ public class TrayClient : MonoBehaviour
                         StartCoroutine(CompleteOrder());
                     }
                     break;
+                case PlayerState.State.Donut:
+                    if (currentOrder == Order.Donut)
+                    {
+                        currentTrayState = TrayState.Completed;
+                        donutTR.SetActive(false);
+                        donut.SetActive(true);
+                        pointsManager.UpdatePoints(2, player);
+                        StartCoroutine(CompleteOrder());
+                    }
+                    break;
             }
         }
     }
@@ -127,6 +142,7 @@ public class TrayClient : MonoBehaviour
 
         coffee.SetActive(false);
         tea.SetActive(false);
+        donut.SetActive(false);
 
         currentTrayState = TrayState.Empty;
     }

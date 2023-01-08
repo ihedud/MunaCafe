@@ -112,8 +112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefe419e63d5e2247b4ccda92b1fc3d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brewingTime: 4
-  burningTime: 2
+  brewingTime: 6
+  burningTime: 4
   cooldownTime: 2
   sphere: {fileID: 8066917321334418457}
   red: {fileID: 2100000, guid: d03c6c1f79d80ad40abcff60ec2a5d61, type: 2}
