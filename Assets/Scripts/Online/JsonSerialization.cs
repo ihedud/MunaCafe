@@ -20,6 +20,7 @@ public class Information
     public bool hasInteracted = false;
     public int order1 = 0;
     public int order2 = 0;
+    public int donutMesh = 0;
 }
 
 public class JsonSerialization : MonoBehaviour

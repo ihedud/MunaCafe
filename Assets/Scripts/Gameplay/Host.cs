@@ -10,6 +10,7 @@ public class Host : MonoBehaviour
     [SerializeField] private List<Material> materials;
     [SerializeField] private Tray tray1;
     [SerializeField] private Tray tray2;
+    [SerializeField] private DonutStation donutStation;
     private HostUDP host;
 
     public HostUDP hostInfo => host;
@@ -65,6 +66,10 @@ public class Host : MonoBehaviour
                 // Tray
                 host.myInfo.order1 = (int)tray1.currentOrder;
                 host.myInfo.order2 = (int)tray2.currentOrder;
+
+                // Donut
+                host.myInfo.donutMesh = donutStation.currentMesh;
+                donutStation.currentMesh = host.clientInfo.donutMesh;
             }
         }
     }

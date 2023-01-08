@@ -529,6 +529,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 04af0475c11921e4f9f717d5d6095977, type: 2}
   tray1: {fileID: 6205271117079916153}
   tray2: {fileID: 942625644}
+  donutStation: {fileID: 5357955107794658309}
   colorID: 0
 --- !u!4 &1301816235
 Transform:
@@ -561,7 +562,6 @@ MonoBehaviour:
   endGameUI: {fileID: 1325618338}
   mainCamera: {fileID: 1790359590}
   mainLight: {fileID: 575726929}
-  loader: {fileID: 0}
 --- !u!1 &1325618338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5804238137195777918, guid: cc09db12a62d0b8419e1efb31aa9002c, type: 3}
@@ -1485,14 +1485,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 2b7d9609b83c67e4f8657a12994bba8d, type: 2}
-    - target: {fileID: 6247955124954052595, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 83fb2baabac653648b2f28580c5c6c3a, type: 2}
-    - target: {fileID: 6261934478928663992, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
-      propertyPath: yellow
-      value: 
-      objectReference: {fileID: 2100000, guid: 16011e61fbd9fd845b380660085b4150, type: 2}
     - target: {fileID: 6261934478928663998, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
       propertyPath: m_Name
       value: DonutStation
@@ -1543,6 +1535,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
+--- !u!114 &5357955107794658309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6261934478928663992, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
+  m_PrefabInstance: {fileID: 5357955107794658308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca64f6c39a10d1f49991ca5e7b189efa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5804238136138996700
 PrefabInstance:
   m_ObjectHideFlags: 0

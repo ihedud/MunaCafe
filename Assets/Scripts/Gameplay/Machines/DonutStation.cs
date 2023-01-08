@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class DonutStation : MonoBehaviour
 {
+    [HideInInspector] public int currentMesh;
     enum State { Empty, Start, Half, Finished };
 
     [SerializeField] private int updateTime;
@@ -124,8 +125,10 @@ public class DonutStation : MonoBehaviour
                     half.SetActive(false);
                     start.SetActive(false);
                     finished.SetActive(true);
-                    finished.GetComponent<MeshFilter>().mesh = donutMeshes[Random.Range(0, 3)];
-
+                    if (player.tag == "Player")
+                        currentMesh = Random.Range(0, 3);
+                    finished.GetComponent<MeshFilter>().mesh = donutMeshes[currentMesh];
+                    player.GetComponent<PlayerState>().hasInteracted = false;
                     break;
             }
             timer = 0.0f;

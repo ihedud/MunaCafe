@@ -10,6 +10,7 @@ public class Client : MonoBehaviour
     [SerializeField] private List<Material> materials;
     [SerializeField] private TrayClient tray1;
     [SerializeField] private TrayClient tray2;
+    [SerializeField] private DonutStation donutStation;
     private ClientUDP client;
 
     public ClientUDP clientInfo => client;
@@ -65,6 +66,10 @@ public class Client : MonoBehaviour
                 // Tray
                 tray1.currentOrder = (TrayClient.Order)client.hostInfo.order1;
                 tray2.currentOrder = (TrayClient.Order)client.hostInfo.order2;
+
+                // Donut
+                client.myInfo.donutMesh = donutStation.currentMesh;
+                donutStation.currentMesh = client.hostInfo.donutMesh;
             }
         }
     }

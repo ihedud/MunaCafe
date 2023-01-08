@@ -12,7 +12,6 @@ public class EndGame : MonoBehaviour
     [SerializeField] private GameObject endGameUI;
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private GameObject mainLight;
-    [SerializeField] private LoadScene loader;
 
     private float currentTime;
 
