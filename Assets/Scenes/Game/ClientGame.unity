@@ -213,8 +213,8 @@ MonoBehaviour:
   coffee: {fileID: 82514560}
   teaTR: {fileID: 82514564}
   tea: {fileID: 82514563}
-  donutTR: {fileID: 0}
-  donut: {fileID: 0}
+  donutTR: {fileID: 82514566}
+  donut: {fileID: 82514565}
   playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
   pointsManager: {fileID: 335918193}
 --- !u!1 &82514563 stripped
@@ -225,6 +225,16 @@ GameObject:
 --- !u!1 &82514564 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6204792403113803212, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 82514558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &82514565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3575029197797997879, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 82514558}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &82514566 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 652768258053026033, guid: a700323c78408c847a864b1d9d306775, type: 3}
   m_PrefabInstance: {fileID: 82514558}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &252123330
@@ -255,7 +265,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &321215508
 GameObject:
@@ -804,8 +814,8 @@ MonoBehaviour:
   coffee: {fileID: 479045815}
   teaTR: {fileID: 479045819}
   tea: {fileID: 479045818}
-  donutTR: {fileID: 0}
-  donut: {fileID: 0}
+  donutTR: {fileID: 479045821}
+  donut: {fileID: 479045820}
   playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
   pointsManager: {fileID: 335918193}
 --- !u!1 &479045818 stripped
@@ -816,6 +826,16 @@ GameObject:
 --- !u!1 &479045819 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6204792403113803212, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 479045813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &479045820 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3575029197797997879, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 479045813}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &479045821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 652768258053026033, guid: a700323c78408c847a864b1d9d306775, type: 3}
   m_PrefabInstance: {fileID: 479045813}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &553962462
@@ -846,7 +866,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &735916390
 PrefabInstance:
@@ -1733,7 +1753,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2007178803
 PrefabInstance:
@@ -1881,7 +1901,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2061858893
 PrefabInstance:

@@ -56,8 +56,7 @@ public class DonutStation : MonoBehaviour
         if (collider.gameObject.tag == "Player2" && collider.gameObject.GetComponent<PlayerState>().hasInteracted && !collider.gameObject.GetComponent<PlayerState>().interactionDone)
         {
             player = collider.gameObject;
-            if (currentState == State.Empty)
-                isBaking = true;
+            DonutInteraction();
         }
     }
 
@@ -76,6 +75,11 @@ public class DonutStation : MonoBehaviour
     private void GrabDonut(InputAction.CallbackContext context)
     {
         player.GetComponent<PlayerState>().hasInteracted = true;
+        DonutInteraction();
+    }
+
+    private void DonutInteraction()
+    {
         if (currentState == State.Empty)
         {
             isBaking = true;
