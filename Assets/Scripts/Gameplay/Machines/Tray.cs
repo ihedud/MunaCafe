@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Tray : MonoBehaviour
 {
-    [HideInInspector] public enum Order { Coffee, Tea, Donut, Coffee_Donut, Tea_Donut };
+    [HideInInspector] public enum Order { Coffee, Tea, Donut };
 
     [HideInInspector] public Order currentOrder;
 
@@ -19,16 +19,6 @@ public class Tray : MonoBehaviour
     [SerializeField] private GameObject tea;
     [SerializeField] private GameObject donutTR;
     [SerializeField] private GameObject donut;
-
-    [SerializeField] private GameObject coffeeTR_donutTR;
-    [SerializeField] private GameObject coffee_donutTR;
-    [SerializeField] private GameObject coffeeTR_donut;
-    [SerializeField] private GameObject coffee_donut;
-
-    [SerializeField] private GameObject teaTR_donutTR;
-    [SerializeField] private GameObject tea_donutTR;
-    [SerializeField] private GameObject teaTR_donut;
-    [SerializeField] private GameObject tea_donut;
 
     private GameObject player;
 
@@ -83,7 +73,7 @@ public class Tray : MonoBehaviour
     {
         currentTrayState = TrayState.Ongoing;
 
-        currentOrder = (Order)Random.Range(0, 5);
+        currentOrder = (Order)Random.Range(0, 3);
 
         yield return new WaitForSeconds(6f);
 
@@ -97,12 +87,6 @@ public class Tray : MonoBehaviour
                 break;
             case Order.Donut:
                 donutTR.SetActive(true);
-                break;
-            case Order.Coffee_Donut:
-                coffeeTR_donutTR.SetActive(true);
-                break;
-            case Order.Tea_Donut:
-                teaTR_donutTR.SetActive(true);
                 break;
         }
     }
@@ -128,23 +112,6 @@ public class Tray : MonoBehaviour
                         pointsManager.UpdatePoints(1, player);
                         StartCoroutine(CompleteOrder());
                     }
-                    else if (currentOrder == Order.Coffee_Donut)
-                    {
-                        if (coffeeTR_donutTR.activeSelf)
-                        {
-                            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
-                            coffeeTR_donutTR.SetActive(false);
-                            coffee_donutTR.SetActive(true);
-                        }
-                        else if (coffeeTR_donut.activeSelf)
-                        {
-                            coffeeTR_donut.SetActive(false);
-                            coffee_donut.SetActive(true);
-                            currentTrayState = TrayState.Completed;
-                            pointsManager.UpdatePoints(5, player);
-                            StartCoroutine(CompleteOrder());
-                        }
-                    }
                     break;
                 case PlayerState.State.Tea:
                     if (currentOrder == Order.Tea)
@@ -152,25 +119,8 @@ public class Tray : MonoBehaviour
                         currentTrayState = TrayState.Completed;
                         teaTR.SetActive(false);
                         tea.SetActive(true);
-                        pointsManager.UpdatePoints(2, player);
+                        pointsManager.UpdatePoints(1, player);
                         StartCoroutine(CompleteOrder());
-                    }
-                    else if (currentOrder == Order.Tea_Donut)
-                    {
-                        if (teaTR_donutTR.activeSelf)
-                        {
-                            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
-                            teaTR_donutTR.SetActive(false);
-                            tea_donutTR.SetActive(true);
-                        }
-                        else if (teaTR_donut.activeSelf)
-                        {
-                            teaTR_donut.SetActive(false);
-                            tea_donut.SetActive(true);
-                            currentTrayState = TrayState.Completed;
-                            pointsManager.UpdatePoints(6, player);
-                            StartCoroutine(CompleteOrder());
-                        }
                     }
                     break;
                 case PlayerState.State.Donut:
@@ -179,42 +129,8 @@ public class Tray : MonoBehaviour
                         currentTrayState = TrayState.Completed;
                         donutTR.SetActive(false);
                         donut.SetActive(true);
-                        pointsManager.UpdatePoints(3, player);
+                        pointsManager.UpdatePoints(2, player);
                         StartCoroutine(CompleteOrder());
-                    }
-                    else if (currentOrder == Order.Coffee_Donut)
-                    {
-                        if(coffeeTR_donutTR.activeSelf)
-                        {
-                            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
-                            coffeeTR_donutTR.SetActive(false);
-                            coffeeTR_donut.SetActive(true);
-                        }
-                        else if (coffee_donutTR.activeSelf)
-                        {
-                            coffee_donutTR.SetActive(false);
-                            coffee_donut.SetActive(true);
-                            currentTrayState = TrayState.Completed;
-                            pointsManager.UpdatePoints(5, player);
-                            StartCoroutine(CompleteOrder());
-                        }
-                    }
-                    else if (currentOrder == Order.Tea_Donut)
-                    {
-                        if (teaTR_donutTR.activeSelf)
-                        {
-                            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
-                            teaTR_donutTR.SetActive(false);
-                            teaTR_donut.SetActive(true);
-                        }
-                        else if (tea_donutTR.activeSelf)
-                        {
-                            tea_donutTR.SetActive(false);
-                            tea_donut.SetActive(true);
-                            currentTrayState = TrayState.Completed;
-                            pointsManager.UpdatePoints(6, player);
-                            StartCoroutine(CompleteOrder());
-                        }
                     }
                     break;
             }
@@ -230,8 +146,6 @@ public class Tray : MonoBehaviour
         coffee.SetActive(false);
         tea.SetActive(false);
         donut.SetActive(false);
-        coffee_donut.SetActive(false);
-        tea_donut.SetActive(false);
 
         currentTrayState = TrayState.Empty;
     }

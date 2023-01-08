@@ -1822,6 +1822,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 652768258053026033, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3575029197797997879, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204792402755264022, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204792403113803212, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6205271116094706940, guid: a700323c78408c847a864b1d9d306775, type: 3}
       propertyPath: m_Name
       value: Tray
@@ -1874,6 +1890,10 @@ PrefabInstance:
       propertyPath: pointsManager
       value: 
       objectReference: {fileID: 1260598765}
+    - target: {fileID: 6205424110845784953, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a700323c78408c847a864b1d9d306775, type: 3}
 --- !u!114 &6205271117079916153 stripped
