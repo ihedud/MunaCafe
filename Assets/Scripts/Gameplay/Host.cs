@@ -66,10 +66,6 @@ public class Host : MonoBehaviour
                 // Tray
                 host.myInfo.order1 = (int)tray1.currentOrder;
                 host.myInfo.order2 = (int)tray2.currentOrder;
-
-                // Donut
-                host.myInfo.donutMesh = donutStation.myCurrentMesh;
-                donutStation.otherCurrentMesh = host.clientInfo.donutMesh;
             }
         }
     }

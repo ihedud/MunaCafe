@@ -45,14 +45,4 @@ public class PlayerState : MonoBehaviour
             donut.SetActive(false);
         }
     }
-
-    public void SetDonutMesh(Mesh mesh)
-    {
-        donut.GetComponent<MeshFilter>().mesh = mesh;
-    }
-
-    public Mesh GetDonutMesh()
-    {
-        return donut.GetComponent<MeshFilter>().mesh;
-    }
 }

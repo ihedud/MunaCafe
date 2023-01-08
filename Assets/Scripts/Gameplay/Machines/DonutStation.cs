@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class DonutStation : MonoBehaviour
 {
-    [HideInInspector] public int otherCurrentMesh;
-    [HideInInspector] public int myCurrentMesh;
     enum State { Empty, Start, Half, Finished };
 
     [SerializeField] private int updateTime;
@@ -24,8 +22,6 @@ public class DonutStation : MonoBehaviour
     [SerializeField] private GameObject start;
     [SerializeField] private GameObject half;
     [SerializeField] private GameObject finished;
-
-    [SerializeField] private List<Mesh> donutMeshes;
 
     private GameObject player;
     private State currentState = State.Empty;
@@ -96,7 +92,6 @@ public class DonutStation : MonoBehaviour
         else if (currentState == State.Finished && player.GetComponent<PlayerState>().currentState == PlayerState.State.None)
         {
             player.GetComponent<PlayerState>().currentState = PlayerState.State.Donut;
-            player.GetComponent<PlayerState>().SetDonutMesh(finished.GetComponent<MeshFilter>().mesh);
             Restart();
         }
     }
@@ -126,13 +121,6 @@ public class DonutStation : MonoBehaviour
                     half.SetActive(false);
                     start.SetActive(false);
                     finished.SetActive(true);
-                    if (player.tag == "Player")
-                    {
-                        myCurrentMesh = Random.Range(0, 3);
-                        finished.GetComponent<MeshFilter>().mesh = donutMeshes[myCurrentMesh];
-                    }
-                    else if (player.tag == "Player2")
-                        finished.GetComponent<MeshFilter>().mesh = donutMeshes[otherCurrentMesh];
                     player.GetComponent<PlayerState>().hasInteracted = false;
                     break;
             }

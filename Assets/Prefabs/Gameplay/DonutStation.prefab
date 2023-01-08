@@ -41,7 +41,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2798859110130947772}
-  m_Mesh: {fileID: 4300000, guid: 5fbda09d5185a47febf22d3176f2aa76, type: 3}
+  m_Mesh: {fileID: 4300000, guid: dc74e53f7f0b5495b9e760dd4803accb, type: 3}
 --- !u!23 &2776155191261503188
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -96,7 +96,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 5fbda09d5185a47febf22d3176f2aa76, type: 3}
+  m_Mesh: {fileID: 4300000, guid: dc74e53f7f0b5495b9e760dd4803accb, type: 3}
 --- !u!114 &2829324503808214428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,7 +598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca64f6c39a10d1f49991ca5e7b189efa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMesh: 0
   updateTime: 3
   sphere: {fileID: 5357955106018011220}
   red: {fileID: 2100000, guid: d03c6c1f79d80ad40abcff60ec2a5d61, type: 2}
@@ -609,7 +608,3 @@ MonoBehaviour:
   start: {fileID: 5357955107299314160}
   half: {fileID: 5357955107391347810}
   finished: {fileID: 2798859110130947772}
-  donutMeshes:
-  - {fileID: 4300000, guid: 5fbda09d5185a47febf22d3176f2aa76, type: 3}
-  - {fileID: 4300000, guid: dc74e53f7f0b5495b9e760dd4803accb, type: 3}
-  - {fileID: 4300000, guid: 716eb86c5f9a24921a13fd6bcaa16cb1, type: 3}

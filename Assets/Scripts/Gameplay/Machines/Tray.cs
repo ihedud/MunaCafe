@@ -129,7 +129,6 @@ public class Tray : MonoBehaviour
                         currentTrayState = TrayState.Completed;
                         donutTR.SetActive(false);
                         donut.SetActive(true);
-                        donut.GetComponent<MeshFilter>().mesh = player.GetComponent<PlayerState>().GetDonutMesh();
                         pointsManager.UpdatePoints(2, player);
                         StartCoroutine(CompleteOrder());
                     }
