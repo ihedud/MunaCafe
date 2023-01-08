@@ -1529,6 +1529,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8668344793754074240, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.08097002
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
 --- !u!114 &5357955107794658309 stripped
@@ -1826,6 +1830,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6204792402755264022, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6204792403113803212, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6205271116094706940, guid: a700323c78408c847a864b1d9d306775, type: 3}
       propertyPath: m_Name
       value: Tray
@@ -1878,6 +1890,10 @@ PrefabInstance:
       propertyPath: pointsManager
       value: 
       objectReference: {fileID: 1260598765}
+    - target: {fileID: 6205424110845784953, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a700323c78408c847a864b1d9d306775, type: 3}
 --- !u!114 &6205271117079916153 stripped

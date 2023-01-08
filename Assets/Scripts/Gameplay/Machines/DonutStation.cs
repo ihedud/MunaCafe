@@ -11,6 +11,7 @@ public class DonutStation : MonoBehaviour
 
     // State
     [SerializeField] private GameObject sphere;
+    [SerializeField] private GameObject sphereTR;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material yellow;
@@ -33,10 +34,11 @@ public class DonutStation : MonoBehaviour
     {
         currentState = State.Empty;
         sphere.GetComponent<MeshRenderer>().material = red;
-        initScale = transform.localScale;
+        initScale = sphere.transform.localScale;
         start.SetActive(false);
         half.SetActive(false);
         finished.SetActive(false);
+        sphereTR.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -86,7 +88,7 @@ public class DonutStation : MonoBehaviour
             half.SetActive(false);
             finished.SetActive(false);
             sphere.GetComponent<MeshRenderer>().material = yellow;
-            // setactive true de la bola transparente
+            sphereTR.SetActive(true);
             timer = 0.0f;
         }
         else if (currentState == State.Finished && player.GetComponent<PlayerState>().currentState == PlayerState.State.None)
@@ -102,7 +104,8 @@ public class DonutStation : MonoBehaviour
             return;
 
         timer += Time.deltaTime;
-        // cambiar scale sphere
+        if(currentState != State.Finished)
+            sphere.transform.localScale += new Vector3(0.00005f, 0.00005f, 0.00005f);
 
         if (timer > updateTime)
         {
@@ -121,6 +124,7 @@ public class DonutStation : MonoBehaviour
                     half.SetActive(false);
                     start.SetActive(false);
                     finished.SetActive(true);
+                    sphereTR.SetActive(false);
                     player.GetComponent<PlayerState>().hasInteracted = false;
                     break;
             }
@@ -136,7 +140,8 @@ public class DonutStation : MonoBehaviour
         start.SetActive(false);
         half.SetActive(false);
         finished.SetActive(false);
+        sphereTR.SetActive(false);
         sphere.GetComponent<MeshRenderer>().material = red;
-        // poner scale a la inicial
+        sphere.transform.localScale = initScale;
     }
 }
