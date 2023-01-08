@@ -62,7 +62,7 @@ public class DonutStation : MonoBehaviour
 
     private void OnTriggerExit(Collider collider)
     {
-        if (collider.gameObject.tag == "Player")
+        if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Player2")
         {
             playerGrab.action.Disable();
             playerGrab.action.performed -= GrabDonut;
