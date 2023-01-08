@@ -1481,10 +1481,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5357955107391347822, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 2b7d9609b83c67e4f8657a12994bba8d, type: 2}
     - target: {fileID: 6261934478928663998, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
       propertyPath: m_Name
       value: DonutStation
