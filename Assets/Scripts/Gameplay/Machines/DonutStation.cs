@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class DonutStation : MonoBehaviour
 {
-    [HideInInspector] public int currentMesh;
+    [HideInInspector] public int otherCurrentMesh;
+    [HideInInspector] public int myCurrentMesh;
     enum State { Empty, Start, Half, Finished };
 
     [SerializeField] private int updateTime;
@@ -126,8 +127,12 @@ public class DonutStation : MonoBehaviour
                     start.SetActive(false);
                     finished.SetActive(true);
                     if (player.tag == "Player")
-                        currentMesh = Random.Range(0, 3);
-                    finished.GetComponent<MeshFilter>().mesh = donutMeshes[currentMesh];
+                    {
+                        myCurrentMesh = Random.Range(0, 3);
+                        finished.GetComponent<MeshFilter>().mesh = donutMeshes[myCurrentMesh];
+                    }
+                    else if (player.tag == "Player2")
+                        finished.GetComponent<MeshFilter>().mesh = donutMeshes[otherCurrentMesh];
                     player.GetComponent<PlayerState>().hasInteracted = false;
                     break;
             }

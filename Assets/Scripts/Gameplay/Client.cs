@@ -68,8 +68,8 @@ public class Client : MonoBehaviour
                 tray2.currentOrder = (TrayClient.Order)client.hostInfo.order2;
 
                 // Donut
-                client.myInfo.donutMesh = donutStation.currentMesh;
-                donutStation.currentMesh = client.hostInfo.donutMesh;
+                client.myInfo.donutMesh = donutStation.myCurrentMesh;
+                donutStation.otherCurrentMesh = client.hostInfo.donutMesh;
             }
         }
     }
