@@ -162,8 +162,8 @@ public class HostUDP : MonoBehaviour
                         if (clientInfo.hostPacketID > packetList[i].hostPacketID)
                         {
                             // Resend data
-                            //byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                            //newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                             //resendID = packetList[i].hostPacketID;
                             //resend = true;
                         }
