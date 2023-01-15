@@ -165,9 +165,9 @@ public class ClientUDP : MonoBehaviour
         {
             if (readyToListen)
             {
-                timer++;
                 try
                 {
+                    timer++;
                     if (timer >= 100000 || myInfo.hasInteracted)
                     {
                         timer = 0;
