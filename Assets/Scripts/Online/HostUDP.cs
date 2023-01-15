@@ -195,7 +195,7 @@ public class HostUDP : MonoBehaviour
                 timer++;
                 try
                 {
-                    if (timer >= 10 || myInfo.hasInteracted)
+                    if (timer >= 100 || myInfo.hasInteracted)
                     {
                         timer = 0;
                         // Send data
