@@ -41,6 +41,8 @@ public class ClientUDP : MonoBehaviour
     [SerializeField] private JsonSerialization json;
     [SerializeField] private LoadScene loader;
 
+    private int timer = 0;
+
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -161,16 +163,21 @@ public class ClientUDP : MonoBehaviour
         {
             if (readyToListen)
             {
+                timer++;
                 try
                 {
-                    // Send data
-                    myInfo.clientPacketID++;
-                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                    newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                    if (packetList.Count > 10)
-                        Debug.Log("pls send worldstate");
-                    /*if (packetList.Count < 200) */
-                    packetList.Add(myInfo);
+                    if (timer >= 10 || myInfo.hasInteracted)
+                    {
+                        timer = 0;
+                        // Send data
+                        myInfo.clientPacketID++;
+                        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                        if (packetList.Count > 10)
+                            Debug.Log("pls send worldstate");
+                        /*if (packetList.Count < 200) */
+                        packetList.Add(myInfo);
+                    }
                 }
                 catch (Exception e)
                 {
