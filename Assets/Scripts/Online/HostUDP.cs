@@ -44,8 +44,6 @@ public class HostUDP : MonoBehaviour
     [SerializeField] private LoadScene loader;
     [SerializeField] private JsonSerialization json;
 
-    private int timer = 0;
-
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -194,21 +192,15 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
-                    timer++;
-                    if (timer >= 100000 || myInfo.hasInteracted)
-                    {
-                        timer = 0;
-                        // Send data
-                        myInfo.hostPacketID++;
-                        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                        //if list.count mayor que 10, send world state y clear list
-                        //if (packetList.Count > 10)
-                        //    Debug.Log("worldstate");
-
-                        /* if (packetList.Count < 200) */
-                        packetList.Add(myInfo);
-                    }
+                    // Send data
+                    myInfo.hostPacketID++;
+                    byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                    newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    //if list.count mayor que 10, send world state y clear list
+                    if (packetList.Count > 10)
+                        Debug.Log("worldstate");
+                    /* if (packetList.Count < 200) */
+                    packetList.Add(myInfo);
                 }
                 catch (Exception e)
                 {
