@@ -168,7 +168,7 @@ public class ClientUDP : MonoBehaviour
                 timer++;
                 try
                 {
-                    if (timer >= 10 || myInfo.hasInteracted)
+                    if (timer >= 100000 || myInfo.hasInteracted)
                     {
                         timer = 0;
                         // Send data
