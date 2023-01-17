@@ -19,8 +19,6 @@ public class HostUDP : MonoBehaviour
 
     private int playerCount = 0;
     private List<Information> packetList = new List<Information>();
-    private bool resend = false;
-    private int resendID = 0;
 
     [HideInInspector] public bool readyToListen = false;
     [HideInInspector] public bool pingDone = false;
@@ -156,18 +154,18 @@ public class HostUDP : MonoBehaviour
 
                     Debug.Log(clientInfo.clientPacketID);
 
-                    for (int i = 0; i < packetList.Count; i++)
-                    {
-                        if (packetList[i].hostPacketID == clientInfo.hostPacketID)
-                            packetList.RemoveAt(i);
+                    //for (int i = 0; i < packetList.Count; i++)
+                    //{
+                    //    if (packetList[i].hostPacketID == clientInfo.hostPacketID)
+                    //        packetList.RemoveAt(i);
 
-                        if (clientInfo.hostPacketID > packetList[i].hostPacketID)
-                        {
-                            // Resend data
-                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                        }
-                    }
+                    //    if (clientInfo.hostPacketID > packetList[i].hostPacketID)
+                    //    {
+                    //        // Resend data
+                    //        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                    //        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    //    }
+                    //}
 
                     if (clientInfo.onPlay)
                         nextScene = true;
@@ -194,14 +192,29 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
+                    for (int i = 0; i < packetList.Count; i++)
+                    {
+                        if (packetList[i].hostPacketID == clientInfo.hostPacketID)
+                            packetList.RemoveAt(i);
+
+                        if (clientInfo.hostPacketID > packetList[i].hostPacketID)
+                        {
+                            // Resend data
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                        }
+                    }
+
                     timer++;
                     if (timer >= 100000 || myInfo.hasInteracted)
                     {
                         timer = 0;
+
                         // Send data
                         myInfo.hostPacketID++;
                         byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                         newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+
                         //if list.count mayor que 10, send world state y clear list
                         //if (packetList.Count > 10)
                         //    Debug.Log("worldstate");

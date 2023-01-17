@@ -125,22 +125,22 @@ public class ClientUDP : MonoBehaviour
 
                     myInfo.hostPacketID = hostInfo.hostPacketID;
 
-                    for (int i = 0; i < packetList.Count; ++i)
-                    {
-                        if (packetList[i].clientPacketID == hostInfo.clientPacketID)
-                        {
-                            Debug.Log("Removing " + packetList[i].clientPacketID);
-                            packetList.RemoveAt(i);
-                        }
+                    //for (int i = 0; i < packetList.Count; ++i)
+                    //{
+                    //    if (packetList[i].clientPacketID == hostInfo.clientPacketID)
+                    //    {
+                    //        Debug.Log("Removing " + packetList[i].clientPacketID);
+                    //        packetList.RemoveAt(i);
+                    //    }
 
-                        if (hostInfo.clientPacketID > packetList[i].clientPacketID)
-                        {
-                            // Resend data
-                            Debug.Log("Resending " + packetList[i].clientPacketID);
-                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                        }
-                    }
+                    //    if (hostInfo.clientPacketID > packetList[i].clientPacketID)
+                    //    {
+                    //        // Resend data
+                    //        Debug.Log("Resending " + packetList[i].clientPacketID);
+                    //        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                    //        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    //    }
+                    //}
 
                     if (hostInfo.onPlay)
                         nextScene = true;
@@ -167,6 +167,23 @@ public class ClientUDP : MonoBehaviour
             {
                 try
                 {
+                    for (int i = 0; i < packetList.Count; ++i)
+                    {
+                        if (packetList[i].clientPacketID == hostInfo.clientPacketID)
+                        {
+                            Debug.Log("Removing " + packetList[i].clientPacketID);
+                            packetList.RemoveAt(i);
+                        }
+
+                        if (hostInfo.clientPacketID > packetList[i].clientPacketID)
+                        {
+                            // Resend data
+                            Debug.Log("Resending " + packetList[i].clientPacketID);
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                        }
+                    }
+
                     timer++;
                     if (timer >= 100000 || myInfo.hasInteracted)
                     {
