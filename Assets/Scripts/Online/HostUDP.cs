@@ -27,6 +27,7 @@ public class HostUDP : MonoBehaviour
     private bool nextScene = false;
     private bool readyToPlay = false;
     private bool closed = true;
+    private bool hasAlreadyInteracted = false;
 
     private IPEndPoint client;
     private EndPoint remote;
@@ -183,7 +184,10 @@ public class HostUDP : MonoBehaviour
                     for (int i = 0; i < packetList.Count; i++)
                     {
                         if (packetList[i].hostPacketID == clientInfo.hostPacketID)
+                        {
                             packetList.RemoveAt(i);
+                            hasAlreadyInteracted = false;
+                        }
 
                         if (clientInfo.hostPacketID > packetList[i].hostPacketID)
                         {
@@ -212,8 +216,9 @@ public class HostUDP : MonoBehaviour
                         newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                     }
 
-                    if (myInfo.hasInteracted)
+                    if (myInfo.hasInteracted && !hasAlreadyInteracted)
                     {
+                        hasAlreadyInteracted = true;
                         packetList.Add(myInfo); 
                         Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
                     }

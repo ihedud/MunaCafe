@@ -27,6 +27,7 @@ public class ClientUDP : MonoBehaviour
     private bool onLoad = false;
     private bool nextScene = false;
     private bool closed = true;
+    private bool hasAlreadyInteracted = false;
 
     private IPEndPoint host;
     private EndPoint remote;
@@ -124,7 +125,7 @@ public class ClientUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
-                    Debug.Log("Receiving " + hostInfo.clientPacketID);
+                    //Debug.Log("Receiving " + hostInfo.clientPacketID);
 
                     myInfo.hostPacketID = hostInfo.hostPacketID;
 
@@ -159,6 +160,7 @@ public class ClientUDP : MonoBehaviour
                         {
                             Debug.Log("Removing " + packetList[i].clientPacketID);
                             packetList.RemoveAt(i);
+                            hasAlreadyInteracted = false;
                         }
 
                         if (hostInfo.clientPacketID > packetList[i].clientPacketID)
@@ -187,8 +189,9 @@ public class ClientUDP : MonoBehaviour
                         newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                     }
 
-                    if (myInfo.hasInteracted)
+                    if (myInfo.hasInteracted && !hasAlreadyInteracted)
                     {
+                        hasAlreadyInteracted = true;
                         packetList.Add(myInfo);
                         Debug.Log("Adding packet to list: " + myInfo.clientPacketID);
                     }
