@@ -162,9 +162,9 @@ public class ClientUDP : MonoBehaviour
                             packetList.RemoveAt(i);
                             hasAlreadyInteracted = false;
                         }
-
-                        if (hostInfo.clientPacketID > packetList[i].clientPacketID)
+                        else if (hostInfo.clientPacketID > packetList[i].clientPacketID)
                         {
+                            Debug.Log("I'm lost " + packetList[i].clientPacketID);
                             lostPacket = packetList[i];
                         }
                     }

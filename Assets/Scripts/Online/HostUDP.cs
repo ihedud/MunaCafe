@@ -152,7 +152,8 @@ public class HostUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
-                    //Debug.Log("Receiving " + clientInfo.hostPacketID);
+                    if (clientInfo.hasInteracted)
+                        Debug.Log("Receiving " + clientInfo.hostPacketID);
                     myInfo.clientPacketID = clientInfo.clientPacketID;
 
                     if (clientInfo.onPlay)
@@ -188,8 +189,7 @@ public class HostUDP : MonoBehaviour
                             packetList.RemoveAt(i);
                             hasAlreadyInteracted = false;
                         }
-
-                        if (clientInfo.hostPacketID > packetList[i].hostPacketID)
+                        else if (clientInfo.hostPacketID > packetList[i].hostPacketID)
                         {
                             lostPacket = packetList[i];
                         }
