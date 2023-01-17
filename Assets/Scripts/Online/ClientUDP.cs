@@ -181,15 +181,15 @@ public class ClientUDP : MonoBehaviour
                         {
                             // Resend data
                             Debug.Log("Resending " + packetList[i].clientPacketID);
-                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                            byte[] dataSent3 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
+                            newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
                         }
                     }
 
-                    timer++;
-                    if (timer >= 100000 || myInfo.hasInteracted)
-                    {
-                        timer = 0;
+                    //timer++;
+                    //if (timer >= 100000 || myInfo.hasInteracted)
+                    //{
+                    //    timer = 0;
                         // Send data
                         myInfo.clientPacketID++;
                         byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
@@ -198,7 +198,7 @@ public class ClientUDP : MonoBehaviour
                         //    Debug.Log("pls send worldstate");
                         /*if (packetList.Count < 200) */
                         packetList.Add(myInfo);
-                    }
+                    //}
                 }
                 catch (Exception e)
                 {
