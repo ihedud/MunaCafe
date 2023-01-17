@@ -196,9 +196,8 @@ public class HostUDP : MonoBehaviour
                     }
 
                     timer++;
-                    if (timer >= 1000 || myInfo.hasInteracted || lostPacket != null)
-                    {
-                        timer = 0;
+                    
+                        
 
                         // Send data
                         if (lostPacket != null)
@@ -208,20 +207,20 @@ public class HostUDP : MonoBehaviour
                             newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                             lostPacket = null;
                         }
-                    }
-                    else
-                    {
+                        else if (lostPacket == null && (timer >= 1000 || myInfo.hasInteracted))
+                        {
+                        timer = 0;
                         myInfo.hostPacketID++;
-                        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                    }
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
 
-                    if (myInfo.hasInteracted && !hasAlreadyInteracted)
-                    {
-                        hasAlreadyInteracted = true;
-                        packetList.Add(myInfo); 
-                        Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
-                    }
+                            if (myInfo.hasInteracted && !hasAlreadyInteracted)
+                            {
+                                hasAlreadyInteracted = true;
+                                packetList.Add(myInfo);
+                                Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
+                            }
+                        }
                 }
                 catch (Exception e)
                 {
