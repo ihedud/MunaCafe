@@ -153,7 +153,7 @@ public class HostUDP : MonoBehaviour
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
                     if (clientInfo.hasInteracted)
-                        Debug.Log("Receiving " + clientInfo.hostPacketID);
+                        Debug.Log("Receiving " + clientInfo.clientPacketID);
                     myInfo.clientPacketID = clientInfo.clientPacketID;
 
                     if (clientInfo.onPlay)
