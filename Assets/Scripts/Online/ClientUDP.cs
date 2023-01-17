@@ -37,6 +37,7 @@ public class ClientUDP : MonoBehaviour
 
     [HideInInspector] public Information myInfo = new Information();
     [HideInInspector] public Information hostInfo = new Information();
+    private Information lostPacket = null;
 
     [SerializeField] private JsonSerialization json;
     [SerializeField] private LoadScene loader;
@@ -117,32 +118,15 @@ public class ClientUDP : MonoBehaviour
         {
             if (readyToListen)
             {
-                //try
-                //{
+                try
+                {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
-                Debug.Log("Receiving " + hostInfo.clientPacketID);
+                    Debug.Log("Receiving " + hostInfo.clientPacketID);
 
                     myInfo.hostPacketID = hostInfo.hostPacketID;
-
-                    //for (int i = 0; i < packetList.Count; ++i)
-                    //{
-                    //    if (packetList[i].clientPacketID == hostInfo.clientPacketID)
-                    //    {
-                    //        Debug.Log("Removing " + packetList[i].clientPacketID);
-                    //        packetList.RemoveAt(i);
-                    //    }
-
-                    //    if (hostInfo.clientPacketID > packetList[i].clientPacketID)
-                    //    {
-                    //        // Resend data
-                    //        Debug.Log("Resending " + packetList[i].clientPacketID);
-                    //        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                    //        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                    //    }
-                    //}
 
                     if (hostInfo.onPlay)
                         nextScene = true;
@@ -152,11 +136,11 @@ public class ClientUDP : MonoBehaviour
 
                     if (!hostInfo.hasInteracted)
                         interactionDone = false;
-                //}
-                //catch (Exception e) 
-                //{ 
-                //    Debug.Log(e.Message); 
-                //}
+                }
+                catch (Exception e) 
+                { 
+                    Debug.Log(e.Message); 
+                }
             }
         }
     }
@@ -179,26 +163,35 @@ public class ClientUDP : MonoBehaviour
 
                         if (hostInfo.clientPacketID > packetList[i].clientPacketID)
                         {
-                            // Resend data
-                            Debug.Log("Resending " + packetList[i].clientPacketID);
-                            byte[] dataSent3 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                            newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
+                            lostPacket = packetList[i];
                         }
                     }
 
-                    //timer++;
-                    //if (timer >= 100000 || myInfo.hasInteracted)
-                    //{
-                    //    timer = 0;
+                    timer++;
+                    if (timer >= 1000 || myInfo.hasInteracted || lostPacket != null)
+                    {
+                        timer = 0;
                         // Send data
+                        if (lostPacket != null)
+                        {
+                            Debug.Log("Resending lost packet: " + lostPacket.clientPacketID);
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(lostPacket));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                            lostPacket = null;
+                        }
+                    }
+                    else
+                    {
                         myInfo.clientPacketID++;
                         byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                         newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                        //if (packetList.Count > 10)
-                        //    Debug.Log("pls send worldstate");
-                        /*if (packetList.Count < 200) */
+                    }
+
+                    if (myInfo.hasInteracted)
+                    {
                         packetList.Add(myInfo);
-                    //}
+                        Debug.Log("Adding packet to list: " + myInfo.clientPacketID);
+                    }
                 }
                 catch (Exception e)
                 {

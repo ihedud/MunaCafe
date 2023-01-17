@@ -37,6 +37,7 @@ public class HostUDP : MonoBehaviour
 
     [HideInInspector] public Information myInfo = new Information();
     [HideInInspector] public Information clientInfo = new Information();
+    private Information lostPacket = null;
 
     [SerializeField] private GameObject playButton;
     [SerializeField] private LoadScene loader;
@@ -150,23 +151,8 @@ public class HostUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
-                    Debug.Log("Receiving " + clientInfo.hostPacketID);
+                    //Debug.Log("Receiving " + clientInfo.hostPacketID);
                     myInfo.clientPacketID = clientInfo.clientPacketID;
-
-                    //Debug.Log(clientInfo.clientPacketID);
-
-                    //for (int i = 0; i < packetList.Count; i++)
-                    //{
-                    //    if (packetList[i].hostPacketID == clientInfo.hostPacketID)
-                    //        packetList.RemoveAt(i);
-
-                    //    if (clientInfo.hostPacketID > packetList[i].hostPacketID)
-                    //    {
-                    //        // Resend data
-                    //        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                    //        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                    //    }
-                    //}
 
                     if (clientInfo.onPlay)
                         nextScene = true;
@@ -193,6 +179,7 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
+                    // Solo las veces que hemos interactuado
                     for (int i = 0; i < packetList.Count; i++)
                     {
                         if (packetList[i].hostPacketID == clientInfo.hostPacketID)
@@ -200,29 +187,36 @@ public class HostUDP : MonoBehaviour
 
                         if (clientInfo.hostPacketID > packetList[i].hostPacketID)
                         {
-                            // Resend data
-                            byte[] dataSent3 = Encoding.Default.GetBytes(json.JsonSerialize(packetList[i]));
-                            newSocket.SendTo(dataSent3, dataSent3.Length, SocketFlags.None, remote);
+                            lostPacket = packetList[i];
                         }
                     }
 
-                    //timer++;
-                    //if (timer >= 100000 || myInfo.hasInteracted)
-                    //{
-                        //timer = 0;
+                    timer++;
+                    if (timer >= 1000 || myInfo.hasInteracted || lostPacket != null)
+                    {
+                        timer = 0;
 
                         // Send data
+                        if (lostPacket != null)
+                        {
+                            Debug.Log("Resending lost packet: " + lostPacket.hostPacketID);
+                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(lostPacket));
+                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                            lostPacket = null;
+                        }
+                    }
+                    else
+                    {
                         myInfo.hostPacketID++;
                         byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                         newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                    }
 
-                        //if list.count mayor que 10, send world state y clear list
-                        //if (packetList.Count > 10)
-                        //    Debug.Log("worldstate");
-
-                        /* if (packetList.Count < 200) */
-                        packetList.Add(myInfo);
-                    //}
+                    if (myInfo.hasInteracted)
+                    {
+                        packetList.Add(myInfo); 
+                        Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
+                    }
                 }
                 catch (Exception e)
                 {
