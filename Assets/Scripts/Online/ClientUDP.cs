@@ -123,6 +123,8 @@ public class ClientUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     hostInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
+                Debug.Log("Receiving " + hostInfo.clientPacketID);
+
                     myInfo.hostPacketID = hostInfo.hostPacketID;
 
                     //for (int i = 0; i < packetList.Count; ++i)
