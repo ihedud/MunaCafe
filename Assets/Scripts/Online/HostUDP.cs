@@ -151,9 +151,9 @@ public class HostUDP : MonoBehaviour
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
-
-                    if (clientInfo.hasInteracted)
-                        Debug.Log("Receiving " + clientInfo.clientPacketID);
+                    Debug.Log("Receiving " + clientInfo.clientPacketID);
+                    //if (clientInfo.hasInteracted)
+                    //    Debug.Log("Receiving " + clientInfo.clientPacketID);
                     myInfo.clientPacketID = clientInfo.clientPacketID;
 
                     if (clientInfo.onPlay)
@@ -189,7 +189,8 @@ public class HostUDP : MonoBehaviour
                             packetList.RemoveAt(i);
                             hasAlreadyInteracted = false;
                         }
-                        else if (clientInfo.hostPacketID > packetList[i].hostPacketID)
+                        
+                        if (clientInfo.hostPacketID > packetList[i].hostPacketID)
                         {
                             lostPacket = packetList[i];
                         }
@@ -202,7 +203,7 @@ public class HostUDP : MonoBehaviour
                         // Send data
                         if (lostPacket != null)
                         {
-                            Debug.Log("Resending lost packet: " + lostPacket.hostPacketID);
+                            //Debug.Log("Resending lost packet: " + lostPacket.hostPacketID);
                             byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(lostPacket));
                             newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                             lostPacket = null;
@@ -218,7 +219,7 @@ public class HostUDP : MonoBehaviour
                             {
                                 hasAlreadyInteracted = true;
                                 packetList.Add(myInfo);
-                                Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
+                                //Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
                             }
                         }
                 }

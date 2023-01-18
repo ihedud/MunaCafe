@@ -158,13 +158,14 @@ public class ClientUDP : MonoBehaviour
                     {
                         if (packetList[i].clientPacketID == hostInfo.clientPacketID)
                         {
-                            Debug.Log("Removing " + packetList[i].clientPacketID);
+                            //Debug.Log("Removing " + packetList[i].clientPacketID);
                             packetList.RemoveAt(i);
                             hasAlreadyInteracted = false;
                         }
-                        else if (hostInfo.clientPacketID > packetList[i].clientPacketID)
+
+                        if (hostInfo.clientPacketID > packetList[i].clientPacketID)
                         {
-                            Debug.Log("I'm lost " + packetList[i].clientPacketID);
+                            //Debug.Log("I'm lost " + packetList[i].clientPacketID);
                             lostPacket = packetList[i];
                         }
                     }
@@ -173,7 +174,7 @@ public class ClientUDP : MonoBehaviour
                         // Send data
                         if (lostPacket != null)
                         {
-                            Debug.Log("Resending lost packet: " + lostPacket.clientPacketID);
+                            //Debug.Log("Resending lost packet: " + lostPacket.clientPacketID);
                             byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(lostPacket));
                             newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
                             lostPacket = null;
@@ -184,12 +185,13 @@ public class ClientUDP : MonoBehaviour
                             myInfo.clientPacketID++;
                             byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
                             newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                        Debug.Log("Sending packet: " + myInfo.clientPacketID);
 
                             if (myInfo.hasInteracted && !hasAlreadyInteracted)
                             {
                                 hasAlreadyInteracted = true;
                                 packetList.Add(myInfo);
-                                Debug.Log("Adding packet to list: " + myInfo.clientPacketID);
+                                //Debug.Log("Adding packet to list: " + myInfo.clientPacketID);
                             }
                         }
                 }
