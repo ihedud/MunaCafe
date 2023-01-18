@@ -144,6 +144,7 @@ public class HostUDP : MonoBehaviour
     {
         while (!closed)
         {
+            Debug.Log(readyToListen);
             if (readyToListen)
             {
                 //try
@@ -151,7 +152,8 @@ public class HostUDP : MonoBehaviour
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
-                    Debug.Log("Receiving " + clientInfo.clientPacketID);
+                    //Debug.Log("Receiving " + clientInfo.clientPacketID);
+                
                     //if (clientInfo.hasInteracted)
                     //    Debug.Log("Receiving " + clientInfo.clientPacketID);
                     myInfo.clientPacketID = clientInfo.clientPacketID;
