@@ -135,7 +135,7 @@ public class CoffeeMachine : MonoBehaviour
             return;
 
         counter++;
-        if (counter > 15)
+        if (counter > 300)
         {
             counter = 0;
             StopAllCoroutines();

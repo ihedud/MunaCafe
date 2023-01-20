@@ -136,7 +136,7 @@ public class DonutStation : MonoBehaviour
         if (currentState != newState && currentState != State.Broken)
         {
             counter++;
-            if (counter > 15)
+            if (counter > 300)
             {
                 counter = 0;
                 StopAllCoroutines();
