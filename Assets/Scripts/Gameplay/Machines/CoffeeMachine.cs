@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CoffeeMachine : MonoBehaviour
 {
-    enum State { Empty, Brewing, Done, Cooldown};
+    public enum State { Empty, Brewing, Done, Cooldown};
 
     [SerializeField] private int brewingTime;
     [SerializeField] private int cooldownTime;
@@ -24,7 +24,7 @@ public class CoffeeMachine : MonoBehaviour
     [SerializeField] private GameObject mug;
 
     private GameObject player;
-    private State currentState = State.Empty;
+    public State currentState = State.Empty;
 
     private void Awake()
     {

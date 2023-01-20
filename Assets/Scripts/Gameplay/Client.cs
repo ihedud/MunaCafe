@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Client : MonoBehaviour
 {
+    [Header("Players")]
     [SerializeField] private GameObject myPlayer;
     [SerializeField] private GameObject hostPlayer;
     [HideInInspector] [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
+
+    [Header("Machines")]
     [SerializeField] private TrayClient tray1;
     [SerializeField] private TrayClient tray2;
+    [SerializeField] private CoffeeMachine coffeeMachine1;
+    [SerializeField] private CoffeeMachine coffeeMachine2;
+    [SerializeField] private CoffeeMachine coffeeMachine3;
+    [SerializeField] private TeaPot teaPot;
     [SerializeField] private DonutStation donutStation;
+
     private ClientUDP client;
 
     public ClientUDP clientInfo => client;
@@ -66,6 +74,19 @@ public class Client : MonoBehaviour
                 // Tray
                 tray1.currentOrder = (TrayClient.Order)client.hostInfo.order1;
                 tray2.currentOrder = (TrayClient.Order)client.hostInfo.order2;
+
+                // Player State
+                hostPlayer.GetComponent<PlayerState>().currentState = client.hostInfo.currentState;
+                client.myInfo.currentState = myPlayer.GetComponent<PlayerState>().currentState;
+
+                // Machines State
+                coffeeMachine1.currentState = client.hostInfo.coffee1State;
+                coffeeMachine2.currentState = client.hostInfo.coffee2State;
+                coffeeMachine3.currentState = client.hostInfo.coffee3State;
+
+                donutStation.currentState = client.hostInfo.donutState;
+
+                teaPot.currentState = client.hostInfo.teaPotState;
             }
         }
     }

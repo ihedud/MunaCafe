@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class TeaPot : MonoBehaviour
 {
-    enum State { Empty, Brewing, Done, Burned, Cooldown };
+    public enum State { Empty, Brewing, Done, Burned, Cooldown };
 
     [SerializeField] private int brewingTime;
     [SerializeField] private int burningTime;
@@ -25,7 +25,7 @@ public class TeaPot : MonoBehaviour
     [SerializeField] private GameObject cup;
 
     private GameObject player;
-    private State currentState = State.Empty;
+    public State currentState = State.Empty;
 
     private void Awake()
     {

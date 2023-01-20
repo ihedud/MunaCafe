@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class DonutStation : MonoBehaviour
 {
-    enum State { Empty, Start, Half, Finished };
+    public enum State { Empty, Start, Half, Finished };
 
     [SerializeField] private int updateTime;
 
@@ -25,7 +25,7 @@ public class DonutStation : MonoBehaviour
     [SerializeField] private GameObject finished;
 
     private GameObject player;
-    private State currentState = State.Empty;
+    public State currentState = State.Empty;
     private bool isBaking;
     private float timer;
     private Vector3 initScale;
