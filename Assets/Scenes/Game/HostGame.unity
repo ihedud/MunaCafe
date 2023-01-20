@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.45129687, g: 0.50095654, b: 0.57323176, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -339,6 +339,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &702760824
@@ -528,6 +529,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 04af0475c11921e4f9f717d5d6095977, type: 2}
   tray1: {fileID: 6205271117079916153}
   tray2: {fileID: 942625644}
+  coffeeMachine1: {fileID: 0}
+  coffeeMachine2: {fileID: 0}
+  coffeeMachine3: {fileID: 0}
+  teaPot: {fileID: 0}
   donutStation: {fileID: 5357955107794658309}
   colorID: 0
 --- !u!4 &1301816235
@@ -642,6 +647,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1464144574
@@ -734,6 +740,7 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1494757129
@@ -1689,6 +1696,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2798859110130947772, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5357955107299314160, guid: 7ecf35b8c9c35114bb90887adf8fb598, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2110,7 +2121,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8987040082571053995, guid: 6efe226e5fcd38d4eba40a763c072725, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8988544831253732326, guid: 6efe226e5fcd38d4eba40a763c072725, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8988606775982466459, guid: 6efe226e5fcd38d4eba40a763c072725, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

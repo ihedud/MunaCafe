@@ -5,17 +5,24 @@ using UnityEngine.InputSystem;
 
 public class DonutStation : MonoBehaviour
 {
-    public enum State { Empty, Start, Half, Finished };
+    public enum State { Empty, Start, Half, Finished, Cooldown, Broken};
 
     [SerializeField] private int updateTime;
+    [SerializeField] private int cooldownTime;
 
     // State
     [SerializeField] private GameObject sphere;
     [SerializeField] private GameObject sphereTR;
+    [HideInInspector] private Material sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material yellow;
     [SerializeField] private Material green;
+    [SerializeField] private Material grey;
+    [SerializeField] private Material purple;
+
+    [SerializeField] private MeshRenderer machine;
+    private Material initialMachineMaterial;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -25,15 +32,19 @@ public class DonutStation : MonoBehaviour
     [SerializeField] private GameObject finished;
 
     private GameObject player;
-    public State currentState = State.Empty;
+    private State currentState = State.Empty;
+    [HideInInspector] public State newState = State.Empty;
     private bool isBaking;
     private float timer;
+    private int counter;
     private Vector3 initScale;
 
     private void Awake()
     {
         currentState = State.Empty;
-        sphere.GetComponent<MeshRenderer>().material = red;
+        initialMachineMaterial = machine.material;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>().material;
+        sphereMaterial = red;
         initScale = sphere.transform.localScale;
         start.SetActive(false);
         half.SetActive(false);
@@ -80,14 +91,17 @@ public class DonutStation : MonoBehaviour
 
     private void DonutInteraction()
     {
-        if (currentState == State.Empty)
+        if (currentState == State.Broken)
+            FixMachine();
+
+        else if (currentState == State.Empty)
         {
             isBaking = true;
             currentState = State.Start;
             start.SetActive(true);
             half.SetActive(false);
             finished.SetActive(false);
-            sphere.GetComponent<MeshRenderer>().material = yellow;
+            sphereMaterial = yellow;
             sphereTR.SetActive(true);
             timer = 0.0f;
         }
@@ -98,8 +112,44 @@ public class DonutStation : MonoBehaviour
         }
     }
 
+    private void FixMachine()
+    {
+        machine.material = initialMachineMaterial;
+        StartCoroutine(Cooldown());
+    }
+
+    private IEnumerator Cooldown()
+    {
+        currentState = State.Cooldown;
+        sphereMaterial = grey;
+
+        yield return new WaitForSeconds(cooldownTime);
+
+        currentState = State.Empty;
+        sphereMaterial = red;
+
+        player.GetComponent<PlayerState>().hasInteracted = false;
+    }
+
     private void Update()
     {
+        if (currentState != newState && currentState != State.Broken)
+        {
+            counter++;
+            if (counter > 15)
+            {
+                counter = 0;
+                StopAllCoroutines();
+                Restart();
+
+                currentState = State.Broken;
+
+                sphereMaterial = purple;
+                machine.material = grey;
+            }
+        }
+
+
         if (!isBaking)
             return;
 
@@ -113,14 +163,14 @@ public class DonutStation : MonoBehaviour
             {
                 case State.Start:
                     currentState = State.Half;
-                    sphere.GetComponent<MeshRenderer>().material = orange;
+                    sphereMaterial = orange;
                     start.SetActive(false);
                     finished.SetActive(false);
                     half.SetActive(true);
                     break;
                 case State.Half:
                     currentState = State.Finished;
-                    sphere.GetComponent<MeshRenderer>().material = green;
+                    sphereMaterial = green;
                     half.SetActive(false);
                     start.SetActive(false);
                     finished.SetActive(true);
@@ -141,7 +191,7 @@ public class DonutStation : MonoBehaviour
         half.SetActive(false);
         finished.SetActive(false);
         sphereTR.SetActive(false);
-        sphere.GetComponent<MeshRenderer>().material = red;
+        sphereMaterial = red;
         sphere.transform.localScale = initScale;
     }
 }

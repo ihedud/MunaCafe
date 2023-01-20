@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class TeaPot : MonoBehaviour
 {
-    public enum State { Empty, Brewing, Done, Burned, Cooldown };
+    public enum State { Empty, Brewing, Done, Burned, Cooldown, Broken };
 
     [SerializeField] private int brewingTime;
     [SerializeField] private int burningTime;
@@ -13,11 +13,16 @@ public class TeaPot : MonoBehaviour
 
     // State
     [SerializeField] private GameObject sphere;
+    [HideInInspector] private Material sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material green;
     [SerializeField] private Material grey;
     [SerializeField] private Material black;
+    [SerializeField] private Material purple;
+
+    [SerializeField] private MeshRenderer machine;
+    private Material initialMachineMaterial;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -25,12 +30,16 @@ public class TeaPot : MonoBehaviour
     [SerializeField] private GameObject cup;
 
     private GameObject player;
-    public State currentState = State.Empty;
+    private int counter = 0;
+    private State currentState = State.Empty;
+    [HideInInspector] public State newState = State.Empty;
 
     private void Awake()
     {
+        initialMachineMaterial = machine.material;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>().material;
         currentState = State.Empty;
-        sphere.GetComponent<MeshRenderer>().material = red;
+        sphereMaterial = red;
         cup.SetActive(false);
     }
 
@@ -71,7 +80,9 @@ public class TeaPot : MonoBehaviour
 
     private void TeaInteraction()
     {
-        if (currentState == State.Empty)
+        if (currentState == State.Broken)
+            FixMachine();
+        else if (currentState == State.Empty)
             StartCoroutine(Brewing());
 
         if (currentState == State.Done && player.GetComponent<PlayerState>().currentState == PlayerState.State.EmptyTea)
@@ -125,6 +136,30 @@ public class TeaPot : MonoBehaviour
         }
 
         player.GetComponent<PlayerState>().hasInteracted = false;
+    }
+    private void FixMachine()
+    {
+        machine.material = initialMachineMaterial;
+        StartCoroutine(Cooldown());
+    }
+
+    private void Update()
+    {
+        if (currentState == newState && currentState != State.Broken)
+            return;
+
+        counter++;
+        if (counter > 15)
+        {
+            counter = 0;
+            StopAllCoroutines();
+            currentState = State.Broken;
+
+            sphereMaterial = purple;
+            machine.material = grey;
+
+            cup.SetActive(false);
+        }
     }
 }
 
