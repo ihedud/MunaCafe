@@ -11,8 +11,8 @@ public class Host : MonoBehaviour
     [SerializeField] private List<Material> materials;
 
     [Header("Machines")]
-    [SerializeField] private Tray tray1;
-    [SerializeField] private Tray tray2;
+    [SerializeField] private TrayClient tray1;
+    [SerializeField] private TrayClient tray2;
     [SerializeField] private CoffeeMachine coffeeMachine1;
     [SerializeField] private CoffeeMachine coffeeMachine2;
     [SerializeField] private CoffeeMachine coffeeMachine3;
@@ -72,8 +72,8 @@ public class Host : MonoBehaviour
                 host.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
 
                 // Tray
-                host.myInfo.order1 = (int)tray1.currentOrder;
-                host.myInfo.order2 = (int)tray2.currentOrder;
+                tray1.currentOrder = (TrayClient.Order)host.clientInfo.order1;
+                tray2.currentOrder = (TrayClient.Order)host.clientInfo.order2;
 
                 // Machines State
 
