@@ -135,7 +135,7 @@ public class CoffeeMachine : MonoBehaviour
             return;
 
         counter++;
-        if (counter > 300)
+        if (counter > 500 || newState == State.Broken)
         {
             counter = 0;
             StopAllCoroutines();
