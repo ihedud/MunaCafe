@@ -13,7 +13,7 @@ public class DonutStation : MonoBehaviour
     // State
     [SerializeField] private GameObject sphere;
     [SerializeField] private GameObject sphereTR;
-    [HideInInspector] private Material sphereMaterial;
+    [HideInInspector] private MeshRenderer sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material yellow;
@@ -33,6 +33,7 @@ public class DonutStation : MonoBehaviour
 
     private GameObject player;
     private State currentState = State.Empty;
+    public State CurrentState => currentState;
     [HideInInspector] public State newState = State.Empty;
     private bool isBaking;
     private float timer;
@@ -43,8 +44,8 @@ public class DonutStation : MonoBehaviour
     {
         currentState = State.Empty;
         initialMachineMaterial = machine.material;
-        sphereMaterial = sphere.GetComponent<MeshRenderer>().material;
-        sphereMaterial = red;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>();
+        sphereMaterial.material = red;
         initScale = sphere.transform.localScale;
         start.SetActive(false);
         half.SetActive(false);
@@ -101,7 +102,7 @@ public class DonutStation : MonoBehaviour
             start.SetActive(true);
             half.SetActive(false);
             finished.SetActive(false);
-            sphereMaterial = yellow;
+            sphereMaterial.material = yellow;
             sphereTR.SetActive(true);
             timer = 0.0f;
         }
@@ -121,12 +122,12 @@ public class DonutStation : MonoBehaviour
     private IEnumerator Cooldown()
     {
         currentState = State.Cooldown;
-        sphereMaterial = grey;
+        sphereMaterial.material = grey;
 
         yield return new WaitForSeconds(cooldownTime);
 
         currentState = State.Empty;
-        sphereMaterial = red;
+        sphereMaterial.material = red;
 
         player.GetComponent<PlayerState>().hasInteracted = false;
     }
@@ -144,7 +145,7 @@ public class DonutStation : MonoBehaviour
 
                 currentState = State.Broken;
 
-                sphereMaterial = purple;
+                sphereMaterial.material = purple;
                 machine.material = grey;
             }
         }
@@ -163,14 +164,14 @@ public class DonutStation : MonoBehaviour
             {
                 case State.Start:
                     currentState = State.Half;
-                    sphereMaterial = orange;
+                    sphereMaterial.material = orange;
                     start.SetActive(false);
                     finished.SetActive(false);
                     half.SetActive(true);
                     break;
                 case State.Half:
                     currentState = State.Finished;
-                    sphereMaterial = green;
+                    sphereMaterial.material = green;
                     half.SetActive(false);
                     start.SetActive(false);
                     finished.SetActive(true);
@@ -191,7 +192,7 @@ public class DonutStation : MonoBehaviour
         half.SetActive(false);
         finished.SetActive(false);
         sphereTR.SetActive(false);
-        sphereMaterial = red;
+        sphereMaterial.material = red;
         sphere.transform.localScale = initScale;
     }
 }

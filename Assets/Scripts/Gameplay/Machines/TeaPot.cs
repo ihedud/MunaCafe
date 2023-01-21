@@ -13,7 +13,7 @@ public class TeaPot : MonoBehaviour
 
     // State
     [SerializeField] private GameObject sphere;
-    [HideInInspector] private Material sphereMaterial;
+    [HideInInspector] private MeshRenderer sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material green;
@@ -32,14 +32,15 @@ public class TeaPot : MonoBehaviour
     private GameObject player;
     private int counter = 0;
     private State currentState = State.Empty;
+    public State CurrentState => currentState;
     [HideInInspector] public State newState = State.Empty;
 
     private void Awake()
     {
         initialMachineMaterial = machine.material;
-        sphereMaterial = sphere.GetComponent<MeshRenderer>().material;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>();
         currentState = State.Empty;
-        sphereMaterial = red;
+        sphereMaterial.material = red;
         cup.SetActive(false);
     }
 
@@ -106,12 +107,12 @@ public class TeaPot : MonoBehaviour
     private IEnumerator Cooldown()
     {
         currentState = State.Cooldown;
-        sphere.GetComponent<MeshRenderer>().material = grey;
+        sphereMaterial.material = grey;
 
         yield return new WaitForSeconds(cooldownTime);
 
         currentState = State.Empty;
-        sphere.GetComponent<MeshRenderer>().material = red;
+        sphereMaterial.material = red;
 
         player.GetComponent<PlayerState>().hasInteracted = false;
     }
@@ -120,19 +121,19 @@ public class TeaPot : MonoBehaviour
     {
         cup.SetActive(true);
         currentState = State.Brewing;
-        sphere.GetComponent<MeshRenderer>().material = orange;
+        sphereMaterial.material = orange;
 
         yield return new WaitForSeconds(brewingTime);
 
         currentState = State.Done;
-        sphere.GetComponent<MeshRenderer>().material = green;
+        sphereMaterial.material = green;
 
         yield return new WaitForSeconds(burningTime);
 
         if (currentState == State.Done)
         {
             currentState = State.Burned;
-            sphere.GetComponent<MeshRenderer>().material = black;
+            sphereMaterial.material = black;
         }
 
         player.GetComponent<PlayerState>().hasInteracted = false;
@@ -155,7 +156,7 @@ public class TeaPot : MonoBehaviour
             StopAllCoroutines();
             currentState = State.Broken;
 
-            sphereMaterial = purple;
+            sphereMaterial.material = purple;
             machine.material = grey;
 
             cup.SetActive(false);
