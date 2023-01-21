@@ -30,6 +30,7 @@ public class CoffeeMachine : MonoBehaviour
 
     private GameObject player;
     private State currentState = State.Empty;
+    public State CurrentState => currentState;
     [HideInInspector] public State newState = State.Empty;
     private int counter = 0;
 

@@ -80,6 +80,11 @@ public class Client : MonoBehaviour
                 client.myInfo.currentState = myPlayer.GetComponent<PlayerState>().currentState;
 
                 // Machines State
+
+                client.myInfo.coffee1State = coffeeMachine1.CurrentState;
+                client.myInfo.coffee2State = coffeeMachine2.CurrentState;
+                client.myInfo.coffee3State = coffeeMachine3.CurrentState;
+
                 coffeeMachine1.newState = client.hostInfo.coffee1State;
                 coffeeMachine2.newState = client.hostInfo.coffee2State;
                 coffeeMachine3.newState = client.hostInfo.coffee3State;

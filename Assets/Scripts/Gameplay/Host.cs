@@ -80,6 +80,11 @@ public class Host : MonoBehaviour
                 host.myInfo.currentState = myPlayer.GetComponent<PlayerState>().currentState;
 
                 // Machines State
+
+                host.myInfo.coffee1State = coffeeMachine1.CurrentState;
+                host.myInfo.coffee2State = coffeeMachine2.CurrentState;
+                host.myInfo.coffee3State = coffeeMachine3.CurrentState;
+
                 coffeeMachine1.newState = host.clientInfo.coffee1State;
                 coffeeMachine2.newState = host.clientInfo.coffee2State;
                 coffeeMachine3.newState = host.clientInfo.coffee3State;
