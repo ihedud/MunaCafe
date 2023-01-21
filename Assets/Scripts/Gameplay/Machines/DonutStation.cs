@@ -76,6 +76,7 @@ public class DonutStation : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Player2")
         {
+            player = collider.gameObject;
             playerGrab.action.Disable();
             playerGrab.action.performed -= GrabDonut;
             player.GetComponent<PlayerState>().hasInteracted = false;
