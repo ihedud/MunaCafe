@@ -76,8 +76,8 @@ public class Client : MonoBehaviour
                 tray2.currentOrder = (TrayClient.Order)client.hostInfo.order2;
 
                 // Player State
-                //hostPlayer.GetComponent<PlayerState>().currentState = client.hostInfo.currentState;
-                //client.myInfo.currentState = myPlayer.GetComponent<PlayerState>().currentState;
+                hostPlayer.GetComponent<PlayerState>().currentState = client.hostInfo.currentState;
+                client.myInfo.currentState = myPlayer.GetComponent<PlayerState>().currentState;
 
                 // Machines State
 
