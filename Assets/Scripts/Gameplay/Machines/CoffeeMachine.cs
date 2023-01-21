@@ -135,8 +135,11 @@ public class CoffeeMachine : MonoBehaviour
             return;
 
         counter++;
-        if (counter > 500 || newState == State.Broken)
+        if (counter > 200 || newState == State.Broken)
         {
+            Debug.Log("It broke lol");
+            Debug.Log("My state: " + currentState + ", new state = " + newState);
+
             counter = 0;
             StopAllCoroutines();
             currentState = State.Broken;
