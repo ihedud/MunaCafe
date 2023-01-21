@@ -155,8 +155,8 @@ public class TeaPot : MonoBehaviour
         counter++;
         if (counter > 300)
         {
-            //player1.currentState = PlayerState.State.None;
-            //player2.currentState = PlayerState.State.None;
+            player1.currentState = PlayerState.State.None;
+            player2.currentState = PlayerState.State.None;
 
             counter = 0;
             StopAllCoroutines();
