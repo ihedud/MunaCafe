@@ -144,8 +144,8 @@ public class CoffeeMachine : MonoBehaviour
             Debug.Log("It broke lol");
             Debug.Log("My state: " + currentState + ", new state = " + newState);
 
-            player1.currentState = PlayerState.State.None;
-            player2.currentState = PlayerState.State.None;
+            //player1.currentState = PlayerState.State.None;
+            //player2.currentState = PlayerState.State.None;
 
             counter = 0;
             StopAllCoroutines();
