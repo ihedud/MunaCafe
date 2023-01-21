@@ -75,10 +75,6 @@ public class Host : MonoBehaviour
                 host.myInfo.order1 = (int)tray1.currentOrder;
                 host.myInfo.order2 = (int)tray2.currentOrder;
 
-                // Player State
-                clientPlayer.GetComponent<PlayerState>().currentState = host.clientInfo.currentState;
-                host.myInfo.currentState = myPlayer.GetComponent<PlayerState>().currentState;
-
                 // Machines State
 
                 host.myInfo.coffee1State = coffeeMachine1.CurrentState;

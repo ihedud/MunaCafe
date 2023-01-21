@@ -34,6 +34,9 @@ public class CoffeeMachine : MonoBehaviour
     [HideInInspector] public State newState = State.Empty;
     private int counter = 0;
 
+    [SerializeField] private PlayerState player1;
+    [SerializeField] private PlayerState player2;
+
     private void Awake()
     {
         initialMachineMaterial = machine.material;
@@ -140,6 +143,9 @@ public class CoffeeMachine : MonoBehaviour
         {
             Debug.Log("It broke lol");
             Debug.Log("My state: " + currentState + ", new state = " + newState);
+
+            player1.currentState = PlayerState.State.None;
+            player2.currentState = PlayerState.State.None;
 
             counter = 0;
             StopAllCoroutines();

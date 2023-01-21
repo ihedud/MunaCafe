@@ -35,6 +35,9 @@ public class TeaPot : MonoBehaviour
     public State CurrentState => currentState;
     [HideInInspector] public State newState = State.Empty;
 
+    [SerializeField] private PlayerState player1;
+    [SerializeField] private PlayerState player2;
+
     private void Awake()
     {
         initialMachineMaterial = machine.material;
@@ -152,6 +155,9 @@ public class TeaPot : MonoBehaviour
         counter++;
         if (counter > 300)
         {
+            player1.currentState = PlayerState.State.None;
+            player2.currentState = PlayerState.State.None;
+
             counter = 0;
             StopAllCoroutines();
             currentState = State.Broken;
