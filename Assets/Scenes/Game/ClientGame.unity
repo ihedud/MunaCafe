@@ -1168,6 +1168,17 @@ PrefabInstance:
       objectReference: {fileID: 335918193}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a700323c78408c847a864b1d9d306775, type: 3}
+--- !u!114 &915919458 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 915919457}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943a86fa0babae34f96e6e27e61c18cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1084138944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,6 +1333,17 @@ PrefabInstance:
       objectReference: {fileID: 335918193}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a700323c78408c847a864b1d9d306775, type: 3}
+--- !u!114 &1174934611 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
+  m_PrefabInstance: {fileID: 1174934610}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 943a86fa0babae34f96e6e27e61c18cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1283996500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1509,8 +1531,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 16011e61fbd9fd845b380660085b4150, type: 2}
   - {fileID: 2100000, guid: 503e1b1fac9c13a47a48a0cfcae73525, type: 2}
   - {fileID: 2100000, guid: 04af0475c11921e4f9f717d5d6095977, type: 2}
-  tray1: {fileID: 0}
-  tray2: {fileID: 0}
+  tray1: {fileID: 1174934611}
+  tray2: {fileID: 915919458}
   coffeeMachine1: {fileID: 1867236165}
   coffeeMachine2: {fileID: 900085010}
   coffeeMachine3: {fileID: 1660175673}
