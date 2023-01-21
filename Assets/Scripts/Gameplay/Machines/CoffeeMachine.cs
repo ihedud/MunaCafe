@@ -12,7 +12,7 @@ public class CoffeeMachine : MonoBehaviour
 
     // State
     [SerializeField] private GameObject sphere;
-    [HideInInspector] private Material sphereMaterial;
+    [HideInInspector] private MeshRenderer sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material green;
@@ -36,8 +36,8 @@ public class CoffeeMachine : MonoBehaviour
     private void Awake()
     {
         initialMachineMaterial = machine.material;
-        sphereMaterial = sphere.GetComponent<MeshRenderer>().material;
-        sphereMaterial = red;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>();
+        sphereMaterial.material = red;
         currentState = State.Empty;
     }
 
@@ -97,12 +97,12 @@ public class CoffeeMachine : MonoBehaviour
     private IEnumerator Cooldown()
     {
         currentState = State.Cooldown;
-        sphereMaterial = grey;
+        sphereMaterial.material = grey;
 
         yield return new WaitForSeconds(cooldownTime);
 
         currentState = State.Empty;
-        sphereMaterial = red;
+        sphereMaterial.material = red;
 
         player.GetComponent<PlayerState>().hasInteracted = false;
     }
@@ -111,12 +111,12 @@ public class CoffeeMachine : MonoBehaviour
     {
         mug.SetActive(true);
         currentState = State.Brewing;
-        sphereMaterial = orange;
+        sphereMaterial.material = orange;
 
         yield return new WaitForSeconds(brewingTime);
 
         currentState = State.Done;
-        sphereMaterial = green;
+        sphereMaterial.material = green;
 
         coffee.SetActive(true);
 
@@ -141,7 +141,7 @@ public class CoffeeMachine : MonoBehaviour
             StopAllCoroutines();
             currentState = State.Broken;
 
-            sphereMaterial = purple;
+            sphereMaterial.material = purple;
             machine.material = grey;
 
             coffee.SetActive(false);
