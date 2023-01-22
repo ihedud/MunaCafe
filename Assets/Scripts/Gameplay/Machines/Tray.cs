@@ -38,6 +38,7 @@ public class Tray : MonoBehaviour
     [SerializeField] private MeshRenderer trayMesh;
     [SerializeField] private Material grey;
 
+    private Material initialTrayMaterial;
     private GameObject player;
     private int counter = 0;
 
@@ -49,6 +50,7 @@ public class Tray : MonoBehaviour
     private void Awake()
     {
         currentTrayState = TrayState.Empty;
+        initialTrayMaterial = trayMesh.material;
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -82,7 +84,7 @@ public class Tray : MonoBehaviour
 
     private void Update()
     {
-        if(currentTrayState == TrayState.Empty)
+        if(currentTrayState == TrayState.Empty && currentTrayState != TrayState.Broken)
         {
             StartCoroutine(AssignOrder());
         }
@@ -252,6 +254,14 @@ public class Tray : MonoBehaviour
                     break;
             }
         }
+        else if (currentTrayState == TrayState.Broken)
+            FixMachine();
+    }
+
+    private void FixMachine()
+    {
+        trayMesh.material = initialTrayMaterial;
+        StartCoroutine(CompleteOrder());
     }
 
     private IEnumerator CompleteOrder()
