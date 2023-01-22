@@ -15,7 +15,6 @@ public class TeaCup : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += GrabCup;
         }
     }
@@ -33,7 +32,6 @@ public class TeaCup : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= GrabCup;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -56,7 +54,6 @@ public class TeaCup : MonoBehaviour
 
     private IEnumerator Grabbing()
     {
-        playerGrab.action.Disable();
         playerGrab.action.performed -= GrabCup;
 
         yield return new WaitForSeconds(0.5f);

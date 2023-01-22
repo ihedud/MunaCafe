@@ -27,22 +27,40 @@ public class PlayerState : MonoBehaviour
     private void Update()
     {
         if (currentState == State.Coffee && !coffee.activeSelf)
-            coffee.SetActive(true);
-        else if (currentState == State.EmptyTea && !emptyTea.activeSelf)
-            emptyTea.SetActive(true);
-        else if (currentState == State.Tea && !tea.activeSelf)
-            tea.SetActive(true);
-        else if (currentState == State.BurnedTea && !burnedTea.activeSelf)
-            burnedTea.SetActive(true);
-        else if (currentState == State.Donut && !donut.activeSelf)
-            donut.SetActive(true);
-        else if (currentState == State.None)
         {
-            coffee.SetActive(false);
-            emptyTea.SetActive(false);
-            tea.SetActive(false);
-            burnedTea.SetActive(false);
-            donut.SetActive(false);
+            DectivateProps();
+            coffee.SetActive(true);
         }
+        else if (currentState == State.EmptyTea && !emptyTea.activeSelf)
+        {
+            DectivateProps();
+            emptyTea.SetActive(true);
+        }
+        else if (currentState == State.Tea && !tea.activeSelf)
+        {
+            DectivateProps();
+            tea.SetActive(true);
+        }
+        else if (currentState == State.BurnedTea && !burnedTea.activeSelf)
+        {
+            DectivateProps();
+            burnedTea.SetActive(true);
+        }
+        else if (currentState == State.Donut && !donut.activeSelf)
+        {
+            DectivateProps();
+            donut.SetActive(true);
+        }
+        else if (currentState == State.None)
+            DectivateProps();
+    }
+
+    private void DectivateProps()
+    {
+        coffee.SetActive(false);
+        emptyTea.SetActive(false);
+        tea.SetActive(false);
+        burnedTea.SetActive(false);
+        donut.SetActive(false);
     }
 }

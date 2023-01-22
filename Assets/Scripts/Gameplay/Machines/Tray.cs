@@ -9,8 +9,10 @@ public class Tray : MonoBehaviour
 
     [HideInInspector] public Order currentOrder;
 
-    private enum TrayState { Empty, Ongoing, Completed };
-    private TrayState currentTrayState;
+    public enum TrayState { Empty, Ongoing, HalfCompleted, Completed, Broken };
+    public TrayState currentTrayState;
+
+    public TrayState newState = TrayState.Empty;
 
     // Orders
     [SerializeField] private GameObject coffeeTR;
@@ -30,7 +32,15 @@ public class Tray : MonoBehaviour
     [SerializeField] private GameObject teaTR_donut;
     [SerializeField] private GameObject tea_donut;
 
+    [SerializeField] private PlayerState player1;
+    [SerializeField] private PlayerState player2;
+
+    [SerializeField] private MeshRenderer trayMesh;
+    [SerializeField] private Material grey;
+
+    private Material initialTrayMaterial;
     private GameObject player;
+    private int counter = 0;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -40,6 +50,8 @@ public class Tray : MonoBehaviour
     private void Awake()
     {
         currentTrayState = TrayState.Empty;
+        initialTrayMaterial = trayMesh.material; 
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -47,7 +59,6 @@ public class Tray : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += DeliverOrder;
         }
     }
@@ -65,7 +76,6 @@ public class Tray : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= DeliverOrder;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -73,9 +83,37 @@ public class Tray : MonoBehaviour
 
     private void Update()
     {
-        if(currentTrayState == TrayState.Empty)
+        if(currentTrayState == TrayState.Empty && currentTrayState != TrayState.Broken)
         {
             StartCoroutine(AssignOrder());
+        }
+
+        if (currentTrayState == newState || currentTrayState == TrayState.Broken)
+            return;
+
+        counter++;
+        if (counter > 300)
+        {
+            Debug.Log("It broke lol");
+            Debug.Log("My state: " + currentTrayState + ", new state = " + newState);
+
+            player1.currentState = PlayerState.State.None;
+            player2.currentState = PlayerState.State.None;
+
+            counter = 0;
+            StopAllCoroutines();
+
+            coffee.SetActive(false);
+            tea.SetActive(false);
+            donut.SetActive(false);
+            coffee_donut.SetActive(false);
+            tea_donut.SetActive(false);
+
+            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
+
+            currentTrayState = TrayState.Broken;
+
+            trayMesh.material = grey;
         }
     }
 
@@ -115,7 +153,7 @@ public class Tray : MonoBehaviour
 
     private void TrayInteraction()
     {
-        if (currentTrayState == TrayState.Ongoing)
+        if (currentTrayState == TrayState.Ongoing || currentTrayState == TrayState.HalfCompleted)
         {
             switch (player.GetComponent<PlayerState>().currentState)
             {
@@ -135,6 +173,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             coffeeTR_donutTR.SetActive(false);
                             coffee_donutTR.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (coffeeTR_donut.activeSelf)
                         {
@@ -162,6 +201,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             teaTR_donutTR.SetActive(false);
                             tea_donutTR.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (teaTR_donut.activeSelf)
                         {
@@ -189,6 +229,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             coffeeTR_donutTR.SetActive(false);
                             coffeeTR_donut.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (coffee_donutTR.activeSelf)
                         {
@@ -206,6 +247,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             teaTR_donutTR.SetActive(false);
                             teaTR_donut.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (tea_donutTR.activeSelf)
                         {
@@ -219,6 +261,14 @@ public class Tray : MonoBehaviour
                     break;
             }
         }
+        else if (currentTrayState == TrayState.Broken)
+            FixMachine();
+    }
+
+    private void FixMachine()
+    {
+        trayMesh.material = initialTrayMaterial;
+        StartCoroutine(CompleteOrder());
     }
 
     private IEnumerator CompleteOrder()
@@ -234,5 +284,10 @@ public class Tray : MonoBehaviour
         tea_donut.SetActive(false);
 
         currentTrayState = TrayState.Empty;
+    }
+
+    private void OnDisable()
+    {
+        playerGrab.action.Disable();
     }
 }

@@ -121,8 +121,11 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: acea3d54802ac09419e85f566a48c272, type: 2}
   grey: {fileID: 2100000, guid: 506fa4ff228af3e42951909733b45238, type: 2}
   black: {fileID: 2100000, guid: 6097034819203e545a3ff45826960040, type: 2}
+  purple: {fileID: 2100000, guid: 503e1b1fac9c13a47a48a0cfcae73525, type: 2}
+  machine: {fileID: 23476322138259918}
   playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
   cup: {fileID: 6523182971068948631}
+  newState: 0
 --- !u!65 &5176564744598557981
 BoxCollider:
   m_ObjectHideFlags: 0

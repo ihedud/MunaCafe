@@ -147,11 +147,12 @@ public class HostUDP : MonoBehaviour
             Debug.Log(readyToListen);
             if (readyToListen)
             {
-                //try
-                //{
+                try
+                {
                     // Receive data
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
+
                     //Debug.Log("Receiving " + clientInfo.clientPacketID);
                 
                     //if (clientInfo.hasInteracted)
@@ -166,11 +167,11 @@ public class HostUDP : MonoBehaviour
 
                     if (!clientInfo.hasInteracted)
                         interactionDone = false;
-                //}
-                //catch (Exception e)
-                //{
-                //    Debug.Log(e.Message);
-                //}
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
             }
         }
     }

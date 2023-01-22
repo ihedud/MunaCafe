@@ -21,6 +21,25 @@ public class Information
     public int order1 = 0;
     public int order2 = 0;
     public int donutMesh = 0;
+
+    // Player State
+    public PlayerState.State currentState;
+
+    // Machine States
+    public CoffeeMachine.State coffee1State;
+    public CoffeeMachine.State coffee2State;
+    public CoffeeMachine.State coffee3State;
+
+    public DonutStation.State donutState;
+
+    public TeaPot.State teaPotState;
+
+    // Tray States
+    public Tray.TrayState tray1State;
+    public Tray.TrayState tray2State;
+
+    //public TrayClient.TrayState trayClient1State;
+    //public TrayClient.TrayState trayClient2State;
 }
 
 public class JsonSerialization : MonoBehaviour

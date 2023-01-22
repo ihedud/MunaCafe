@@ -5,17 +5,24 @@ using UnityEngine.InputSystem;
 
 public class DonutStation : MonoBehaviour
 {
-    enum State { Empty, Start, Half, Finished };
+    public enum State { Empty, Start, Half, Finished, Cooldown, Broken};
 
     [SerializeField] private int updateTime;
+    [SerializeField] private int cooldownTime;
 
     // State
     [SerializeField] private GameObject sphere;
     [SerializeField] private GameObject sphereTR;
+    [HideInInspector] private MeshRenderer sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material yellow;
     [SerializeField] private Material green;
+    [SerializeField] private Material grey;
+    [SerializeField] private Material purple;
+
+    [SerializeField] private MeshRenderer machine;
+    private Material initialMachineMaterial;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -26,19 +33,28 @@ public class DonutStation : MonoBehaviour
 
     private GameObject player;
     private State currentState = State.Empty;
+    public State CurrentState => currentState;
+    [HideInInspector] public State newState = State.Empty;
     private bool isBaking;
     private float timer;
+    private int counter;
     private Vector3 initScale;
+
+    [SerializeField] private PlayerState player1;
+    [SerializeField] private PlayerState player2;
 
     private void Awake()
     {
         currentState = State.Empty;
-        sphere.GetComponent<MeshRenderer>().material = red;
+        initialMachineMaterial = machine.material;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>();
+        sphereMaterial.material = red;
         initScale = sphere.transform.localScale;
         start.SetActive(false);
         half.SetActive(false);
         finished.SetActive(false);
         sphereTR.SetActive(false);
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -46,7 +62,6 @@ public class DonutStation : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += GrabDonut;
         }
     }
@@ -64,7 +79,7 @@ public class DonutStation : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Player2")
         {
-            playerGrab.action.Disable();
+            player = collider.gameObject;
             playerGrab.action.performed -= GrabDonut;
             player.GetComponent<PlayerState>().hasInteracted = false;
             if (currentState != State.Finished)
@@ -80,14 +95,17 @@ public class DonutStation : MonoBehaviour
 
     private void DonutInteraction()
     {
-        if (currentState == State.Empty)
+        if (currentState == State.Broken)
+            FixMachine();
+
+        else if (currentState == State.Empty)
         {
             isBaking = true;
             currentState = State.Start;
             start.SetActive(true);
             half.SetActive(false);
             finished.SetActive(false);
-            sphere.GetComponent<MeshRenderer>().material = yellow;
+            sphereMaterial.material = yellow;
             sphereTR.SetActive(true);
             timer = 0.0f;
         }
@@ -98,14 +116,53 @@ public class DonutStation : MonoBehaviour
         }
     }
 
+    private void FixMachine()
+    {
+        machine.material = initialMachineMaterial;
+        StartCoroutine(Cooldown());
+    }
+
+    private IEnumerator Cooldown()
+    {
+        currentState = State.Cooldown;
+        sphereMaterial.material = grey;
+
+        yield return new WaitForSeconds(cooldownTime);
+
+        currentState = State.Empty;
+        sphereMaterial.material = red;
+
+        player.GetComponent<PlayerState>().hasInteracted = false;
+    }
+
     private void Update()
     {
+        if (currentState != newState || currentState == State.Broken)
+        {
+            counter++;
+            if (counter > 300)
+            {
+                player1.currentState = PlayerState.State.None;
+                player2.currentState = PlayerState.State.None;
+
+                counter = 0;
+                StopAllCoroutines();
+                Restart();
+
+                currentState = State.Broken;
+
+                sphereMaterial.material = purple;
+                machine.material = grey;
+            }
+        }
+
+
         if (!isBaking)
             return;
 
         timer += Time.deltaTime;
         if(currentState != State.Finished)
-            sphere.transform.localScale += new Vector3(0.000009f, 0.000009f, 0.000009f);
+            sphere.transform.localScale += new Vector3(0.000009f, 0.000015f, 0.000009f);
 
         if (timer > updateTime)
         {
@@ -113,14 +170,14 @@ public class DonutStation : MonoBehaviour
             {
                 case State.Start:
                     currentState = State.Half;
-                    sphere.GetComponent<MeshRenderer>().material = orange;
+                    sphereMaterial.material = orange;
                     start.SetActive(false);
                     finished.SetActive(false);
                     half.SetActive(true);
                     break;
                 case State.Half:
                     currentState = State.Finished;
-                    sphere.GetComponent<MeshRenderer>().material = green;
+                    sphereMaterial.material = green;
                     half.SetActive(false);
                     start.SetActive(false);
                     finished.SetActive(true);
@@ -141,7 +198,12 @@ public class DonutStation : MonoBehaviour
         half.SetActive(false);
         finished.SetActive(false);
         sphereTR.SetActive(false);
-        sphere.GetComponent<MeshRenderer>().material = red;
+        sphereMaterial.material = red;
         sphere.transform.localScale = initScale;
+    }
+
+    private void OnDisable()
+    {
+        playerGrab.action.Disable();
     }
 }

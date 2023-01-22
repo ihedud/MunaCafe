@@ -140,7 +140,7 @@ public class ClientUDP : MonoBehaviour
                 }
                 catch (Exception e) 
                 { 
-                    Debug.Log(e.Message); 
+                    Debug.Log(e.Message);
                 }
             }
         }

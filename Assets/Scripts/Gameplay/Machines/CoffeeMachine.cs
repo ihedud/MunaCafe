@@ -5,17 +5,22 @@ using UnityEngine.InputSystem;
 
 public class CoffeeMachine : MonoBehaviour
 {
-    enum State { Empty, Brewing, Done, Cooldown};
+    public enum State { Empty, Brewing, Done, Cooldown, Broken};
 
     [SerializeField] private int brewingTime;
     [SerializeField] private int cooldownTime;
 
     // State
     [SerializeField] private GameObject sphere;
+    [HideInInspector] private MeshRenderer sphereMaterial;
     [SerializeField] private Material red;
     [SerializeField] private Material orange;
     [SerializeField] private Material green;
     [SerializeField] private Material grey;
+    [SerializeField] private Material purple;
+
+    [SerializeField] private MeshRenderer machine;
+    private Material initialMachineMaterial;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -25,11 +30,20 @@ public class CoffeeMachine : MonoBehaviour
 
     private GameObject player;
     private State currentState = State.Empty;
+    public State CurrentState => currentState;
+    [HideInInspector] public State newState = State.Empty;
+    private int counter = 0;
+
+    [SerializeField] private PlayerState player1;
+    [SerializeField] private PlayerState player2;
 
     private void Awake()
     {
+        initialMachineMaterial = machine.material;
+        sphereMaterial = sphere.GetComponent<MeshRenderer>();
+        sphereMaterial.material = red;
         currentState = State.Empty;
-        sphere.GetComponent<MeshRenderer>().material = red;
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -37,7 +51,6 @@ public class CoffeeMachine : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += GrabCoffee;
         }
     }
@@ -55,7 +68,6 @@ public class CoffeeMachine : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= GrabCoffee;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -69,7 +81,9 @@ public class CoffeeMachine : MonoBehaviour
 
     private void CoffeeInteraction()
     {
-        if (currentState == State.Empty)
+        if (currentState == State.Broken)
+            FixMachine();
+        else if (currentState == State.Empty)
             StartCoroutine(Brewing());
 
         if (currentState == State.Done && player.GetComponent<PlayerState>().currentState == PlayerState.State.None)
@@ -86,12 +100,12 @@ public class CoffeeMachine : MonoBehaviour
     private IEnumerator Cooldown()
     {
         currentState = State.Cooldown;
-        sphere.GetComponent<MeshRenderer>().material = grey;
+        sphereMaterial.material = grey;
 
         yield return new WaitForSeconds(cooldownTime);
 
         currentState = State.Empty;
-        sphere.GetComponent<MeshRenderer>().material = red;
+        sphereMaterial.material = red;
 
         player.GetComponent<PlayerState>().hasInteracted = false;
     }
@@ -100,15 +114,55 @@ public class CoffeeMachine : MonoBehaviour
     {
         mug.SetActive(true);
         currentState = State.Brewing;
-        sphere.GetComponent<MeshRenderer>().material = orange;
+        sphereMaterial.material = orange;
 
         yield return new WaitForSeconds(brewingTime);
 
         currentState = State.Done;
-        sphere.GetComponent<MeshRenderer>().material = green;
+        sphereMaterial.material = green;
 
         coffee.SetActive(true);
 
         player.GetComponent<PlayerState>().hasInteracted = false;
+    }
+
+    private void FixMachine()
+    {
+        machine.material = initialMachineMaterial;
+        StartCoroutine(Cooldown());
+    }
+
+    private void Update()
+    {
+        if (currentState == newState || currentState == State.Broken)
+            return;
+
+        //if (newState == State.Broken)
+        //    counter = 300;
+
+        counter++;
+        if (counter > 300)
+        {
+            Debug.Log("It broke lol");
+            Debug.Log("My state: " + currentState + ", new state = " + newState);
+
+            player1.currentState = PlayerState.State.None;
+            player2.currentState = PlayerState.State.None;
+
+            counter = 0;
+            StopAllCoroutines();
+            currentState = State.Broken;
+
+            sphereMaterial.material = purple;
+            machine.material = grey;
+
+            coffee.SetActive(false);
+            mug.SetActive(false);
+        }
+    }
+
+    private void OnDisable()
+    {
+            playerGrab.action.Disable();
     }
 }

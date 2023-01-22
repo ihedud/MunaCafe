@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class Host : MonoBehaviour
 {
+    [Header("Players")]
     [SerializeField] private GameObject myPlayer;
     [SerializeField] private GameObject clientPlayer;
     [HideInInspector] [SerializeField] private bool lobby = false;
     [SerializeField] private List<Material> materials;
-    [SerializeField] private Tray tray1;
-    [SerializeField] private Tray tray2;
+
+    [Header("Machines")]
+    [SerializeField] private TrayClient tray1;
+    [SerializeField] private TrayClient tray2;
+    [SerializeField] private CoffeeMachine coffeeMachine1;
+    [SerializeField] private CoffeeMachine coffeeMachine2;
+    [SerializeField] private CoffeeMachine coffeeMachine3;
+    [SerializeField] private TeaPot teaPot;
     [SerializeField] private DonutStation donutStation;
+
     private HostUDP host;
 
     public HostUDP hostInfo => host;
@@ -64,8 +72,32 @@ public class Host : MonoBehaviour
                 host.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
 
                 // Tray
-                host.myInfo.order1 = (int)tray1.currentOrder;
-                host.myInfo.order2 = (int)tray2.currentOrder;
+                host.myInfo.tray1State = (Tray.TrayState)tray1.currentTrayState;
+                host.myInfo.tray2State = (Tray.TrayState)tray2.currentTrayState;
+
+                tray1.newState = (TrayClient.TrayState)host.clientInfo.tray1State;
+                tray2.newState = (TrayClient.TrayState)host.clientInfo.tray2State;
+
+                tray1.currentOrder = (TrayClient.Order)host.clientInfo.order1;
+                tray2.currentOrder = (TrayClient.Order)host.clientInfo.order2;
+
+                // Machines State
+
+                host.myInfo.coffee1State = coffeeMachine1.CurrentState;
+                host.myInfo.coffee2State = coffeeMachine2.CurrentState;
+                host.myInfo.coffee3State = coffeeMachine3.CurrentState;
+
+                coffeeMachine1.newState = host.clientInfo.coffee1State;
+                coffeeMachine2.newState = host.clientInfo.coffee2State;
+                coffeeMachine3.newState = host.clientInfo.coffee3State;
+
+                host.myInfo.donutState = donutStation.CurrentState;
+
+                donutStation.newState = host.clientInfo.donutState;
+
+                host.myInfo.teaPotState = teaPot.CurrentState;
+
+                teaPot.newState = host.clientInfo.teaPotState;
             }
         }
     }
