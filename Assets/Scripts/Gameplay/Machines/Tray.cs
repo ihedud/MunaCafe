@@ -102,7 +102,15 @@ public class Tray : MonoBehaviour
 
             counter = 0;
             StopAllCoroutines();
-            StartCoroutine(CompleteOrder());
+
+            coffee.SetActive(false);
+            tea.SetActive(false);
+            donut.SetActive(false);
+            coffee_donut.SetActive(false);
+            tea_donut.SetActive(false);
+
+            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
+
             currentTrayState = TrayState.Broken;
 
             trayMesh.material = grey;
