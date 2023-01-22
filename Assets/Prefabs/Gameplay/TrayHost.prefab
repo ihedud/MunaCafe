@@ -172,7 +172,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2060521728286150444}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 275.1, y: 258.387, z: -3.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -206,6 +206,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentOrder: 0
+  currentTrayState: 0
+  newState: 0
   coffeeTR: {fileID: 2061492997926189044}
   coffee: {fileID: 2061492997990787241}
   teaTR: {fileID: 2062126896959366684}
@@ -220,6 +222,10 @@ MonoBehaviour:
   tea_donutTR: {fileID: 4539887229028571800}
   teaTR_donut: {fileID: 338818905098805680}
   tea_donut: {fileID: 5969512451081688935}
+  player1: {fileID: 0}
+  player2: {fileID: 0}
+  trayMesh: {fileID: 2074927658413567329}
+  grey: {fileID: 2100000, guid: 506fa4ff228af3e42951909733b45238, type: 2}
   playerGrab: {fileID: 6697843885108881331, guid: ff9368a603df47145942813f6396684a, type: 3}
   pointsManager: {fileID: 0}
 --- !u!1 &2061472601036264437

@@ -32,7 +32,14 @@ public class Tray : MonoBehaviour
     [SerializeField] private GameObject teaTR_donut;
     [SerializeField] private GameObject tea_donut;
 
+    [SerializeField] private PlayerState player1;
+    [SerializeField] private PlayerState player2;
+
+    [SerializeField] private MeshRenderer trayMesh;
+    [SerializeField] private Material grey;
+
     private GameObject player;
+    private int counter = 0;
 
     // Input
     [SerializeField] private InputActionReference playerGrab;
@@ -78,6 +85,26 @@ public class Tray : MonoBehaviour
         if(currentTrayState == TrayState.Empty)
         {
             StartCoroutine(AssignOrder());
+        }
+
+        if (currentTrayState == newState && currentTrayState != TrayState.Broken)
+            return;
+
+        counter++;
+        if (counter > 300)
+        {
+            Debug.Log("It broke lol");
+            Debug.Log("My state: " + currentTrayState + ", new state = " + newState);
+
+            player1.currentState = PlayerState.State.None;
+            player2.currentState = PlayerState.State.None;
+
+            counter = 0;
+            StopAllCoroutines();
+            StartCoroutine(CompleteOrder());
+            currentTrayState = TrayState.Broken;
+
+            trayMesh.material = grey;
         }
     }
 

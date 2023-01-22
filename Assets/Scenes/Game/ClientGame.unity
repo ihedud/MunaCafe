@@ -1163,6 +1163,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: player1
+      value: 
+      objectReference: {fileID: 735916393}
+    - target: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: player2
+      value: 
+      objectReference: {fileID: 868808686}
+    - target: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
       propertyPath: pointsManager
       value: 
       objectReference: {fileID: 335918193}
@@ -1327,6 +1335,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: player1
+      value: 
+      objectReference: {fileID: 735916393}
+    - target: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
+      propertyPath: player2
+      value: 
+      objectReference: {fileID: 868808686}
     - target: {fileID: 6205271116094706942, guid: a700323c78408c847a864b1d9d306775, type: 3}
       propertyPath: pointsManager
       value: 
