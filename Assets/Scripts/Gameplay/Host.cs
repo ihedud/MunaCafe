@@ -72,6 +72,12 @@ public class Host : MonoBehaviour
                 host.myInfo.hasInteracted = myPlayer.GetComponent<PlayerState>().hasInteracted;
 
                 // Tray
+                host.myInfo.tray1State = (Tray.TrayState)tray1.currentTrayState;
+                host.myInfo.tray2State = (Tray.TrayState)tray2.currentTrayState;
+
+                tray1.newState = (TrayClient.TrayState)host.clientInfo.tray1State;
+                tray2.newState = (TrayClient.TrayState)host.clientInfo.tray2State;
+
                 tray1.currentOrder = (TrayClient.Order)host.clientInfo.order1;
                 tray2.currentOrder = (TrayClient.Order)host.clientInfo.order2;
 

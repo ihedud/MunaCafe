@@ -33,6 +33,13 @@ public class Information
     public DonutStation.State donutState;
 
     public TeaPot.State teaPotState;
+
+    // Tray States
+    public Tray.TrayState tray1State;
+    public Tray.TrayState tray2State;
+
+    //public TrayClient.TrayState trayClient1State;
+    //public TrayClient.TrayState trayClient2State;
 }
 
 public class JsonSerialization : MonoBehaviour

@@ -9,8 +9,10 @@ public class Tray : MonoBehaviour
 
     [HideInInspector] public Order currentOrder;
 
-    private enum TrayState { Empty, Ongoing, Completed };
-    private TrayState currentTrayState;
+    public enum TrayState { Empty, Ongoing, Completed, Broken };
+    public TrayState currentTrayState;
+
+    public TrayState newState = TrayState.Empty;
 
     // Orders
     [SerializeField] private GameObject coffeeTR;
