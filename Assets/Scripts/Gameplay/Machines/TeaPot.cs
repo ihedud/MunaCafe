@@ -154,18 +154,23 @@ public class TeaPot : MonoBehaviour
         counter++;
         if (counter > 300)
         {
-            player1.currentState = PlayerState.State.None;
-            player2.currentState = PlayerState.State.None;
-
-            counter = 0;
-            StopAllCoroutines();
-            currentState = State.Broken;
-
-            sphereMaterial.material = purple;
-            machine.material = grey;
-
-            cup.SetActive(false);
+            SetBroken();
         }
+    }
+
+    private void SetBroken()
+    {
+        player1.currentState = PlayerState.State.None;
+        player2.currentState = PlayerState.State.None;
+
+        counter = 0;
+        StopAllCoroutines();
+        currentState = State.Broken;
+
+        sphereMaterial.material = purple;
+        machine.material = grey;
+
+        cup.SetActive(false);
     }
 
     private void OnDisable()

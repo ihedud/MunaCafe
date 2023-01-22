@@ -200,6 +200,7 @@ public class ClientUDP : MonoBehaviour
     private void OnDisable()
     {
         closed = true;
+        packetList.Clear();
 
         try
         {

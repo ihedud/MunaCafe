@@ -220,6 +220,7 @@ public class HostUDP : MonoBehaviour
     private void OnDisable()
     {
         closed = true;
+        packetList.Clear();
 
         try
         {

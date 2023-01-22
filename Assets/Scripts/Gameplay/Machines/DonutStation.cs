@@ -135,6 +135,21 @@ public class DonutStation : MonoBehaviour
         player.GetComponent<PlayerState>().hasInteracted = false;
     }
 
+    private void SetBroken()
+    {
+        player1.currentState = PlayerState.State.None;
+        player2.currentState = PlayerState.State.None;
+
+        counter = 0;
+        StopAllCoroutines();
+        Restart();
+
+        currentState = State.Broken;
+
+        sphereMaterial.material = purple;
+        machine.material = grey;
+    }
+
     private void Update()
     {
         if (currentState != newState || currentState == State.Broken)
@@ -142,17 +157,7 @@ public class DonutStation : MonoBehaviour
             counter++;
             if (counter > 300)
             {
-                player1.currentState = PlayerState.State.None;
-                player2.currentState = PlayerState.State.None;
-
-                counter = 0;
-                StopAllCoroutines();
-                Restart();
-
-                currentState = State.Broken;
-
-                sphereMaterial.material = purple;
-                machine.material = grey;
+                SetBroken();
             }
         }
 

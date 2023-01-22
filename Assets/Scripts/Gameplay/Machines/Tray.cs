@@ -94,24 +94,29 @@ public class Tray : MonoBehaviour
         counter++;
         if (counter > 300)
         {
-            player1.currentState = PlayerState.State.None;
-            player2.currentState = PlayerState.State.None;
-
-            counter = 0;
-            StopAllCoroutines();
-
-            coffee.SetActive(false);
-            tea.SetActive(false);
-            donut.SetActive(false);
-            coffee_donut.SetActive(false);
-            tea_donut.SetActive(false);
-
-            player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
-
-            currentTrayState = TrayState.Broken;
-
-            trayMesh.material = grey;
+            SetBroken();
         }
+    }
+    
+    private void SetBroken()
+    {
+        player1.currentState = PlayerState.State.None;
+        player2.currentState = PlayerState.State.None;
+
+        counter = 0;
+        StopAllCoroutines();
+
+        coffee.SetActive(false);
+        tea.SetActive(false);
+        donut.SetActive(false);
+        coffee_donut.SetActive(false);
+        tea_donut.SetActive(false);
+
+        player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
+
+        currentTrayState = TrayState.Broken;
+
+        trayMesh.material = grey;
     }
 
     private IEnumerator AssignOrder()
