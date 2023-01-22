@@ -134,8 +134,11 @@ public class CoffeeMachine : MonoBehaviour
 
     private void Update()
     {
-        if (currentState == newState && currentState != State.Broken)
+        if (currentState == newState || currentState == State.Broken)
             return;
+
+        //if (newState == State.Broken)
+        //    counter = 300;
 
         counter++;
         if (counter > 300)

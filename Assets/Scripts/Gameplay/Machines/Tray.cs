@@ -88,7 +88,7 @@ public class Tray : MonoBehaviour
             StartCoroutine(AssignOrder());
         }
 
-        if (currentTrayState == newState && currentTrayState != TrayState.Broken)
+        if (currentTrayState == newState || currentTrayState == TrayState.Broken)
             return;
 
         counter++;

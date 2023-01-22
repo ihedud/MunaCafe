@@ -82,7 +82,7 @@ public class TrayClient : MonoBehaviour
 
     private void Update()
     {
-        if (currentTrayState == TrayState.Empty && currentTrayState != TrayState.Broken)
+        if (currentTrayState == TrayState.Empty || currentTrayState == TrayState.Broken)
         {
             StartCoroutine(AssignOrder());
         }

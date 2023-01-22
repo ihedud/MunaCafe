@@ -137,7 +137,7 @@ public class DonutStation : MonoBehaviour
 
     private void Update()
     {
-        if (currentState != newState && currentState != State.Broken)
+        if (currentState != newState || currentState == State.Broken)
         {
             counter++;
             if (counter > 300)

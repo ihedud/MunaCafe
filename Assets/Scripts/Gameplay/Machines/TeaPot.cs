@@ -148,7 +148,7 @@ public class TeaPot : MonoBehaviour
 
     private void Update()
     {
-        if (currentState == newState && currentState != State.Broken)
+        if (currentState == newState || currentState == State.Broken)
             return;
 
         counter++;
