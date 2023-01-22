@@ -166,7 +166,7 @@ public class DonutStation : MonoBehaviour
 
         timer += Time.deltaTime;
         if(currentState != State.Finished)
-            sphere.transform.localScale += new Vector3(0.0002f, 0.0002f, 0.0002f);
+            sphere.transform.localScale += (Time.deltaTime * 0.007f) * Vector3.one;
 
         if (timer > updateTime)
         {
