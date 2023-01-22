@@ -9,7 +9,7 @@ public class Tray : MonoBehaviour
 
     [HideInInspector] public Order currentOrder;
 
-    public enum TrayState { Empty, Ongoing, Completed, Broken };
+    public enum TrayState { Empty, Ongoing, HalfCompleted, Completed, Broken };
     public TrayState currentTrayState;
 
     public TrayState newState = TrayState.Empty;
@@ -144,7 +144,7 @@ public class Tray : MonoBehaviour
 
     private void TrayInteraction()
     {
-        if (currentTrayState == TrayState.Ongoing)
+        if (currentTrayState == TrayState.Ongoing || currentTrayState == TrayState.HalfCompleted)
         {
             switch (player.GetComponent<PlayerState>().currentState)
             {
@@ -164,6 +164,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             coffeeTR_donutTR.SetActive(false);
                             coffee_donutTR.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (coffeeTR_donut.activeSelf)
                         {
@@ -191,6 +192,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             teaTR_donutTR.SetActive(false);
                             tea_donutTR.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (teaTR_donut.activeSelf)
                         {
@@ -218,6 +220,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             coffeeTR_donutTR.SetActive(false);
                             coffeeTR_donut.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (coffee_donutTR.activeSelf)
                         {
@@ -235,6 +238,7 @@ public class Tray : MonoBehaviour
                             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
                             teaTR_donutTR.SetActive(false);
                             teaTR_donut.SetActive(true);
+                            currentTrayState = TrayState.HalfCompleted;
                         }
                         else if (tea_donutTR.activeSelf)
                         {
