@@ -99,8 +99,6 @@ public class HostUDP : MonoBehaviour
 
     private void Connecting()
     {
-        Debug.Log("Starting Thread");
-
         client = new IPEndPoint(IPAddress.Any, port);
         remote = (EndPoint)client;
 
@@ -108,20 +106,15 @@ public class HostUDP : MonoBehaviour
 
         try
         {
-            Debug.Log("Waiting for clients...");
-
             // Receive data
             byte[] dataReceived1 = new byte[1024];
             clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived1, 0, newSocket.ReceiveFrom(dataReceived1, ref remote)));
-
-            Debug.Log(clientInfo.username + " wants to connect...");
 
             // Adding client to lobby
             if (playerCount < 2)
             {
                 playerManager.ConnectPlayer(clientInfo.username, playerCount);
                 playerCount++;
-                Debug.Log(clientInfo.username + " has joined the server!");
             }
         }
         catch (Exception e)
@@ -144,7 +137,6 @@ public class HostUDP : MonoBehaviour
     {
         while (!closed)
         {
-            Debug.Log(readyToListen);
             if (readyToListen)
             {
                 try
@@ -153,10 +145,6 @@ public class HostUDP : MonoBehaviour
                     byte[] dataReceived2 = new byte[1024];
                     clientInfo = json.JsonDeserialize(Encoding.ASCII.GetString(dataReceived2, 0, newSocket.ReceiveFrom(dataReceived2, ref remote)));
 
-                    //Debug.Log("Receiving " + clientInfo.clientPacketID);
-                
-                    //if (clientInfo.hasInteracted)
-                    //    Debug.Log("Receiving " + clientInfo.clientPacketID);
                     myInfo.clientPacketID = clientInfo.clientPacketID;
 
                     if (clientInfo.onPlay)
@@ -184,7 +172,6 @@ public class HostUDP : MonoBehaviour
             {
                 try
                 {
-                    // Solo las veces que hemos interactuado
                     for (int i = 0; i < packetList.Count; i++)
                     {
                         if (packetList[i].hostPacketID == clientInfo.hostPacketID)
@@ -200,31 +187,27 @@ public class HostUDP : MonoBehaviour
                     }
 
                     timer++;
-                    
-                        
 
-                        // Send data
-                        if (lostPacket != null)
-                        {
-                            //Debug.Log("Resending lost packet: " + lostPacket.hostPacketID);
-                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(lostPacket));
-                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
-                            lostPacket = null;
-                        }
-                        else if (lostPacket == null && (timer >= 1000 || myInfo.hasInteracted))
-                        {
+                    // Send data
+                    if (lostPacket != null)
+                    {
+                        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(lostPacket));
+                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                        lostPacket = null;
+                    }
+                    else if (lostPacket == null && (timer >= 1000 || myInfo.hasInteracted))
+                    {
                         timer = 0;
                         myInfo.hostPacketID++;
-                            byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
-                            newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
+                        byte[] dataSent2 = Encoding.Default.GetBytes(json.JsonSerialize(myInfo));
+                        newSocket.SendTo(dataSent2, dataSent2.Length, SocketFlags.None, remote);
 
-                            if (myInfo.hasInteracted && !hasAlreadyInteracted)
-                            {
-                                hasAlreadyInteracted = true;
-                                packetList.Add(myInfo);
-                                //Debug.Log("Adding packet to list: " + myInfo.hostPacketID);
-                            }
+                        if (myInfo.hasInteracted && !hasAlreadyInteracted)
+                        {
+                            hasAlreadyInteracted = true;
+                            packetList.Add(myInfo);
                         }
+                    }
                 }
                 catch (Exception e)
                 {

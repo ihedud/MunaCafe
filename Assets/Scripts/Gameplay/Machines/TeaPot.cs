@@ -173,4 +173,3 @@ public class TeaPot : MonoBehaviour
         playerGrab.action.Disable();
     }
 }
-

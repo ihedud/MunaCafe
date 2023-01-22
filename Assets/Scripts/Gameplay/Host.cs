@@ -92,11 +92,9 @@ public class Host : MonoBehaviour
                 coffeeMachine3.newState = host.clientInfo.coffee3State;
 
                 host.myInfo.donutState = donutStation.CurrentState;
-
                 donutStation.newState = host.clientInfo.donutState;
 
                 host.myInfo.teaPotState = teaPot.CurrentState;
-
                 teaPot.newState = host.clientInfo.teaPotState;
             }
         }

@@ -137,15 +137,9 @@ public class CoffeeMachine : MonoBehaviour
         if (currentState == newState || currentState == State.Broken)
             return;
 
-        //if (newState == State.Broken)
-        //    counter = 300;
-
         counter++;
         if (counter > 300)
         {
-            Debug.Log("It broke lol");
-            Debug.Log("My state: " + currentState + ", new state = " + newState);
-
             player1.currentState = PlayerState.State.None;
             player2.currentState = PlayerState.State.None;
 
@@ -163,6 +157,6 @@ public class CoffeeMachine : MonoBehaviour
 
     private void OnDisable()
     {
-            playerGrab.action.Disable();
+        playerGrab.action.Disable();
     }
 }

@@ -93,9 +93,6 @@ public class TrayClient : MonoBehaviour
         counter++;
         if (counter > 300)
         {
-            Debug.Log("It broke lol");
-            Debug.Log("My state: " + currentTrayState + ", new state = " + newState);
-
             player1.currentState = PlayerState.State.None;
             player2.currentState = PlayerState.State.None;
 
