@@ -45,6 +45,7 @@ public class TeaPot : MonoBehaviour
         currentState = State.Empty;
         sphereMaterial.material = red;
         cup.SetActive(false);
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -52,7 +53,6 @@ public class TeaPot : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += GrabTea;
         }
     }
@@ -70,7 +70,6 @@ public class TeaPot : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= GrabTea;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -167,6 +166,11 @@ public class TeaPot : MonoBehaviour
 
             cup.SetActive(false);
         }
+    }
+
+    private void OnDisable()
+    {
+        playerGrab.action.Disable();
     }
 }
 

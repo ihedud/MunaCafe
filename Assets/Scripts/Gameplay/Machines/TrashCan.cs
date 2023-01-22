@@ -12,12 +12,16 @@ public class TrashCan : MonoBehaviour
 
     private GameObject player;
 
+    private void Awake()
+    {
+        playerGrab.action.Enable();
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += ThrowTrash;
         }
     }
@@ -35,7 +39,6 @@ public class TrashCan : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= ThrowTrash;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -53,5 +56,10 @@ public class TrashCan : MonoBehaviour
             cup.SetActive(true);
         if (player.GetComponent<PlayerState>().currentState != PlayerState.State.None)
             player.GetComponent<PlayerState>().currentState = PlayerState.State.None;
+    }
+
+    private void OnDisable()
+    {
+        playerGrab.action.Disable();
     }
 }

@@ -54,6 +54,7 @@ public class DonutStation : MonoBehaviour
         half.SetActive(false);
         finished.SetActive(false);
         sphereTR.SetActive(false);
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -61,7 +62,6 @@ public class DonutStation : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += GrabDonut;
         }
     }
@@ -80,7 +80,6 @@ public class DonutStation : MonoBehaviour
         if (collider.gameObject.tag == "Player" || collider.gameObject.tag == "Player2")
         {
             player = collider.gameObject;
-            playerGrab.action.Disable();
             playerGrab.action.performed -= GrabDonut;
             player.GetComponent<PlayerState>().hasInteracted = false;
             if (currentState != State.Finished)
@@ -201,5 +200,10 @@ public class DonutStation : MonoBehaviour
         sphereTR.SetActive(false);
         sphereMaterial.material = red;
         sphere.transform.localScale = initScale;
+    }
+
+    private void OnDisable()
+    {
+        playerGrab.action.Disable();
     }
 }

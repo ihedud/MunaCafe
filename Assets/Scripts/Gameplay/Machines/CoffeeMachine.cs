@@ -43,6 +43,7 @@ public class CoffeeMachine : MonoBehaviour
         sphereMaterial = sphere.GetComponent<MeshRenderer>();
         sphereMaterial.material = red;
         currentState = State.Empty;
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -50,7 +51,6 @@ public class CoffeeMachine : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += GrabCoffee;
         }
     }
@@ -68,7 +68,6 @@ public class CoffeeMachine : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= GrabCoffee;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -157,5 +156,10 @@ public class CoffeeMachine : MonoBehaviour
             coffee.SetActive(false);
             mug.SetActive(false);
         }
+    }
+
+    private void OnDisable()
+    {
+            playerGrab.action.Disable();
     }
 }

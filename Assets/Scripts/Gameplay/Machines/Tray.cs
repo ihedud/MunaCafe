@@ -50,7 +50,8 @@ public class Tray : MonoBehaviour
     private void Awake()
     {
         currentTrayState = TrayState.Empty;
-        initialTrayMaterial = trayMesh.material;
+        initialTrayMaterial = trayMesh.material; 
+        playerGrab.action.Enable();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -58,7 +59,6 @@ public class Tray : MonoBehaviour
         if (collider.gameObject.tag == "Player")
         {
             player = collider.gameObject;
-            playerGrab.action.Enable();
             playerGrab.action.performed += DeliverOrder;
         }
     }
@@ -76,7 +76,6 @@ public class Tray : MonoBehaviour
     {
         if (collider.gameObject.tag == "Player")
         {
-            playerGrab.action.Disable();
             playerGrab.action.performed -= DeliverOrder;
             player.GetComponent<PlayerState>().hasInteracted = false;
         }
@@ -277,5 +276,10 @@ public class Tray : MonoBehaviour
         tea_donut.SetActive(false);
 
         currentTrayState = TrayState.Empty;
+    }
+
+    private void OnDisable()
+    {
+        playerGrab.action.Disable();
     }
 }
